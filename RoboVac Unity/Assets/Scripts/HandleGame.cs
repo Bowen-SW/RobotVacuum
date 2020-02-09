@@ -10,13 +10,6 @@ public class HandleGame : MonoBehaviour
     {
         Debug.Log("GameHandler.Start");
 
-        //ball = new Ball();
         ball.Launch();
     }
-
-    // Update is called once per frame
-    // void Update()
-    // {
-        
-    // }
 }

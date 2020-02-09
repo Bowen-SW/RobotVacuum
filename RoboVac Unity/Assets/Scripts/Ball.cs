@@ -12,7 +12,7 @@ public class Ball : MonoBehaviour
     //The Roomba's current random direction
     private Vector3 currentDirection;
 
-    private float velocity = 60F;
+    private float velocity = 30F;
 
     private Rigidbody2D vacuum;
 
@@ -24,15 +24,14 @@ public class Ball : MonoBehaviour
 
         //TODO: choose the path algorithm based on user selections
         //TODO: set the simulation speed based on user selection
-        path = gameObject.AddComponent<RandomPath>();
+        //path = gameObject.AddComponent<RandomPath>();
+        path = gameObject.AddComponent<SnakingPath>();
+
         path.SetFields(velocity, simSpeed, vacuum);
-        //path = new RandomPath(velocity, simSpeed);
-        //path = new SnakingPath(velocity, simSpeed, vacuum);
     }
 
     //Handle the collision
     void OnCollisionEnter2D(Collision2D col) {
-        //StartCoroutine(RandomPath());
         path.Move();
     }
 
@@ -46,8 +45,17 @@ public class Ball : MonoBehaviour
  
     public void Launch(float x = 0, float y = 1F)
     {
-        //The direction to be launched towards
-        currentDirection = new Vector3(x, y, 0);
+        //TODO: Current directions need to be based off of the roomba's current direction
+        if(path is RandomPath){
+            currentDirection = new Vector3(0, 1F, 0);
+        } else if(path is SnakingPath) {
+            currentDirection = new Vector3(0, 1F, 0);
+        } else {
+            //The direction to be launched towards
+            currentDirection = new Vector3(x, y, 0);
+        }
+
+        path.SetDirection(currentDirection);
 
         //Make sure we start at the minimum speed limit
         Vector3 normalizedDirection = currentDirection.normalized * MinimumSpeed;
