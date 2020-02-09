@@ -5,19 +5,15 @@ using UnityEngine;
 public class RandomPath : Path
 {
     private float MinimumSpeed = 5;
-    private Vector3 currentDirection;
 
-    public RandomPath(float velocity, float simSpeed, Rigidbody2D vacuum){
-        this.velocity = velocity;
-        this.simSpeed = simSpeed;
-        this.vacuum = vacuum;
-    }
+    //Need to set this according to where the roomba is placed
+    private Vector3 currentDirection = new Vector3(0, 1F, 0);
 
     public override void Move(){
         StartCoroutine(RandomMove());
     }
 
-    IEnumerator RandomMove(){
+    private IEnumerator RandomMove(){
         //float velocity = 60F;
         float randomX = Random.Range(-1F, 1F);
         float randomY = Random.Range(-1F, 1F);
@@ -29,7 +25,7 @@ public class RandomPath : Path
         vacuum.angularVelocity = velocity * simSpeed;
 
         float waitTime = angleChange / Mathf.Abs(velocity);        
-
+        
         yield return new WaitForSeconds(waitTime / simSpeed);
         vacuum.angularVelocity = 0;
 
@@ -93,12 +89,6 @@ public class RandomPath : Path
         //Debug.Log("currentAngle = " + currentAngle + "\nnewAngle = " + newAngle + "\nangleChange = " + angleChange);  
 
         return angleChange;
-    }
-
-    private void Stop(){
-        Vector3 direction = vacuum.velocity;
-        float speed = 0.0F;
-        vacuum.velocity = direction * speed;
     }
  
     public void Launch(float x = 0, float y = 1F)

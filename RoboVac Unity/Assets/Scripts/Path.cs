@@ -4,11 +4,25 @@ using UnityEngine;
 
 public abstract class Path : MonoBehaviour
 {
-    public float velocity;
+    protected float velocity;
 
-    public float simSpeed;
+    protected float simSpeed;
 
-    public Rigidbody2D vacuum;
+    protected Rigidbody2D vacuum;
 
     public abstract void Move();
+
+    public void SetFields (float velocity, float simSpeed, Rigidbody2D vacuum){ 
+        this.velocity = velocity;
+        this.simSpeed = simSpeed;
+        this.vacuum = vacuum;
+    }
+
+    protected void Stop(){
+        Vector3 direction = vacuum.velocity;
+        float speed = 0.0F;
+        vacuum.velocity = direction * speed;
+    }
+
+    
 }
