@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ball : MonoBehaviour
+public class Roomba : MonoBehaviour
 {
     public float MinimumSpeed = 5;
 

@@ -5,11 +5,11 @@ using UnityEngine;
 public class HandleGame : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] public Ball ball;
+    [SerializeField] public Roomba roomba;
     void Start()
     {
         Debug.Log("GameHandler.Start");
 
-        ball.Launch();
+        roomba.Launch();
     }
 }
