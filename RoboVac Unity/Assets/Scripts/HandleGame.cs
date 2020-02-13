@@ -8,7 +8,7 @@ public class HandleGame : MonoBehaviour
     [SerializeField] public Roomba roomba;
     void Start()
     {
-        Debug.Log("GameHandler.Start");
+        //Debug.Log("GameHandler.Start");
 
         roomba.Launch();
     }

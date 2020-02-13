@@ -12,7 +12,7 @@ public class Roomba : MonoBehaviour
     //The Roomba's current random direction
     private Vector3 currentDirection;
 
-    private float velocity = 30F;
+    private float velocity = 100F;
 
     private Rigidbody2D vacuum;
 

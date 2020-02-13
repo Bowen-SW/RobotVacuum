@@ -28,8 +28,9 @@ public class SnakingPath : Path
         float waitTime;
         
         if(inCurrentCollision) {
-            x = -1F;
-            y = 1F;
+            float temp = x;
+            x = y;
+            y = -temp;
             turn90 = true;
             velocity = -velocity;
             yield break;
@@ -57,7 +58,7 @@ public class SnakingPath : Path
         if(counterClockwise){
             Launch(-x, 0);
             
-            yield return new WaitForSeconds(.1F);
+            yield return new WaitForSeconds(.2F);
 
             //If a collision happens here, it will be detected and dealt with
 
@@ -79,7 +80,7 @@ public class SnakingPath : Path
             
         } else { //Turn clockwise
             Launch(0, y);
-            yield return new WaitForSeconds(.1F);
+            yield return new WaitForSeconds(.2F);
             
             //If a collision happens here, it will be detected and dealt with
 
