@@ -28,7 +28,6 @@ public class SnakingPath : Path
         float waitTime;
         
         if(inCurrentCollision) {
-            //offset = 90;
             x = -1F;
             y = 1F;
             turn90 = true;
@@ -57,9 +56,11 @@ public class SnakingPath : Path
         
         if(counterClockwise){
             Launch(-x, 0);
-            //Need to detect if a collision occurs here. If so, apply offset
             
             yield return new WaitForSeconds(.1F);
+
+            //If a collision happens here, it will be detected and dealt with
+
             Stop();
 
             angleChange = 45F;
@@ -75,19 +76,12 @@ public class SnakingPath : Path
             vacuum.angularVelocity = 0;
 
             Launch(-x, -y);
-
-            // if(offset == 0){
-            //     Launch(x, y);
-            // } else {
-            //     Launch(y, -x);
-            //     velocity = -velocity;
-            // }
             
         } else { //Turn clockwise
             Launch(0, y);
             yield return new WaitForSeconds(.1F);
-            //TODO: Detect if a collision happens here
-
+            
+            //If a collision happens here, it will be detected and dealt with
 
             Stop();
             angleChange = 45F;
@@ -103,13 +97,6 @@ public class SnakingPath : Path
             vacuum.angularVelocity = 0;
 
             Launch(x, y);
-
-            // if(offset == 0){
-            //     Launch(x, y);
-            // } else {
-            //     Launch(y, -x);
-            //     velocity = -velocity;
-            // }
         }
             
         inCurrentCollision = false;
@@ -120,8 +107,6 @@ public class SnakingPath : Path
     private float TurnParallel() {
         float angleChange = 0F;
         float currentAngle = GetCurrentAngle();
-
-        //See if Raycast can be used so that it always is able to rotate to parallel
 
         if(firstTurn){
             angleChange = 90F;
@@ -141,22 +126,6 @@ public class SnakingPath : Path
         } 
 
         return angleChange;
-    }
-
-    private void BottomLeft(){
-        Launch(-1F, -1F);
-    }
-
-    private void BottomRight(){
-        Launch(1F, -1F);
-    }
-
-    private void TopLeft(){
-        Launch(-1F, 1F);
-    }
-
-    private void TopRight(){
-        Launch(1F, 1F);
     }
 
     public override void Launch(float x = 0F, float y = 1F)
