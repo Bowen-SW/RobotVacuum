@@ -13,7 +13,11 @@ public class HandleGame : MonoBehaviour
 
     public Button startButton;
 
+    public Text text;
+
     private Button robotSpeedBtn;
+
+    // private RobotSpeedHandler robotSpeedBtn;
 
     private float robotSpeed = 12F;
 
@@ -26,36 +30,33 @@ public class HandleGame : MonoBehaviour
 
         Button startBtn = startButton.GetComponent<Button>();
         startBtn.onClick.AddListener(StartLaunch);
-
-        roomba.SetVelocity(robotSpeed, simulationSpeed);
-        // roomba.Launch();
     }
 
     void SetRobotSpeed(){
-        Text txt = transform.Find("Text").GetComponent<Text>();
+        Text txt = text.GetComponent<Text>();
 
-        if(String.Equals(txt, "12 in/sec")){
+        if(String.Equals(txt.text, "12 in/sec")){
             Debug.Log("Click to 18 in/sec");
             txt.text = "18 in/sec";
             robotSpeed = 18F;
-        } else if (String.Equals(txt, "18 in/sec")) {
+        } else if (String.Equals(txt.text, "18 in/sec")) {
             Debug.Log("Click to 6 in/sec");
             txt.text = "6 in/sec";
             robotSpeed = 6F;
-        } else if (String.Equals(txt, "6 in/sec")) {
-            Debug.Log("Click to 18 in/sec");
+        } else if (String.Equals(txt.text, "6 in/sec")) {
+            Debug.Log("Click to 12 in/sec");
             txt.text = "12 in/sec";
             robotSpeed = 12F;
         } else {
-            Debug.Log("Error: Unexpected value. Setting to default");
+            Debug.Log("Error: Unexpected value = " + txt.text + ". Setting to default");
             txt.text = "12 in/sec";
             robotSpeed = 12F;
         }
 
-        // Debug.Log("Clicked");
     }
 
     void StartLaunch() {
+        roomba.SetVelocity(robotSpeed, simulationSpeed);
         roomba.Launch();
     }
 }

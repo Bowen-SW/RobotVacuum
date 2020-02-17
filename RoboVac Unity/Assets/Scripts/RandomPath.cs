@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class RandomPath : Path
 {
-    private float MinimumSpeed = 5;
-
     //Need to set this according to where the roomba is placed
     //private Vector3 currentDirection;
 
@@ -34,27 +32,6 @@ public class RandomPath : Path
 
     private float CalculateAngleChange(float randomX, float randomY){
         float currentAngle = GetCurrentAngle();
-
-        // //Check for angles in which arc-tangent is undefined
-        // if(currentDirection.x == 0 && currentDirection.y > 0){
-        //     currentAngle = 90;
-        // } else if (currentDirection.x == 0 && currentDirection.y < 0){
-        //     currentAngle = 270;
-        // } else {
-        //     //Find the angles in degrees using arc-tangent
-        //     currentAngle = Mathf.Atan(currentDirection.y / currentDirection.x) * 180 / Mathf.PI;
-        // }
-
-        
-
-        // //The new angle will depend on whether the new direction coordinates are each positive or negative
-        // if(currentDirection.x < 0) { //2nd and 3rd quadrant
-        //     currentAngle = currentAngle + 180;
-        // } else if (currentDirection.y < 0) { //4th quadrant
-        //     currentAngle = currentAngle + 360;
-        // } else { //1st quandrant
-        //     //no change needed
-        // }
 
         float newAngle = Mathf.Atan(randomY / randomX) * 180 / Mathf.PI;
 
@@ -89,18 +66,4 @@ public class RandomPath : Path
         return angleChange;
     }
  
-    public override void Launch(float x = 0, float y = 1F)
-    {
-        //The direction to be launched towards
-        currentDirection = new Vector3(x, y, 0);
-
-//TODO: Fix the normalized speed. Speed should be the same at all times
-        //Make sure we start at the minimum speed limit
-        Vector3 normalizedDirection = currentDirection.normalized * MinimumSpeed;
-
-        //Apply it to the rigidbody so it keeps moving into that direction, untill it hits a block or wall
-        vacuum.velocity = normalizedDirection;
-        Debug.Log("Roomba Velocity = " + normalizedDirection);
-    }
-
 }

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class SnakingPath : Path
 {
-    private float MinimumSpeed = 5;
-
     private bool turn90 = false; //Turn 90 degrees if true
 
     private bool firstTurn = true;
@@ -129,18 +127,6 @@ public class SnakingPath : Path
         return angleChange;
     }
 
-    public override void Launch(float x = 0F, float y = 1F)
-    {
-        //The direction to be launched towards
-        currentDirection = new Vector3(x, y, 0);
-
-        //TODO: Fix the normalized speed. Speed should be the same at all times
-        //Make sure we start at the minimum speed limit
-        Vector3 normalizedDirection = currentDirection.normalized * MinimumSpeed;
-
-        //Apply it to the rigidbody so it keeps moving into that direction, untill it hits a block or wall
-        vacuum.velocity = normalizedDirection;
-        Debug.Log("Roomba Velocity = " + normalizedDirection);
-    }
+    
 
 }

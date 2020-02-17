@@ -46,7 +46,7 @@ public class Roomba : MonoBehaviour
         gameObject.transform.Translate(moveHorizontal , moveVertical , 0.0f);
     }
  
-    public void Launch(float x = 0, float y = 1F)
+    public void Launch()
     {
         path.SetFields(velocity, simSpeed, vacuum);
         //TODO: Current directions need to be based off of the roomba's current direction
@@ -56,7 +56,7 @@ public class Roomba : MonoBehaviour
             currentDirection = new Vector3(0, 1F, 0);
         } else {
             //The direction to be launched towards
-            currentDirection = new Vector3(x, y, 0);
+            currentDirection = new Vector3(0, 1F, 0);
         }
 
         path.SetDirection(currentDirection);
