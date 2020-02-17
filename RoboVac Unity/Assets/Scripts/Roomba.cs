@@ -12,11 +12,13 @@ public class Roomba : MonoBehaviour
     //The Roomba's current random direction
     private Vector3 currentDirection;
 
-    private float velocity = 100F;
+    private float velocity = 10F;
 
     private Rigidbody2D vacuum;
 
     private Path path;
+
+    private float factor = 1F;
 
     void Awake() {
         //vacuum = gameObject.AddComponent<Rigidbody2D>() as RigidBody2D;
@@ -27,11 +29,12 @@ public class Roomba : MonoBehaviour
         //path = gameObject.AddComponent<RandomPath>();
         path = gameObject.AddComponent<SnakingPath>();
 
-        path.SetFields(velocity, simSpeed, vacuum);
+        //path.SetFields(velocity, simSpeed, vacuum);
     }
 
     //Handle the collision
     void OnCollisionEnter2D(Collision2D col) {
+        
         path.Move();
     }
 
@@ -45,6 +48,7 @@ public class Roomba : MonoBehaviour
  
     public void Launch(float x = 0, float y = 1F)
     {
+        path.SetFields(velocity, simSpeed, vacuum);
         //TODO: Current directions need to be based off of the roomba's current direction
         if(path is RandomPath){
             currentDirection = new Vector3(0, 1F, 0);
@@ -61,6 +65,13 @@ public class Roomba : MonoBehaviour
         Vector3 normalizedDirection = currentDirection.normalized * MinimumSpeed;
 
         //Apply it to the rigidbody so it keeps moving into that direction, untill it hits a block or wall
-        vacuum.velocity = normalizedDirection;
+        vacuum.velocity = normalizedDirection * factor;
+        Debug.Log("Roomba Velocity = " + normalizedDirection);
+    }
+
+    public void SetVelocity(float robotSpeed, int simulationSpeed){
+        velocity = velocity * robotSpeed * simulationSpeed;
+        factor = 120F / velocity;
+        Debug.Log("Velocity = " + velocity);
     }
  }

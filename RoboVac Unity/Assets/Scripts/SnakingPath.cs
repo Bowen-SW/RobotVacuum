@@ -6,8 +6,6 @@ public class SnakingPath : Path
 {
     private float MinimumSpeed = 5;
 
-    private int offset = 0;
-
     private bool turn90 = false; //Turn 90 degrees if true
 
     private bool firstTurn = true;
@@ -33,6 +31,7 @@ public class SnakingPath : Path
             y = -temp;
             turn90 = true;
             velocity = -velocity;
+
             yield break;
         } else {
             inCurrentCollision = true;
@@ -102,7 +101,6 @@ public class SnakingPath : Path
             
         inCurrentCollision = false;
         turn90 = false;
-        offset = 0;
     }
 
     private float TurnParallel() {
@@ -126,6 +124,8 @@ public class SnakingPath : Path
             //Should be an error
         } 
 
+
+
         return angleChange;
     }
 
@@ -140,6 +140,7 @@ public class SnakingPath : Path
 
         //Apply it to the rigidbody so it keeps moving into that direction, untill it hits a block or wall
         vacuum.velocity = normalizedDirection;
+        Debug.Log("Roomba Velocity = " + normalizedDirection);
     }
 
 }

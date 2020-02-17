@@ -100,6 +100,7 @@ public class RandomPath : Path
 
         //Apply it to the rigidbody so it keeps moving into that direction, untill it hits a block or wall
         vacuum.velocity = normalizedDirection;
+        Debug.Log("Roomba Velocity = " + normalizedDirection);
     }
 
 }
