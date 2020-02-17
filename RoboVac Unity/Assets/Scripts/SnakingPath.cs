@@ -55,7 +55,7 @@ public class SnakingPath : Path
         if(counterClockwise){
             Launch(-x, 0);
             
-            yield return new WaitForSeconds(.2F);
+            yield return new WaitForSeconds(.2F / factor);
 
             //If a collision happens here, it will be detected and dealt with
 
@@ -77,7 +77,7 @@ public class SnakingPath : Path
             
         } else { //Turn clockwise
             Launch(0, y);
-            yield return new WaitForSeconds(.2F);
+            yield return new WaitForSeconds(.2F / factor);
             
             //If a collision happens here, it will be detected and dealt with
 

@@ -48,7 +48,7 @@ public class Roomba : MonoBehaviour
  
     public void Launch()
     {
-        path.SetFields(velocity, simSpeed, vacuum);
+        path.SetFields(velocity, simSpeed, factor, vacuum);
         //TODO: Current directions need to be based off of the roomba's current direction
         if(path is RandomPath){
             currentDirection = new Vector3(0, 1F, 0);
@@ -71,7 +71,7 @@ public class Roomba : MonoBehaviour
 
     public void SetVelocity(float robotSpeed, int simulationSpeed){
         velocity = velocity * robotSpeed * simulationSpeed;
-        factor = 120F / velocity;
+        factor = velocity / 120F;
         Debug.Log("Velocity = " + velocity);
     }
  }

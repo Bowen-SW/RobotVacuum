@@ -8,6 +8,8 @@ public abstract class Path : MonoBehaviour
 
     protected float simSpeed;
 
+    protected float factor;
+
     protected Rigidbody2D vacuum;
 
     protected Vector3 currentDirection;
@@ -16,10 +18,11 @@ public abstract class Path : MonoBehaviour
 
     //public abstract void Launch(float x = 0, float y = 0);
 
-    public void SetFields (float velocity, float simSpeed, Rigidbody2D vacuum){ 
+    public void SetFields (float velocity, float simSpeed, float factor, Rigidbody2D vacuum){ 
         this.velocity = velocity;
         this.simSpeed = simSpeed;
         this.vacuum = vacuum;
+        this.factor = factor;
     }
 
     public void SetDirection(Vector3 direction){
@@ -67,7 +70,7 @@ public abstract class Path : MonoBehaviour
         Vector3 normalizedDirection = currentDirection.normalized * MinimumSpeed;
 
         //Apply it to the rigidbody so it keeps moving into that direction, untill it hits a block or wall
-        vacuum.velocity = normalizedDirection;
+        vacuum.velocity = normalizedDirection * factor;
         // Debug.Log("Roomba Velocity = " + normalizedDirection);
     }
     
