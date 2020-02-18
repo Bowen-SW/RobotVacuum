@@ -29,7 +29,7 @@ public abstract class Path : MonoBehaviour
         this.currentDirection = direction;
     }
 
-    protected void Stop(){
+    public void Stop(){
         Vector3 direction = vacuum.velocity;
         float speed = 0.0F;
         vacuum.velocity = direction * speed;
@@ -64,7 +64,7 @@ public abstract class Path : MonoBehaviour
         //The direction to be launched towards
         currentDirection = new Vector3(x, y, 0);
 
-        float MinimumSpeed = 5f;
+        float MinimumSpeed = 2f;
         //TODO: Fix the normalized speed. Speed should be the same at all times
         //Make sure we start at the minimum speed limit
         Vector3 normalizedDirection = currentDirection.normalized * MinimumSpeed;

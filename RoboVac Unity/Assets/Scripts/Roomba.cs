@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Roomba : MonoBehaviour
 {
-    public float MinimumSpeed = 5;
+    public float MinimumSpeed = 2;
 
     //Speed of the simulation
     private float simSpeed = 1f;
@@ -12,11 +12,11 @@ public class Roomba : MonoBehaviour
     //The Roomba's current random direction
     private Vector3 currentDirection;
 
-    private float velocity = 10F;
+    private float velocity = 1F;
 
     private Rigidbody2D vacuum;
 
-    private Path path;
+    public Path path;
 
     private float factor = 1F;
 
@@ -71,7 +71,7 @@ public class Roomba : MonoBehaviour
 
     public void SetVelocity(float robotSpeed, int simulationSpeed){
         velocity = velocity * robotSpeed * simulationSpeed;
-        factor = velocity / 120F;
+        factor = velocity / 120F; //12 represents the defaults; 12 in/sec * 1x speed
         Debug.Log("Velocity = " + velocity);
     }
  }

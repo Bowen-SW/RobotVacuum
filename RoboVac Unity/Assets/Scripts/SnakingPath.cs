@@ -40,14 +40,15 @@ public class SnakingPath : Path
 
         angleChange = TurnParallel();
 
-        vacuum.angularVelocity = velocity * simSpeed;
+        vacuum.angularVelocity = velocity;
+        // vacuum.angularVelocity = velocity * simSpeed;
 
         //Reset velocity to be positive
         velocity = Mathf.Abs(velocity); 
 
         waitTime = angleChange / velocity;       
         
-        yield return new WaitForSeconds(waitTime / simSpeed);
+        yield return new WaitForSeconds(waitTime);
         vacuum.angularVelocity = 0;
         //End Logic for turning to be parallel with wall
 
@@ -55,7 +56,7 @@ public class SnakingPath : Path
         if(counterClockwise){
             Launch(-x, 0);
             
-            yield return new WaitForSeconds(.2F / factor);
+            yield return new WaitForSeconds(.2F/factor);
 
             //If a collision happens here, it will be detected and dealt with
 
@@ -63,35 +64,35 @@ public class SnakingPath : Path
 
             angleChange = 45F;
             if(turn90){
-                angleChange += 90F;
+                angleChange += 180F;
             }
             
-            vacuum.angularVelocity = velocity * simSpeed;
+            vacuum.angularVelocity = velocity;
 
             waitTime = angleChange / Mathf.Abs(velocity);        
             
-            yield return new WaitForSeconds(waitTime / simSpeed);
+            yield return new WaitForSeconds(waitTime);
             vacuum.angularVelocity = 0;
 
             Launch(-x, -y);
             
         } else { //Turn clockwise
             Launch(0, y);
-            yield return new WaitForSeconds(.2F / factor);
+            yield return new WaitForSeconds(.2F/factor);
             
             //If a collision happens here, it will be detected and dealt with
 
             Stop();
             angleChange = 45F;
             if(turn90){
-                angleChange += 90F;
+                angleChange += 180F;
             }
 
-            vacuum.angularVelocity = -velocity * simSpeed;
+            vacuum.angularVelocity = -velocity;
 
             waitTime = angleChange / Mathf.Abs(velocity);        
             
-            yield return new WaitForSeconds(waitTime / simSpeed);
+            yield return new WaitForSeconds(waitTime);
             vacuum.angularVelocity = 0;
 
             Launch(x, y);

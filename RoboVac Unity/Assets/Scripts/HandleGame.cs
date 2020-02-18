@@ -13,27 +13,42 @@ public class HandleGame : MonoBehaviour
 
     public Button startButton;
 
-    public Text text;
+    public Button simSpeedButton;
+
+    public Button pauseButton;
+
+    public Text robotText;
+
+    public Text simText;
 
     private Button robotSpeedBtn;
 
-    // private RobotSpeedHandler robotSpeedBtn;
+    private Button simSpeedBtn;
+
+    private Button startBtn;
+
+    private Button pauseBtn;
 
     private float robotSpeed = 12F;
 
     private int simulationSpeed = 1;
     void Start()
     {
-        //Debug.Log("GameHandler.Start");
         robotSpeedBtn = robotSpeedButton.GetComponent<Button>();
         robotSpeedBtn.onClick.AddListener(SetRobotSpeed);
 
-        Button startBtn = startButton.GetComponent<Button>();
+        simSpeedBtn = simSpeedButton.GetComponent<Button>();
+        simSpeedBtn.onClick.AddListener(SetSimSpeed);
+
+        startBtn = startButton.GetComponent<Button>();
         startBtn.onClick.AddListener(StartLaunch);
+        
+        pauseBtn = pauseButton.GetComponent<Button>();
+        pauseBtn.onClick.AddListener(Pause);
     }
 
     void SetRobotSpeed(){
-        Text txt = text.GetComponent<Text>();
+        Text txt = robotText.GetComponent<Text>();
 
         if(String.Equals(txt.text, "12 in/sec")){
             Debug.Log("Click to 18 in/sec");
@@ -55,8 +70,40 @@ public class HandleGame : MonoBehaviour
 
     }
 
+    void SetSimSpeed(){
+        Text txt = simText.GetComponent<Text>();
+
+        if(String.Equals(txt.text, "1x Speed")){
+            // Debug.Log("Click to 18 in/sec");
+            txt.text = "25x Speed";
+            simulationSpeed = 25;
+        } else if (String.Equals(txt.text, "25x Speed")) {
+            // Debug.Log("Click to 6 in/sec");
+            txt.text = "50x Speed";
+            simulationSpeed = 50;
+        } else if (String.Equals(txt.text, "50x Speed")) {
+            // Debug.Log("Click to 12 in/sec");
+            txt.text = "1x Speed";
+            simulationSpeed = 1;
+        } else {
+            Debug.Log("Error: Unexpected value = " + txt.text + ". Setting to default");
+            txt.text = "1x Speed";
+            simulationSpeed = 1;
+        }
+    }
+
     void StartLaunch() {
+        robotSpeedBtn.interactable = false;
+        simSpeedBtn.interactable = false;
+        startBtn.interactable = false;
+        pauseBtn.interactable = true;
         roomba.SetVelocity(robotSpeed, simulationSpeed);
         roomba.Launch();
+    }
+
+    void Pause(){
+        startBtn.interactable = true;
+        pauseBtn.interactable = false;
+        roomba.path.Stop();
     }
 }
