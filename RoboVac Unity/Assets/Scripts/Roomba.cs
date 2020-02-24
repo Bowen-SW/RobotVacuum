@@ -74,7 +74,7 @@ public class Roomba : MonoBehaviour
         Vector3 normalizedDirection = currentDirection.normalized * MinimumSpeed;
 
         //Apply it to the rigidbody so it keeps moving into that direction, untill it hits a block or wall
-        vacuum.velocity = normalizedDirection / factor;
+        vacuum.velocity = normalizedDirection * factor;
         Debug.Log("Roomba Velocity = " + normalizedDirection);
     }
 

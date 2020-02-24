@@ -14,6 +14,8 @@ public abstract class Path : MonoBehaviour
 
     protected Vector3 currentDirection;
 
+    protected float waitFactor;
+
     public abstract void Move();
 
     //public abstract void Launch(float x = 0, float y = 0);
@@ -23,6 +25,7 @@ public abstract class Path : MonoBehaviour
         this.simSpeed = simSpeed;
         this.vacuum = vacuum;
         this.factor = factor;
+        SetWaitFactor((int)velocity);
     }
 
     public void SetDirection(Vector3 direction){
@@ -72,6 +75,22 @@ public abstract class Path : MonoBehaviour
         //Apply it to the rigidbody so it keeps moving into that direction, untill it hits a block or wall
         vacuum.velocity = normalizedDirection * factor;
         // Debug.Log("Roomba Velocity = " + normalizedDirection);
+    }
+
+    public void SetWaitFactor(int velocity){
+        if(velocity == 150){            //6 x 25
+            waitFactor = .5F;
+        } else if (velocity == 300) {   //12 x 25
+            waitFactor = 1F;
+        } else if (velocity == 450) {   //18 x 25
+            waitFactor = 1.25F;
+        } else if (velocity == 600) {   //12 x 50
+            waitFactor = 2F;
+        } else if (velocity == 900) {   //18 x 50
+            waitFactor = 2.5F;
+        } else {                        //6-18 x 1
+            waitFactor = .04F;
+        }
     }
     
 }

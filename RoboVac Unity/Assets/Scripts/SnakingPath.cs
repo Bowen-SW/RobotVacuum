@@ -20,6 +20,7 @@ public class SnakingPath : Path
     }
 
     private IEnumerator SnakingMove(){
+        Stop();
         float angleChange;
         float waitTime;
         
@@ -36,7 +37,7 @@ public class SnakingPath : Path
         }
 
         //Start Logic for turning to be parallel with wall
-        Stop();
+        // Stop();
 
         angleChange = TurnParallel();
 
@@ -56,7 +57,7 @@ public class SnakingPath : Path
         if(counterClockwise){
             Launch(-x, 0);
             
-            yield return new WaitForSeconds(.2F/factor);
+            yield return new WaitForSeconds(.2F/waitFactor);
 
             //If a collision happens here, it will be detected and dealt with
 
@@ -78,7 +79,7 @@ public class SnakingPath : Path
             
         } else { //Turn clockwise
             Launch(0, y);
-            yield return new WaitForSeconds(.2F/factor);
+            yield return new WaitForSeconds(.2F/waitFactor);
             
             //If a collision happens here, it will be detected and dealt with
 
@@ -127,7 +128,4 @@ public class SnakingPath : Path
 
         return angleChange;
     }
-
-    
-
 }
