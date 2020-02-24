@@ -7,18 +7,18 @@ public class Roomba : MonoBehaviour
     public float MinimumSpeed = 2;
 
     //Speed of the simulation
-    private float simSpeed = 1f;
+    private float simSpeed;
 
     //The Roomba's current random direction
     private Vector3 currentDirection;
 
-    private float velocity = 1F;
+    private float velocity;
 
     private Rigidbody2D vacuum;
 
     public Path path;
 
-    private float factor = 1F;
+    private float factor;
 
     void Awake() {
         //vacuum = gameObject.AddComponent<Rigidbody2D>() as RigidBody2D;
@@ -38,12 +38,21 @@ public class Roomba : MonoBehaviour
         path.Move();
     }
 
-    void FixedUpdate()
-    {
+    void Update(){
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
         gameObject.transform.Translate(moveHorizontal , moveVertical , 0.0f);
+    }
+
+    void FixedUpdate()
+    {
+        //Update();
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+
+        gameObject.transform.Translate(moveHorizontal , moveVertical , 0.0f);
+        //Update();
     }
  
     public void Launch()
@@ -65,12 +74,14 @@ public class Roomba : MonoBehaviour
         Vector3 normalizedDirection = currentDirection.normalized * MinimumSpeed;
 
         //Apply it to the rigidbody so it keeps moving into that direction, untill it hits a block or wall
-        vacuum.velocity = normalizedDirection * factor;
+        vacuum.velocity = normalizedDirection / factor;
         Debug.Log("Roomba Velocity = " + normalizedDirection);
     }
 
     public void SetVelocity(float robotSpeed, int simulationSpeed){
-        velocity = velocity * robotSpeed * simulationSpeed;
+        //velocity = 1F; //reset the velocity
+        simSpeed = simulationSpeed;
+        velocity = robotSpeed * simulationSpeed;
         factor = velocity / 120F; //12 represents the defaults; 12 in/sec * 1x speed
         Debug.Log("Velocity = " + velocity);
     }
