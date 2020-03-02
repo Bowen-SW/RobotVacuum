@@ -14,6 +14,6 @@ public class Left : GrabberPosition
 
     public void SetParent(IResizable p, Vector2 pos)
     {
-        p.SetStart(new Vector2(pos.x,p.GetStart().y));
+        p.SetLeft(pos.x);
     }
 }

@@ -14,6 +14,6 @@ public class Right : GrabberPosition
 
     public void SetParent(IResizable p, Vector2 pos)
     {
-        p.SetStop(new Vector2(pos.x,p.GetStop().y));
+        p.SetRight(pos.x);
     }
 }

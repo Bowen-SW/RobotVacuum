@@ -14,6 +14,6 @@ public class Top : GrabberPosition
 
     public void SetParent(IResizable p, Vector2 pos)
     {
-        p.SetStop(new Vector2(p.GetStop().x,pos.y));
+        p.SetTop(pos.y);
     }
 }

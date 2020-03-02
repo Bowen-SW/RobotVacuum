@@ -55,6 +55,30 @@ public class Room : MonoBehaviour, IResizable
         return stop;
     }
 
+    public Vector2 SetLeft(float position)
+    {
+        this.start.x = Mathf.Round(position + 0.5f);
+        return start;
+    }
+
+    public Vector2 SetRight(float position)
+    {
+        this.stop.x = Mathf.Round(position + 0.5f);
+        return stop;
+    }
+
+    public Vector2 SetTop(float position)
+    {
+        this.stop.y = Mathf.Round(position + 0.5f);
+        return stop;
+    }
+
+    public Vector2 SetBottom(float position)
+    {
+        this.start.y = Mathf.Round(position + 0.5f);
+        return start;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

@@ -14,7 +14,7 @@ public class BottomRight : GrabberPosition
 
     public void SetParent(IResizable p, Vector2 pos)
     {
-        p.SetStart(new Vector2(p.GetStart().x,pos.y));
-        p.SetStop(new Vector2(pos.x,p.GetStop().y));
+        p.SetBottom(pos.y);
+        p.SetRight(pos.x);
     }
 }
