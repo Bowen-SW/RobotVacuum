@@ -9,101 +9,112 @@ public class HandleGame : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] public Roomba roomba;
 
-    public Button robotSpeedButton;
+    public Button roombaSpeedButton;
 
     public Button startButton;
 
-    public Button simSpeedButton;
+    public Button pathTypeButton;
 
     public Button pauseButton;
 
-    public Text robotText;
+    public Text roombaText;
 
-    public Text simText;
+    public Text pathText;
 
-    private Button robotSpeedBtn;
+    private Button roombaSpeedBtn;
 
-    private Button simSpeedBtn;
+    private Button pathTypeBtn;
 
     private Button startBtn;
 
     private Button pauseBtn;
+    public Text pauseText;
 
-    private float robotSpeed = 12F;
-
-    private int simulationSpeed = 1;
+    private float roombaSpeed = 12F;
+    private PathType pathType;
     void Start()
     {
-        robotSpeedBtn = robotSpeedButton.GetComponent<Button>();
-        robotSpeedBtn.onClick.AddListener(SetRobotSpeed);
+        roombaSpeedBtn = roombaSpeedButton.GetComponent<Button>();
+        roombaSpeedBtn.onClick.AddListener(SetRoombaSpeed);
 
-        simSpeedBtn = simSpeedButton.GetComponent<Button>();
-        simSpeedBtn.onClick.AddListener(SetSimSpeed);
+        pathTypeBtn = pathTypeButton.GetComponent<Button>();
+        pathTypeBtn.onClick.AddListener(SetPathType);
 
         startBtn = startButton.GetComponent<Button>();
         startBtn.onClick.AddListener(StartLaunch);
         
         pauseBtn = pauseButton.GetComponent<Button>();
-        pauseBtn.onClick.AddListener(Pause);
+        pauseBtn.onClick.AddListener(PauseAndResume);
     }
 
-    void SetRobotSpeed(){
-        Text txt = robotText.GetComponent<Text>();
+    void SetRoombaSpeed(){
+        Text txt = roombaText.GetComponent<Text>();
 
         if(String.Equals(txt.text, "12 in/sec")){
             Debug.Log("Click to 18 in/sec");
             txt.text = "18 in/sec";
-            robotSpeed = 18F;
+            roombaSpeed = 18F;
         } else if (String.Equals(txt.text, "18 in/sec")) {
             Debug.Log("Click to 6 in/sec");
             txt.text = "6 in/sec";
-            robotSpeed = 6F;
+            roombaSpeed = 6F;
         } else if (String.Equals(txt.text, "6 in/sec")) {
             Debug.Log("Click to 12 in/sec");
             txt.text = "12 in/sec";
-            robotSpeed = 12F;
+            roombaSpeed = 12F;
         } else {
             Debug.Log("Error: Unexpected value = " + txt.text + ". Setting to default");
             txt.text = "12 in/sec";
-            robotSpeed = 12F;
+            roombaSpeed = 12F;
         }
 
     }
 
-    void SetSimSpeed(){
-        Text txt = simText.GetComponent<Text>();
+    void SetPathType(){
+        Text txt = pathText.GetComponent<Text>();
 
-        if(String.Equals(txt.text, "1x Speed")){
-            // Debug.Log("Click to 18 in/sec");
-            txt.text = "25x Speed";
-            simulationSpeed = 25;
-        } else if (String.Equals(txt.text, "25x Speed")) {
-            // Debug.Log("Click to 6 in/sec");
-            txt.text = "50x Speed";
-            simulationSpeed = 50;
-        } else if (String.Equals(txt.text, "50x Speed")) {
-            // Debug.Log("Click to 12 in/sec");
-            txt.text = "1x Speed";
-            simulationSpeed = 1;
+        if(String.Equals(txt.text, "Random")){
+            txt.text = "Snaking";
+            pathType = PathType.Snaking;
+            Debug.Log("Snaking");
+        } else if (String.Equals(txt.text, "Snaking")) {
+            txt.text = "Spiral";
+            pathType = PathType.Spiral;
+        } else if (String.Equals(txt.text, "Spiral")) {
+            txt.text = "Wall Follow";
+            pathType = PathType.WallFollow;
+        } else if (String.Equals(txt.text, "Wall Follow")){
+            txt.text = "All";
+            pathType = PathType.All;
+        } else if (String.Equals(txt.text, "All")){
+            txt.text = "Random";
+            pathType = PathType.Random;
         } else {
-            Debug.Log("Error: Unexpected value = " + txt.text + ". Setting to default");
-            txt.text = "1x Speed";
-            simulationSpeed = 1;
+            txt.text = "Random";
+            pathType = PathType.Random;
         }
     }
 
     void StartLaunch() {
-        robotSpeedBtn.interactable = false;
-        simSpeedBtn.interactable = false;
+        roombaSpeedBtn.interactable = false;
+        pathTypeBtn.interactable = false;
         startBtn.interactable = false;
         pauseBtn.interactable = true;
-        roomba.SetVelocity(robotSpeed);
-        roomba.Launch();
+        roomba.SetVelocities(roombaSpeed);
+        roomba.SetPathType(pathType);
+        roomba.Launch(); //change to roomba.path.Launch();
     }
 
-    void Pause(){
-        startBtn.interactable = true;
-        pauseBtn.interactable = false;
-        roomba.path.Stop();
+    void PauseAndResume(){
+        Text txt = pauseText.GetComponent<Text>();
+
+        if(String.Equals(txt.text, "Pause")){
+            roomba.Pause();
+            txt.text = "Resume";
+        } else if (String.Equals(txt.text, "Resume")){
+            roomba.Resume();
+            txt.text = "Pause";
+        }
+        
     }
 }

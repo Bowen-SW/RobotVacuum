@@ -9,15 +9,11 @@ public class Roomba : MonoBehaviour
     //The Roomba's current random direction
     private Vector3 currentDirection;
 
-    private float velocity;
-
-    
+    private float angluarVelocity;
 
     private Rigidbody2D vacuum;
 
     public Path path;
-
-    private float factor;
 
     void Awake() {
         //vacuum = gameObject.AddComponent<Rigidbody2D>() as RigidBody2D;
@@ -27,7 +23,7 @@ public class Roomba : MonoBehaviour
         //TODO: choose the path algorithm based on user selections
         //TODO: set the simulation speed based on user selection
         //path = gameObject.AddComponent<RandomPath>();
-        path = gameObject.AddComponent<SnakingPath>();
+        //path = gameObject.AddComponent<SnakingPath>();
 
     }
 
@@ -50,7 +46,7 @@ public class Roomba : MonoBehaviour
  
     public void Launch()
     {
-        path.SetFields(velocity, vacuum);
+        path.SetFields(angluarVelocity, vacuum);
         //TODO: Current directions need to be based off of the roomba's current direction
         if(path is RandomPath){
             currentDirection = new Vector3(0, 1F, 0);
@@ -68,11 +64,45 @@ public class Roomba : MonoBehaviour
 
         //Apply it to the rigidbody so it keeps moving into that direction, untill it hits a block or wall
         vacuum.velocity = normalizedDirection;
-        Debug.Log("Roomba Velocity = " + normalizedDirection);
+       // Debug.Log("Roomba Velocity = " + normalizedDirection);
     }
 
-    public void SetVelocity(float robotSpeed){
-        velocity = 50;
-        Debug.Log("Velocity = " + velocity);
+    public void SetVelocities(float roombaSpeed){
+        angluarVelocity = 50;
+        Debug.Log("Angular velocity = " + angluarVelocity);
+    }
+
+    public void SetPathType(PathType pathType){
+        Debug.Log("Path selection = " + pathType);
+
+        switch(pathType){
+            case PathType.Random:
+                path = gameObject.AddComponent<RandomPath>();
+                break;
+            case PathType.Snaking:
+                path = gameObject.AddComponent<SnakingPath>();
+                break;
+            case PathType.Spiral:
+                //TODO
+                break;
+            case PathType.WallFollow:
+                //TODO
+                break;
+            case PathType.All:
+                //TODO
+                break;
+            default:
+                Debug.Log("Error setting path. Default to Random.");
+                path = gameObject.AddComponent<RandomPath>();
+                break;
+        }
+    }
+
+    public void Pause(){
+        Time.timeScale = 0F;
+    }
+
+    public void Resume(){ //TODO Add some sort of implementation
+        Time.timeScale = 1F;
     }
  }

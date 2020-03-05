@@ -279,12 +279,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomba: {fileID: 1891761368}
-  robotSpeedButton: {fileID: 1481762162}
+  roombaSpeedButton: {fileID: 1481762162}
   startButton: {fileID: 1491162453}
-  simSpeedButton: {fileID: 282033694}
+  pathTypeButton: {fileID: 282033694}
   pauseButton: {fileID: 1842569206}
-  robotText: {fileID: 376340721}
-  simText: {fileID: 1750891658}
+  roombaText: {fileID: 376340721}
+  pathText: {fileID: 1750891658}
+  pauseText: {fileID: 1050088553}
 --- !u!4 &257143141
 Transform:
   m_ObjectHideFlags: 0
@@ -313,7 +314,7 @@ GameObject:
   - component: {fileID: 282033695}
   - component: {fileID: 282033694}
   m_Layer: 5
-  m_Name: SimSpeedBtn
+  m_Name: PathTypeBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -430,7 +431,7 @@ GameObject:
   - component: {fileID: 376340722}
   - component: {fileID: 376340721}
   m_Layer: 5
-  m_Name: RobotText
+  m_Name: RoombaText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -773,7 +774,7 @@ GameObject:
   - component: {fileID: 1050088554}
   - component: {fileID: 1050088553}
   m_Layer: 5
-  m_Name: Text
+  m_Name: PauseText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1025,7 +1026,7 @@ GameObject:
   - component: {fileID: 1481762163}
   - component: {fileID: 1481762162}
   m_Layer: 5
-  m_Name: RobotSpeedBtn
+  m_Name: RoombaSpeedBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1390,7 +1391,7 @@ GameObject:
   - component: {fileID: 1750891659}
   - component: {fileID: 1750891658}
   m_Layer: 5
-  m_Name: SimText
+  m_Name: PathText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1446,7 +1447,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1x Speed
+  m_Text: Random
 --- !u!222 &1750891659
 CanvasRenderer:
   m_ObjectHideFlags: 0

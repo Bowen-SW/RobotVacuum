@@ -65,6 +65,6 @@ public abstract class Path : MonoBehaviour
 
         //Apply it to the rigidbody so it keeps moving into that direction, untill it hits a block or wall
         vacuum.velocity = normalizedDirection;// * factor;
-        Debug.Log("Roomba Velocity = " + normalizedDirection);
+        //Debug.Log("Roomba Velocity = " + normalizedDirection);
     }    
 }
