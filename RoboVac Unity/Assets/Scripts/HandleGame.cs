@@ -97,7 +97,7 @@ public class HandleGame : MonoBehaviour
         simSpeedBtn.interactable = false;
         startBtn.interactable = false;
         pauseBtn.interactable = true;
-        roomba.SetVelocity(robotSpeed, simulationSpeed);
+        roomba.SetVelocity(robotSpeed);
         roomba.Launch();
     }
 

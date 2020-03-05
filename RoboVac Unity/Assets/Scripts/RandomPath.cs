@@ -12,7 +12,6 @@ public class RandomPath : Path
     }
 
     private IEnumerator RandomMove(){
-        //float velocity = 60F;
         float randomX = Random.Range(-1F, 1F);
         float randomY = Random.Range(-1F, 1F);
 
@@ -20,11 +19,11 @@ public class RandomPath : Path
 
         Stop();
 
-        vacuum.angularVelocity = velocity * simSpeed;
+        vacuum.angularVelocity = velocity;
 
         float waitTime = angleChange / Mathf.Abs(velocity);        
         
-        yield return new WaitForSeconds(waitTime / simSpeed);
+        yield return new WaitForSeconds(waitTime);
         vacuum.angularVelocity = 0;
 
         Launch(randomX, randomY);
