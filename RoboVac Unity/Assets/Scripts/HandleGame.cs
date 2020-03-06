@@ -38,7 +38,7 @@ public class HandleGame : MonoBehaviour
         roombaSpeedBtn.onClick.AddListener(SetRoombaSpeed);
 
         pathTypeBtn = pathTypeButton.GetComponent<Button>();
-        pathTypeBtn.onClick.AddListener(SetPathType);
+        pathTypeButton.onClick.AddListener(SetPathType);
 
         startBtn = startButton.GetComponent<Button>();
         startBtn.onClick.AddListener(StartRoomba);

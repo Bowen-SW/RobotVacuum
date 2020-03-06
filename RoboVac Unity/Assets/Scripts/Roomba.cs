@@ -1,15 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Roomba : MonoBehaviour
 {
+    public Text simTimeText;
+    private Text timeText;
     private Rigidbody2D vacuum;
 
     private Path path;
 
+    private bool timerStarted = false;
+    float timer = 0F;
+
     void Awake() {
         vacuum = GetComponent<Rigidbody2D>();
+        timeText = simTimeText.GetComponent<Text>();
         Time.timeScale = 1F;
     }
 
@@ -23,10 +30,28 @@ public class Roomba : MonoBehaviour
         SetPathType(pathType);
         path.SetFields(angularVelocity, vacuum);
         path.Launch();
+        timerStarted = true;
     }
 
     void OnCollisionEnter2D(Collision2D col) { 
         path.Move();
+    }
+
+    void Update(){
+        if(timerStarted){
+
+            timer = timer + Time.deltaTime;
+
+            string minutes = Mathf.Floor(timer / 60).ToString("00");
+            string seconds = (timer % 60).ToString("00");
+
+            //TODO: Change to the user selected battery life
+            if(Mathf.Floor(timer / 60) >= 1){
+                Finish();
+            }
+
+            timeText.text = string.Format("{0}:{1}", minutes, seconds);          
+        }
     }
 
     void FixedUpdate()
@@ -72,5 +97,10 @@ public class Roomba : MonoBehaviour
 
     public void Resume(){ //TODO Add some sort of implementation
         Time.timeScale = 1F;
+    }
+
+    public void Finish(){
+        Time.timeScale = 0F;
+        //Debug.Log("Simulation Finished");
     }
  }

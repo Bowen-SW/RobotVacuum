@@ -56,7 +56,7 @@ public abstract class Path : MonoBehaviour
         //The direction to be launched towards
         currentDirection = new Vector3(x, y, 0);
 
-        float MinimumSpeed = 5f;
+        float MinimumSpeed = 1f;
         //TODO: Fix the normalized speed. Speed should be the same at all times
         //Make sure we start at the minimum speed limit
         Vector3 normalizedDirection = currentDirection.normalized * MinimumSpeed;
