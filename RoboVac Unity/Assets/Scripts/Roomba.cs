@@ -4,32 +4,28 @@ using UnityEngine;
 
 public class Roomba : MonoBehaviour
 {
-    public float MinimumSpeed = 20;
-
-    //The Roomba's current random direction
-    private Vector3 currentDirection;
-
-    private float angluarVelocity;
-
     private Rigidbody2D vacuum;
 
     public Path path;
 
     void Awake() {
-        //vacuum = gameObject.AddComponent<Rigidbody2D>() as RigidBody2D;
         vacuum = GetComponent<Rigidbody2D>();
-
         Time.timeScale = 1F;
-        //TODO: choose the path algorithm based on user selections
-        //TODO: set the simulation speed based on user selection
-        //path = gameObject.AddComponent<RandomPath>();
-        //path = gameObject.AddComponent<SnakingPath>();
-
     }
 
-    //Handle the collision
-    void OnCollisionEnter2D(Collision2D col) {
-        
+    public void init(float roombaSpeed, PathType pathType)
+    {
+        //TODO: set the simulation speed based on user selection
+        //TODO: set the current direction based on where the roomba is pointing
+        //TODO: set the "minimum speed" (launch velocity) in the path algorithm
+        float angularVelocity = roombaSpeed * 4;
+
+        SetPathType(pathType);
+        path.SetFields(angularVelocity, vacuum);
+        path.Launch();
+    }
+
+    void OnCollisionEnter2D(Collision2D col) { 
         path.Move();
     }
 
@@ -42,34 +38,6 @@ public class Roomba : MonoBehaviour
         transform.position += moveVector * Time.deltaTime;
 
         //gameObject.transform.Translate(moveHorizontal , moveVertical , 0.0f);
-    }
- 
-    public void Launch()
-    {
-        path.SetFields(angluarVelocity, vacuum);
-        //TODO: Current directions need to be based off of the roomba's current direction
-        if(path is RandomPath){
-            currentDirection = new Vector3(0, 1F, 0);
-        } else if(path is SnakingPath) {
-            currentDirection = new Vector3(0, 1F, 0);
-        } else {
-            //The direction to be launched towards
-            currentDirection = new Vector3(0, 1F, 0);
-        }
-
-        path.SetDirection(currentDirection);
-
-        //Make sure we start at the minimum speed limit
-        Vector3 normalizedDirection = currentDirection.normalized * MinimumSpeed;
-
-        //Apply it to the rigidbody so it keeps moving into that direction, untill it hits a block or wall
-        vacuum.velocity = normalizedDirection;
-       // Debug.Log("Roomba Velocity = " + normalizedDirection);
-    }
-
-    public void SetVelocities(float roombaSpeed){
-        angluarVelocity = 50;
-        Debug.Log("Angular velocity = " + angluarVelocity);
     }
 
     public void SetPathType(PathType pathType){

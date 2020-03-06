@@ -41,7 +41,7 @@ public class HandleGame : MonoBehaviour
         pathTypeBtn.onClick.AddListener(SetPathType);
 
         startBtn = startButton.GetComponent<Button>();
-        startBtn.onClick.AddListener(StartLaunch);
+        startBtn.onClick.AddListener(StartRoomba);
         
         pauseBtn = pauseButton.GetComponent<Button>();
         pauseBtn.onClick.AddListener(PauseAndResume);
@@ -76,7 +76,6 @@ public class HandleGame : MonoBehaviour
         if(String.Equals(txt.text, "Random")){
             txt.text = "Snaking";
             pathType = PathType.Snaking;
-            Debug.Log("Snaking");
         } else if (String.Equals(txt.text, "Snaking")) {
             txt.text = "Spiral";
             pathType = PathType.Spiral;
@@ -95,14 +94,12 @@ public class HandleGame : MonoBehaviour
         }
     }
 
-    void StartLaunch() {
+    void StartRoomba() {
         roombaSpeedBtn.interactable = false;
         pathTypeBtn.interactable = false;
         startBtn.interactable = false;
         pauseBtn.interactable = true;
-        roomba.SetVelocities(roombaSpeed);
-        roomba.SetPathType(pathType);
-        roomba.Launch(); //change to roomba.path.Launch();
+        roomba.init(roombaSpeed, pathType);
     }
 
     void PauseAndResume(){

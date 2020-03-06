@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class RandomPath : Path
 {
-    //Need to set this according to where the roomba is placed
-    //private Vector3 currentDirection;
-
     public override void Move(){
         StartCoroutine(RandomMove());
     }
@@ -29,7 +26,7 @@ public class RandomPath : Path
         Launch(randomX, randomY);
     }
 
-    private float CalculateAngleChange(float randomX, float randomY){
+    public float CalculateAngleChange(float randomX, float randomY){
         float currentAngle = GetCurrentAngle();
 
         float newAngle = Mathf.Atan(randomY / randomX) * 180 / Mathf.PI;
@@ -43,7 +40,6 @@ public class RandomPath : Path
             //no change needed
         }
 
-
         float angleChange = newAngle - currentAngle;
 
         //Make sure the change is positive
@@ -52,9 +48,7 @@ public class RandomPath : Path
         }
 
         //Reset the velocity to being positive
-        if(velocity < 0) {
-            velocity = -1 * velocity;
-        }
+        velocity = Mathf.Abs(velocity);
 
         if(angleChange > 180){
             //Rotate clockwise for a shorter length than it would take to go counterclockwise

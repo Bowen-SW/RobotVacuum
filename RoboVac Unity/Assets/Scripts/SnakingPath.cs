@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class SnakingPath : Path
 {
-    private bool turn90 = false; //Turn 90 degrees if true
+    private bool shift = false; //True if it hits an unexpected collision
 
     private bool firstTurn = true;
     private bool counterClockwise = false; //Turn counter clockwise if true
     private bool clockwise = false; //Turn clockwise if true
-
     private bool inCurrentCollision = false;
 
-    float x = 1F;
-    float y = 1F;
+    float xDirection = 1F;
+    float yDirection = 1F;
 
     public override void Move(){
         StartCoroutine(SnakingMove());
@@ -21,14 +20,12 @@ public class SnakingPath : Path
 
     private IEnumerator SnakingMove(){
         Stop();
-        float angleChange;
-        float waitTime;
         
         if(inCurrentCollision) {
-            float temp = x;
-            x = y;
-            y = -temp;
-            turn90 = true;
+            float temp = xDirection;
+            xDirection = yDirection;
+            yDirection = -temp;
+            shift = true;
             velocity = -velocity;
 
             yield break;
@@ -37,71 +34,30 @@ public class SnakingPath : Path
         }
 
         //Start Logic for turning to be parallel with wall
-        angleChange = TurnParallel();
+        float angleChange = FindParallel();
 
         vacuum.angularVelocity = velocity;
+        
+        velocity = Mathf.Abs(velocity); //Reset velocity to be positive
 
-        //Reset velocity to be positive
-        velocity = Mathf.Abs(velocity); 
-        Debug.Log("Angular Velocity = " + vacuum.angularVelocity);
-
-        waitTime = angleChange / velocity;       
+        float waitTime = angleChange / velocity;       
         
         yield return new WaitForSeconds(waitTime);
         vacuum.angularVelocity = 0;
         //End Logic for turning to be parallel with wall
-
         
         if(counterClockwise){
-            Launch(-x, 0);
-            
-            yield return new WaitForSeconds(.2F);
-
-            //If a collision happens here, it will be detected and dealt with
-
-            Stop();
-
-            angleChange = 45F;
-            if(turn90){
-                angleChange += 180F;
-            }
-            
-            vacuum.angularVelocity = velocity;
-
-            waitTime = angleChange / Mathf.Abs(velocity);        
-            
-            yield return new WaitForSeconds(waitTime);
-            vacuum.angularVelocity = 0;
-
-            Launch(-x, -y);
-            
+            StartCoroutine(TurnCounterClock());            
         } else { //Turn clockwise
-            Launch(0, y);
-            yield return new WaitForSeconds(.2F);
-            
-            //If a collision happens here, it will be detected and dealt with
-
-            Stop();
-            angleChange = 45F;
-            if(turn90){
-                angleChange += 180F;
-            }
-
-            vacuum.angularVelocity = -velocity;
-
-            waitTime = angleChange / Mathf.Abs(velocity);        
-            
-            yield return new WaitForSeconds(waitTime);
-            vacuum.angularVelocity = 0;
-
-            Launch(x, y);
+            StartCoroutine(TurnClockwise());
         }
             
         inCurrentCollision = false;
-        turn90 = false;
+        shift = false;
     }
+    
 
-    private float TurnParallel() {
+    private float FindParallel() {
         float angleChange = 0F;
         float currentAngle = GetCurrentAngle();
 
@@ -113,17 +69,60 @@ public class SnakingPath : Path
             angleChange = 135F;
             counterClockwise = true;
             clockwise = false;
+            velocity = velocity * 1;
         } else if (counterClockwise) {
             angleChange = 135;
             counterClockwise = false;
             clockwise = true;
             velocity = velocity * -1;
         } else {
-            //Should be an error
+            Debug.Log("Error trying to turn parallel in Snaking Path");
         } 
 
-
-
         return angleChange;
+    }
+
+    private IEnumerator TurnCounterClock(){
+        Launch(-xDirection, 0);
+            
+            yield return new WaitForSeconds(.2F);
+            //If a collision happens here, it will be detected and dealt with using the inCurrentCollision boolean
+
+            Stop();
+
+            float angleChange = 45F;
+            if(shift){
+                angleChange += 180F;
+            }
+            
+            vacuum.angularVelocity = velocity;
+
+            float waitTime = angleChange / Mathf.Abs(velocity);        
+            
+            yield return new WaitForSeconds(waitTime);
+            vacuum.angularVelocity = 0;
+
+            Launch(-xDirection, -yDirection);
+    }
+
+    private IEnumerator TurnClockwise(){
+        Launch(0, yDirection);
+        yield return new WaitForSeconds(.2F);
+        //If a collision happens here, it will be detected and dealt with using the inCurrentCollision boolean
+
+        Stop();
+        float angleChange = 45F;
+        if(shift){
+            angleChange += 180F;
+        }
+
+        vacuum.angularVelocity = -velocity;
+
+        float waitTime = angleChange / Mathf.Abs(velocity);        
+        
+        yield return new WaitForSeconds(waitTime);
+        vacuum.angularVelocity = 0;
+
+        Launch(xDirection, yDirection);
     }
 }
