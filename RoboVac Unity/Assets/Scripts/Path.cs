@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class Path : MonoBehaviour
 {
+    protected float angularVelocity;
+
     protected float velocity;
 
     protected Rigidbody2D vacuum;
@@ -12,8 +14,10 @@ public abstract class Path : MonoBehaviour
 
     public abstract void Move();
 
-    public void SetFields (float velocity, Rigidbody2D vacuum){ 
-        this.velocity = velocity;
+    public void SetFields (float roombaSpeed, Rigidbody2D vacuum){ 
+        float velocityFactor = roombaSpeed / 12F;
+        this.angularVelocity = roombaSpeed * 4 * velocityFactor;
+        velocity = velocityFactor;
         this.vacuum = vacuum;
     }
 
@@ -56,10 +60,10 @@ public abstract class Path : MonoBehaviour
         //The direction to be launched towards
         currentDirection = new Vector3(x, y, 0);
 
-        float MinimumSpeed = 1f;
+        //float MinimumSpeed = 1f;
         //TODO: Fix the normalized speed. Speed should be the same at all times
         //Make sure we start at the minimum speed limit
-        Vector3 normalizedDirection = currentDirection.normalized * MinimumSpeed;
+        Vector3 normalizedDirection = currentDirection.normalized * velocity;
 
         //Apply it to the rigidbody so it keeps moving into that direction, untill it hits a block or wall
         vacuum.velocity = normalizedDirection;

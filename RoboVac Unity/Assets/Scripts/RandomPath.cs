@@ -16,9 +16,9 @@ public class RandomPath : Path
 
         Stop();
 
-        vacuum.angularVelocity = velocity;
+        vacuum.angularVelocity = angularVelocity;
 
-        float waitTime = angleChange / Mathf.Abs(velocity);        
+        float waitTime = angleChange / Mathf.Abs(angularVelocity);        
         
         yield return new WaitForSeconds(waitTime);
         vacuum.angularVelocity = 0;
@@ -48,11 +48,11 @@ public class RandomPath : Path
         }
 
         //Reset the velocity to being positive
-        velocity = Mathf.Abs(velocity);
+        angularVelocity = Mathf.Abs(angularVelocity);
 
         if(angleChange > 180){
             //Rotate clockwise for a shorter length than it would take to go counterclockwise
-            velocity = -1 * velocity;
+            angularVelocity = -1 * angularVelocity;
             angleChange = 360 - angleChange;
         } 
 

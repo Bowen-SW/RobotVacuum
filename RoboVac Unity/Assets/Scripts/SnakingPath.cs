@@ -27,7 +27,7 @@ public class SnakingPath : Path
             xDirection = yDirection;
             yDirection = -temp;
             shift = true;
-            velocity = -velocity;
+            angularVelocity = -angularVelocity;
 
             yield break;
         } else {
@@ -37,11 +37,11 @@ public class SnakingPath : Path
         //Start Logic for turning to be parallel with wall
         float angleChange = FindParallel();
 
-        vacuum.angularVelocity = velocity;
+        vacuum.angularVelocity = angularVelocity;
         
-        velocity = Mathf.Abs(velocity); //Reset velocity to be positive
+        angularVelocity = Mathf.Abs(angularVelocity); //Reset velocity to be positive
 
-        float waitTime = angleChange / velocity;       
+        float waitTime = angleChange / angularVelocity;       
         
         yield return new WaitForSeconds(waitTime);
         vacuum.angularVelocity = 0;
@@ -61,9 +61,9 @@ public class SnakingPath : Path
                 angleChange += 180F;
             }
             
-            vacuum.angularVelocity = velocity;
+            vacuum.angularVelocity = angularVelocity;
 
-            waitTime = angleChange / Mathf.Abs(velocity);        
+            waitTime = angleChange / Mathf.Abs(angularVelocity);        
             
             yield return new WaitForSeconds(waitTime);
             vacuum.angularVelocity = 0;
@@ -81,9 +81,9 @@ public class SnakingPath : Path
                 angleChange += 180F;
             }
 
-            vacuum.angularVelocity = -velocity;
+            vacuum.angularVelocity = -angularVelocity;
 
-            waitTime = angleChange / Mathf.Abs(velocity);        
+            waitTime = angleChange / Mathf.Abs(angularVelocity);        
             
             yield return new WaitForSeconds(waitTime);
             vacuum.angularVelocity = 0;
@@ -112,12 +112,12 @@ public class SnakingPath : Path
             angleChange = 135F;
             counterClockwise = true;
             clockwise = false;
-            velocity = velocity * 1;
+            angularVelocity = angularVelocity;
         } else if (counterClockwise) {
             angleChange = 135;
             counterClockwise = false;
             clockwise = true;
-            velocity = velocity * -1;
+            angularVelocity = angularVelocity * -1;
         } else {
             Debug.Log("Error trying to turn parallel in Snaking Path");
         } 
@@ -138,9 +138,9 @@ public class SnakingPath : Path
     //         angleChange += 180F;
     //     }
         
-    //     vacuum.angularVelocity = velocity;
+    //     vacuum.angularVelocity = angularVelocity;
 
-    //     float waitTime = angleChange / Mathf.Abs(velocity);        
+    //     float waitTime = angleChange / Mathf.Abs(angularVelocity);        
         
     //     yield return new WaitForSeconds(waitTime);
     //     vacuum.angularVelocity = 0;
@@ -159,9 +159,9 @@ public class SnakingPath : Path
     //         angleChange += 180F;
     //     }
 
-    //     vacuum.angularVelocity = -velocity;
+    //     vacuum.angularVelocity = -angularVelocity;
 
-    //     float waitTime = angleChange / Mathf.Abs(velocity);        
+    //     float waitTime = angleChange / Mathf.Abs(angularVelocity);        
         
     //     yield return new WaitForSeconds(waitTime);
     //     vacuum.angularVelocity = 0;

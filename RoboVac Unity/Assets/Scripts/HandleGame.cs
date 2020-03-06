@@ -8,30 +8,23 @@ public class HandleGame : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] public Roomba roomba;
-
     public Button roombaSpeedButton;
-
     public Button startButton;
-
     public Button pathTypeButton;
-
     public Button pauseButton;
-
     public Text roombaText;
-
     public Text pathText;
-
-    private Button roombaSpeedBtn;
-
-    private Button pathTypeBtn;
-
-    private Button startBtn;
-
-    private Button pauseBtn;
+    public Slider roombaSpeedSlider;
+    public Text speedText;
     public Text pauseText;
 
-    private float roombaSpeed = 12F;
+    private Button roombaSpeedBtn;
+    private Button pathTypeBtn;
+    private Button startBtn;
+    private Button pauseBtn;
+    private float roombaSpeed = 12F; //Defualt value 12 in/sec
     private PathType pathType;
+
     void Start()
     {
         roombaSpeedBtn = roombaSpeedButton.GetComponent<Button>();
@@ -45,28 +38,16 @@ public class HandleGame : MonoBehaviour
         
         pauseBtn = pauseButton.GetComponent<Button>();
         pauseBtn.onClick.AddListener(PauseAndResume);
+
+        roombaSpeedSlider.onValueChanged.AddListener(delegate {SetRoombaSpeed();});
     }
 
     void SetRoombaSpeed(){
-        Text txt = roombaText.GetComponent<Text>();
+        Text txt = speedText.GetComponent<Text>();
 
-        if(String.Equals(txt.text, "12 in/sec")){
-            Debug.Log("Click to 18 in/sec");
-            txt.text = "18 in/sec";
-            roombaSpeed = 18F;
-        } else if (String.Equals(txt.text, "18 in/sec")) {
-            Debug.Log("Click to 6 in/sec");
-            txt.text = "6 in/sec";
-            roombaSpeed = 6F;
-        } else if (String.Equals(txt.text, "6 in/sec")) {
-            Debug.Log("Click to 12 in/sec");
-            txt.text = "12 in/sec";
-            roombaSpeed = 12F;
-        } else {
-            Debug.Log("Error: Unexpected value = " + txt.text + ". Setting to default");
-            txt.text = "12 in/sec";
-            roombaSpeed = 12F;
-        }
+        //Debug.Log("Slider value = " + roombaSpeedSlider.value.ToString());
+        txt.text = roombaSpeedSlider.value.ToString();
+        roombaSpeed = roombaSpeedSlider.value;
     }
 
     void SetPathType(){

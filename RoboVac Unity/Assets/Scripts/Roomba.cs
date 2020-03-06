@@ -25,10 +25,9 @@ public class Roomba : MonoBehaviour
         //TODO: set the simulation speed based on user selection
         //TODO: set the current direction based on where the roomba is pointing
         //TODO: set the "minimum speed" (launch velocity) in the path algorithm
-        float angularVelocity = roombaSpeed * 4;
 
         SetPathType(pathType);
-        path.SetFields(angularVelocity, vacuum);
+        path.SetFields(roombaSpeed, vacuum);
         path.Launch();
         timerStarted = true;
     }
