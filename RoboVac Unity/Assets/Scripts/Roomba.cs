@@ -6,7 +6,7 @@ public class Roomba : MonoBehaviour
 {
     private Rigidbody2D vacuum;
 
-    public Path path;
+    private Path path;
 
     void Awake() {
         vacuum = GetComponent<Rigidbody2D>();

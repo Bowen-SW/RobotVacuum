@@ -26,7 +26,7 @@ public class RandomPath : Path
         Launch(randomX, randomY);
     }
 
-    public float CalculateAngleChange(float randomX, float randomY){
+    private float CalculateAngleChange(float randomX, float randomY){
         float currentAngle = GetCurrentAngle();
 
         float newAngle = Mathf.Atan(randomY / randomX) * 180 / Mathf.PI;

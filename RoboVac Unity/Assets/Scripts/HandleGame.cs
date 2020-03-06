@@ -67,7 +67,6 @@ public class HandleGame : MonoBehaviour
             txt.text = "12 in/sec";
             roombaSpeed = 12F;
         }
-
     }
 
     void SetPathType(){

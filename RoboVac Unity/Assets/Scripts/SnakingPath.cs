@@ -10,6 +10,7 @@ public class SnakingPath : Path
     private bool counterClockwise = false; //Turn counter clockwise if true
     private bool clockwise = false; //Turn clockwise if true
     private bool inCurrentCollision = false;
+    private bool inCoroutine = false;
 
     float xDirection = 1F;
     float yDirection = 1F;
@@ -47,9 +48,51 @@ public class SnakingPath : Path
         //End Logic for turning to be parallel with wall
         
         if(counterClockwise){
-            StartCoroutine(TurnCounterClock());            
+            //StartCoroutine(TurnCounterClock()); 
+            Launch(-xDirection, 0);
+            
+            yield return new WaitForSeconds(.2F);
+            //If a collision happens here, it will be detected and dealt with using the inCurrentCollision boolean
+
+            Stop();
+
+            angleChange = 45F;
+            if(shift){
+                angleChange += 180F;
+            }
+            
+            vacuum.angularVelocity = velocity;
+
+            waitTime = angleChange / Mathf.Abs(velocity);        
+            
+            yield return new WaitForSeconds(waitTime);
+            vacuum.angularVelocity = 0;
+
+            Launch(-xDirection, -yDirection);           
         } else { //Turn clockwise
-            StartCoroutine(TurnClockwise());
+            //StartCoroutine(TurnClockwise());
+            Launch(0, yDirection);
+            yield return new WaitForSeconds(.2F);
+            //If a collision happens here, it will be detected and dealt with using the inCurrentCollision boolean
+
+            Stop();
+            angleChange = 45F;
+            if(shift){
+                angleChange += 180F;
+            }
+
+            vacuum.angularVelocity = -velocity;
+
+            waitTime = angleChange / Mathf.Abs(velocity);        
+            
+            yield return new WaitForSeconds(waitTime);
+            vacuum.angularVelocity = 0;
+
+            Launch(xDirection, yDirection);
+        }
+
+        while(inCoroutine){
+            yield return new WaitForSeconds(0.1F);
         }
             
         inCurrentCollision = false;
@@ -82,47 +125,47 @@ public class SnakingPath : Path
         return angleChange;
     }
 
-    private IEnumerator TurnCounterClock(){
-        Launch(-xDirection, 0);
+    // private IEnumerator TurnCounterClock(){
+    //     Launch(-xDirection, 0);
             
-            yield return new WaitForSeconds(.2F);
-            //If a collision happens here, it will be detected and dealt with using the inCurrentCollision boolean
+    //     yield return new WaitForSeconds(.2F);
+    //     //If a collision happens here, it will be detected and dealt with using the inCurrentCollision boolean
 
-            Stop();
+    //     Stop();
 
-            float angleChange = 45F;
-            if(shift){
-                angleChange += 180F;
-            }
-            
-            vacuum.angularVelocity = velocity;
-
-            float waitTime = angleChange / Mathf.Abs(velocity);        
-            
-            yield return new WaitForSeconds(waitTime);
-            vacuum.angularVelocity = 0;
-
-            Launch(-xDirection, -yDirection);
-    }
-
-    private IEnumerator TurnClockwise(){
-        Launch(0, yDirection);
-        yield return new WaitForSeconds(.2F);
-        //If a collision happens here, it will be detected and dealt with using the inCurrentCollision boolean
-
-        Stop();
-        float angleChange = 45F;
-        if(shift){
-            angleChange += 180F;
-        }
-
-        vacuum.angularVelocity = -velocity;
-
-        float waitTime = angleChange / Mathf.Abs(velocity);        
+    //     float angleChange = 45F;
+    //     if(shift){
+    //         angleChange += 180F;
+    //     }
         
-        yield return new WaitForSeconds(waitTime);
-        vacuum.angularVelocity = 0;
+    //     vacuum.angularVelocity = velocity;
 
-        Launch(xDirection, yDirection);
-    }
+    //     float waitTime = angleChange / Mathf.Abs(velocity);        
+        
+    //     yield return new WaitForSeconds(waitTime);
+    //     vacuum.angularVelocity = 0;
+
+    //     Launch(-xDirection, -yDirection);
+    // }
+
+    // private IEnumerator TurnClockwise(){
+    //     Launch(0, yDirection);
+    //     yield return new WaitForSeconds(.2F);
+    //     //If a collision happens here, it will be detected and dealt with using the inCurrentCollision boolean
+
+    //     Stop();
+    //     float angleChange = 45F;
+    //     if(shift){
+    //         angleChange += 180F;
+    //     }
+
+    //     vacuum.angularVelocity = -velocity;
+
+    //     float waitTime = angleChange / Mathf.Abs(velocity);        
+        
+    //     yield return new WaitForSeconds(waitTime);
+    //     vacuum.angularVelocity = 0;
+
+    //     Launch(xDirection, yDirection);
+    // }
 }
