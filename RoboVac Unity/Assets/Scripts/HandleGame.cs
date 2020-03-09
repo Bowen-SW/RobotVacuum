@@ -8,27 +8,31 @@ public class HandleGame : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] public Roomba roomba;
-    public Button roombaSpeedButton;
+    public Button simSpeedButton;
     public Button startButton;
     public Button pathTypeButton;
     public Button pauseButton;
-    public Text roombaText;
-    public Text pathText;
     public Slider roombaSpeedSlider;
+    public Slider batterySlider;
+    public Text simText;
+    public Text pathText;
     public Text speedText;
     public Text pauseText;
+    public Text batteryText;
 
-    private Button roombaSpeedBtn;
+    private Button simSpeedBtn;
     private Button pathTypeBtn;
     private Button startBtn;
     private Button pauseBtn;
-    private float roombaSpeed = 12F; //Defualt value 12 in/sec
     private PathType pathType;
+    private float roombaSpeed = 12F; //Defualt value 12 in/sec
+    private float batteryLife = 150F; //Default value
+    private float simSpeed = 1F;    
 
     void Start()
     {
-        roombaSpeedBtn = roombaSpeedButton.GetComponent<Button>();
-        roombaSpeedBtn.onClick.AddListener(SetRoombaSpeed);
+        simSpeedBtn = simSpeedButton.GetComponent<Button>();
+        simSpeedBtn.onClick.AddListener(SetSimSpeed);
 
         pathTypeBtn = pathTypeButton.GetComponent<Button>();
         pathTypeButton.onClick.AddListener(SetPathType);
@@ -40,6 +44,8 @@ public class HandleGame : MonoBehaviour
         pauseBtn.onClick.AddListener(PauseAndResume);
 
         roombaSpeedSlider.onValueChanged.AddListener(delegate {SetRoombaSpeed();});
+        //TODO add battery life slider
+        batterySlider.onValueChanged.AddListener(delegate {SetBatteryLife();});
     }
 
     void SetRoombaSpeed(){
@@ -48,6 +54,34 @@ public class HandleGame : MonoBehaviour
         //Debug.Log("Slider value = " + roombaSpeedSlider.value.ToString());
         txt.text = roombaSpeedSlider.value.ToString();
         roombaSpeed = roombaSpeedSlider.value;
+    }
+
+    void SetBatteryLife(){
+        Text txt = batteryText.GetComponent<Text>();
+
+        batteryLife = batterySlider.value;
+        txt.text = batteryLife.ToString();
+
+        Debug.Log("Slider value = " + txt.text);
+    }
+
+    void SetSimSpeed(){
+        Text txt = simText.GetComponent<Text>();
+
+        if(String.Equals(txt.text, "1x Speed")){
+            txt.text = "25x Speed";
+            simSpeed = 25;
+        } else if (String.Equals(txt.text, "25x Speed")) {
+            txt.text = "50x Speed";
+            simSpeed = 50;
+        } else if (String.Equals(txt.text, "50x Speed")) {
+            txt.text = "1x Speed";
+            simSpeed = 1;
+        } else {
+            Debug.Log("Error: Unexpected value = " + txt.text + ". Setting to default");
+            txt.text = "1x Speed";
+            simSpeed = 1;
+        }
     }
 
     void SetPathType(){
@@ -75,11 +109,11 @@ public class HandleGame : MonoBehaviour
     }
 
     void StartRoomba() {
-        roombaSpeedBtn.interactable = false;
+        simSpeedBtn.interactable = false;
         pathTypeBtn.interactable = false;
         startBtn.interactable = false;
         pauseBtn.interactable = true;
-        roomba.init(roombaSpeed, pathType);
+        roomba.init(roombaSpeed, simSpeed, (int) batteryLife, pathType);
     }
 
     void PauseAndResume(){

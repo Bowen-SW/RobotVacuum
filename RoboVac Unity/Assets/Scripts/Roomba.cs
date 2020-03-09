@@ -8,6 +8,7 @@ public class Roomba : MonoBehaviour
     public Text simTimeText;
     private Text timeText;
     private Rigidbody2D vacuum;
+    private int batteryLife;
 
     private Path path;
 
@@ -17,14 +18,13 @@ public class Roomba : MonoBehaviour
     void Awake() {
         vacuum = GetComponent<Rigidbody2D>();
         timeText = simTimeText.GetComponent<Text>();
-        Time.timeScale = 1F;
     }
 
-    public void init(float roombaSpeed, PathType pathType)
+    public void init(float roombaSpeed, float simSpeed, int batteryLife, PathType pathType)
     {
-        //TODO: set the simulation speed based on user selection
         //TODO: set the current direction based on where the roomba is pointing
-        //TODO: set the "minimum speed" (launch velocity) in the path algorithm
+        Time.timeScale = simSpeed;      //Sets 
+        this.batteryLife = batteryLife;
 
         SetPathType(pathType);
         path.SetFields(roombaSpeed, vacuum);
@@ -44,7 +44,8 @@ public class Roomba : MonoBehaviour
             string minutes = Mathf.Floor(timer / 60).ToString("00");
             string seconds = (timer % 60).ToString("00");
 
-            //TODO: Change to the user selected battery life
+            //TODO: Change to the user selected battery life for production
+            //if(Mathf.Floor(timer / 60) >= batterLife){
             if(Mathf.Floor(timer / 60) >= 1){
                 Finish();
             }
@@ -60,8 +61,6 @@ public class Roomba : MonoBehaviour
 
         Vector3 moveVector = new Vector3(moveHorizontal, moveVertical, 0.0F);
         transform.position += moveVector * Time.deltaTime;
-
-        //gameObject.transform.Translate(moveHorizontal , moveVertical , 0.0f);
     }
 
     public void SetPathType(PathType pathType){
@@ -94,7 +93,7 @@ public class Roomba : MonoBehaviour
         Time.timeScale = 0F;
     }
 
-    public void Resume(){ //TODO Add some sort of implementation
+    public void Resume(){
         Time.timeScale = 1F;
     }
 

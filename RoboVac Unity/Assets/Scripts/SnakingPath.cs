@@ -112,7 +112,6 @@ public class SnakingPath : Path
             angleChange = 135F;
             counterClockwise = true;
             clockwise = false;
-            angularVelocity = angularVelocity;
         } else if (counterClockwise) {
             angleChange = 135;
             counterClockwise = false;
