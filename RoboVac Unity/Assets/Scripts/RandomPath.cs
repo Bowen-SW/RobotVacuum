@@ -9,12 +9,14 @@ public class RandomPath : Path
     }
 
     private IEnumerator RandomMove(){
+        Backoff(-currentDirection.x, -currentDirection.y);
+        yield return new WaitForSeconds(.1F);
+        Stop();
+
         float randomX = Random.Range(-1F, 1F);
         float randomY = Random.Range(-1F, 1F);
 
         float angleChange = CalculateAngleChange(randomX, randomY);
-
-        Stop();
 
         vacuum.angularVelocity = angularVelocity;
 
@@ -58,5 +60,12 @@ public class RandomPath : Path
 
         return angleChange;
     }
+    public void Backoff(float x, float y)
+    {
+        //The direction to be launched towards
+        Vector3 direction = new Vector3(x, y, 0);
+        Vector3 normalizedDirection = direction.normalized * velocity;
+        vacuum.velocity = normalizedDirection;
+    }    
  
 }

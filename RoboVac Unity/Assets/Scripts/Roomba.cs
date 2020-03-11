@@ -23,7 +23,7 @@ public class Roomba : MonoBehaviour
     public void init(float roombaSpeed, float simSpeed, int batteryLife, PathType pathType)
     {
         //TODO: set the current direction based on where the roomba is pointing
-        Time.timeScale = simSpeed;      //Sets 
+        Time.timeScale = simSpeed;      //Sets the simulation speed
         this.batteryLife = batteryLife;
 
         SetPathType(pathType);
@@ -33,6 +33,7 @@ public class Roomba : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D col) { 
+        Debug.Log("Collision");
         path.Move();
     }
 

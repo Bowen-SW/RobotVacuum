@@ -10,7 +10,7 @@ public class SnakingPath : Path
     private bool counterClockwise = false; //Turn counter clockwise if true
     private bool clockwise = false; //Turn clockwise if true
     private bool inCurrentCollision = false;
-    private bool inCoroutine = false;
+    //private bool inCoroutine = false;
 
     float xDirection = 1F;
     float yDirection = 1F;
@@ -20,6 +20,7 @@ public class SnakingPath : Path
     }
 
     private IEnumerator SnakingMove(){
+        Backoff(-currentDirection.x, -currentDirection.y);
         Stop();
         
         if(inCurrentCollision) {
@@ -51,7 +52,7 @@ public class SnakingPath : Path
             //StartCoroutine(TurnCounterClock()); 
             Launch(-xDirection, 0);
             
-            yield return new WaitForSeconds(1F);
+            yield return new WaitForSeconds(1F / velocity);
             //If a collision happens here, it will be detected and dealt with using the inCurrentCollision boolean
 
             Stop();
@@ -72,7 +73,7 @@ public class SnakingPath : Path
         } else { //Turn clockwise
             //StartCoroutine(TurnClockwise());
             Launch(0, yDirection);
-            yield return new WaitForSeconds(1F);
+            yield return new WaitForSeconds(1F / velocity);
             //If a collision happens here, it will be detected and dealt with using the inCurrentCollision boolean
 
             Stop();
@@ -91,9 +92,9 @@ public class SnakingPath : Path
             Launch(xDirection, yDirection);
         }
 
-        while(inCoroutine){
-            yield return new WaitForSeconds(0.1F);
-        }
+        // while(inCoroutine){
+        //     yield return new WaitForSeconds(0.1F);
+        // }
             
         inCurrentCollision = false;
         shift = false;
@@ -123,6 +124,15 @@ public class SnakingPath : Path
 
         return angleChange;
     }
+
+    public void Backoff(float x, float y)
+    {
+        Debug.Log("Backoff");
+        //The direction to be launched towards
+        Vector3 direction = new Vector3(x, y, 0);
+        Vector3 normalizedDirection = direction.normalized * velocity;
+        vacuum.velocity = normalizedDirection;
+    }   
 
     // private IEnumerator TurnCounterClock(){
     //     Launch(-xDirection, 0);

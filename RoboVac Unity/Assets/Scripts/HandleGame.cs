@@ -68,7 +68,7 @@ public class HandleGame : MonoBehaviour
     void SetSimSpeed(){
         Text txt = simText.GetComponent<Text>();
 
-        if(String.Equals(txt.text, "1x Speed")){
+        if (String.Equals(txt.text, "1x Speed")){
             txt.text = "25x Speed";
             simSpeed = 25;
         } else if (String.Equals(txt.text, "25x Speed")) {
