@@ -6,7 +6,7 @@ public class Chest : MonoBehaviour, IResizable
 {
     public Vector2 start;
     public Vector2 stop;
-    
+
     public int width
     {
         get
