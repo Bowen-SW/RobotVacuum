@@ -46,7 +46,7 @@ public class SaveLoad : MonoBehaviour
 
     public void AddRun(RunReport run)
     {
-        reports.add(run);
+        reports.Add(run);
     }
 
     public void Save()
