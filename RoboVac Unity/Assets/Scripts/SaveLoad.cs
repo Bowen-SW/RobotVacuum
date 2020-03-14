@@ -12,6 +12,10 @@ public class SaveLoad : MonoBehaviour
     [HideInInspector] public List<Room> rooms = new List<Room>();
     [HideInInspector] public List<Chest> chests;
     [HideInInspector] public List<Chest> chairs;
+    [HideInInspector] public List<RunReport> reports = new List<RunReport>();
+    
+
+}
 
     public bool AddRoom(GameObject room)
     {
@@ -41,6 +45,11 @@ public class SaveLoad : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void AddRun(RunReport run)
+    {
+        reports.add(run);
     }
 
     public void Save()
