@@ -59,9 +59,17 @@ public abstract class Path : MonoBehaviour
     {
         //The direction to be launched towards
         currentDirection = new Vector3(x, y, 0);
-        Debug.Log("CurrentDirection = " + currentDirection);
+        //Debug.Log("CurrentDirection = " + currentDirection);
         Vector3 normalizedDirection = currentDirection.normalized * velocity;
-        Debug.Log("Norm Direction = " + normalizedDirection);
+        //Debug.Log("Norm Direction = " + normalizedDirection);
         vacuum.velocity = normalizedDirection;
     }    
+
+    // protected void Backoff(float x, float y)
+    // {
+    //     //The direction to be launched towards
+    //     Vector3 direction = new Vector3(x, y, 0);
+    //     Vector3 normalizedDirection = direction.normalized * velocity;
+    //     vacuum.velocity = normalizedDirection;
+    // }    
 }

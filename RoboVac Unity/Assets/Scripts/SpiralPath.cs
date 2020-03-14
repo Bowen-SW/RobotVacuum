@@ -1,14 +1,30 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomPath : Path
+public class SpiralPath : RandomPath
 {
+    float changeRate = 1F;
+    float waitTime = 3F;
+    float time = 0;
+    private bool inCurrentCollision = false;
     public override void Move(){
-        StartCoroutine(RandomMove());
+        time = 0;
+       // StartCoroutine(SpiralMove());
+        
     }
 
-    protected IEnumerator RandomMove(){
+    private IEnumerator SpiralMove(){
+        //Launch in random direction, after X seconds of no collision then begin spiral.
+        //Collision occurs, launch in random direction
+        //Repeat
+
+        if(inCurrentCollision) {
+            yield break;
+        } else {
+            inCurrentCollision = true;
+        }
+
         Backoff(-currentDirection.x, -currentDirection.y);
         yield return new WaitForSeconds(.1F);
         Stop();
@@ -26,6 +42,14 @@ public class RandomPath : Path
         vacuum.angularVelocity = 0;
 
         Launch(randomX, randomY);
+
+        yield return new WaitForSeconds(3F);
+
+        Debug.Log("Start Spiral");
+        
+
+
+        inCurrentCollision = false;
     }
 
     protected float CalculateAngleChange(float randomX, float randomY){
@@ -60,12 +84,20 @@ public class RandomPath : Path
 
         return angleChange;
     }
-    protected void Backoff(float x, float y)
-    {
-        //The direction to be launched towards
-        Vector3 direction = new Vector3(x, y, 0);
-        Vector3 normalizedDirection = direction.normalized * velocity;
-        vacuum.velocity = normalizedDirection;
-    }    
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 }

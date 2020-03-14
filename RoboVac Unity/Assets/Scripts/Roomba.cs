@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+
 
 public class Roomba : MonoBehaviour
 {
@@ -11,9 +14,13 @@ public class Roomba : MonoBehaviour
     private int batteryLife;
 
     private Path path;
+    private PathType pathType;
 
     private bool timerStarted = false;
     float timer = 0F;
+
+    float unit = .1F;
+    float angle = 55F;
 
     void Awake() {
         vacuum = GetComponent<Rigidbody2D>();
@@ -28,12 +35,20 @@ public class Roomba : MonoBehaviour
 
         SetPathType(pathType);
         path.SetFields(roombaSpeed, vacuum);
-        path.Launch();
+
+        if(pathType != PathType.Spiral){
+            path.Launch();
+        } else {
+            //vacuum.angularVelocity = 45F * simSpeed;
+        }
+
         timerStarted = true;
+
+        
     }
 
     void OnCollisionEnter2D(Collision2D col) { 
-        Debug.Log("Collision");
+        //Debug.Log("Collision");
         path.Move();
     }
 
@@ -57,16 +72,26 @@ public class Roomba : MonoBehaviour
 
     void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        if(pathType == PathType.Spiral){
+            //Debug.Log("Spiraling");
+            Vector3 moveVector = new Vector3(unit*(float)Math.Cos(timer), unit*(float)Math.Sin(timer),0);
+            transform.position += moveVector * Time.deltaTime;
+            unit += Time.deltaTime / 15F;
+            transform.Rotate(Vector3.forward, angle * Time.deltaTime);
+            //vacuum.angularVelocity = vacuum.angularVelocity - (Time.deltaTime * .1F);
+        }
+        else{        
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
 
-        Vector3 moveVector = new Vector3(moveHorizontal, moveVertical, 0.0F);
-        transform.position += moveVector * Time.deltaTime;
+            Vector3 moveVector = new Vector3(moveHorizontal, moveVertical, 0.0F);
+            transform.position += moveVector * Time.deltaTime;
+        }
     }
 
     public void SetPathType(PathType pathType){
         Debug.Log("Path selection = " + pathType);
-
+        this.pathType = pathType;
         switch(pathType){
             case PathType.Random:
                 path = gameObject.AddComponent<RandomPath>();
@@ -75,7 +100,7 @@ public class Roomba : MonoBehaviour
                 path = gameObject.AddComponent<SnakingPath>();
                 break;
             case PathType.Spiral:
-                //TODO
+                path = gameObject.AddComponent<SpiralPath>();
                 break;
             case PathType.WallFollow:
                 //TODO
@@ -102,4 +127,5 @@ public class Roomba : MonoBehaviour
         Time.timeScale = 0F;
         //Debug.Log("Simulation Finished");
     }
+
  }
