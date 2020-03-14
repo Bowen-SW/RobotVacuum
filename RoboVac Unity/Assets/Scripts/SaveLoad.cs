@@ -13,9 +13,6 @@ public class SaveLoad : MonoBehaviour
     [HideInInspector] public List<Chest> chests;
     [HideInInspector] public List<Chest> chairs;
     [HideInInspector] public List<RunReport> reports = new List<RunReport>();
-    
-
-}
 
     public bool AddRoom(GameObject room)
     {
