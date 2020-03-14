@@ -6,6 +6,7 @@ TagManager:
   tags:
   - whiskers
   - vacuum
+  - sensor
   layers:
   - Default
   - TransparentFX

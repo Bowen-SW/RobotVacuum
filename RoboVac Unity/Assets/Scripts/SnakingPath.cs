@@ -125,14 +125,14 @@ public class SnakingPath : Path
         return angleChange;
     }
 
-    public void Backoff(float x, float y)
-    {
-        Debug.Log("Backoff");
-        //The direction to be launched towards
-        Vector3 direction = new Vector3(x, y, 0);
-        Vector3 normalizedDirection = direction.normalized * velocity;
-        vacuum.velocity = normalizedDirection;
-    }   
+    // public void Backoff(float x, float y)
+    // {
+    //     Debug.Log("Backoff");
+    //     //The direction to be launched towards
+    //     Vector3 direction = new Vector3(x, y, 0);
+    //     Vector3 normalizedDirection = direction.normalized * velocity;
+    //     vacuum.velocity = normalizedDirection;
+    // }   
 
     // private IEnumerator TurnCounterClock(){
     //     Launch(-xDirection, 0);

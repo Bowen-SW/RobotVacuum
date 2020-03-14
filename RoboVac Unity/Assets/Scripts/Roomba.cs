@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class Roomba : MonoBehaviour
 {
     public Text simTimeText;
+    public Collider2D wallSensor;
     private Text timeText;
     private Rigidbody2D vacuum;
     private int batteryLife;
@@ -18,9 +19,11 @@ public class Roomba : MonoBehaviour
 
     private bool timerStarted = false;
     float timer = 0F;
+    private int count = 0;
 
     float unit = .1F;
     float angle = 55F;
+    bool isTouching = false;
 
     void Awake() {
         vacuum = GetComponent<Rigidbody2D>();
@@ -49,10 +52,42 @@ public class Roomba : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col) { 
         //Debug.Log("Collision");
+        path.SetIsTouching(isTouching);
         path.Move();
     }
 
+    // private void OnTriggerStay2D(Collider2D other) {
+    //     if(other.IsTouching(wallSensor) && other.gameObject.tag != "whiskers" && other.gameObject.tag != "vacuum"){
+    //         //Debug.Log("Wall sensor is touching a wall");
+    //         isTouching = true;
+    //         Debug.Log(other.gameObject.tag);
+    //         //path.SetIsTouching(true);
+    //     } 
+    // }
+    void OnTriggerEnter2D(Collider2D col){
+        if(col.IsTouching(wallSensor) && col.gameObject.tag != "whiskers" && col.gameObject.tag != "vacuum"){
+            //Debug.Log("Wall sensor is touching a wall");
+            isTouching = true;
+            path.SetIsTouching(true);
+            ++count;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col){
+        if(!col.IsTouching(wallSensor) && col.gameObject.tag != "whiskers" && col.gameObject.tag != "vacuum"){
+            //Debug.Log("Wall sensor is no longer touching a wall");
+            isTouching = false;
+            path.SetIsTouching(false);
+            --count;
+            if(count == 0){
+                path.Move();
+            }
+            // path.Move();
+        }
+    }
+
     void Update(){
+        Debug.Log("Count = " + count);
         if(timerStarted){
 
             timer = timer + Time.deltaTime;
@@ -79,6 +114,8 @@ public class Roomba : MonoBehaviour
             unit += Time.deltaTime / 15F;
             transform.Rotate(Vector3.forward, angle * Time.deltaTime);
             //vacuum.angularVelocity = vacuum.angularVelocity - (Time.deltaTime * .1F);
+        //} else if(pathType == PathType.WallFollow){
+            
         }
         else{        
             float moveHorizontal = Input.GetAxis("Horizontal");
@@ -103,7 +140,7 @@ public class Roomba : MonoBehaviour
                 path = gameObject.AddComponent<SpiralPath>();
                 break;
             case PathType.WallFollow:
-                //TODO
+                path = gameObject.AddComponent<WallFollow>();
                 break;
             case PathType.All:
                 //TODO

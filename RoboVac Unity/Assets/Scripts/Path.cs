@@ -11,6 +11,7 @@ public abstract class Path : MonoBehaviour
     protected Rigidbody2D vacuum;
 
     protected Vector3 currentDirection;
+    protected bool isTouching = false;
 
     public abstract void Move();
 
@@ -65,11 +66,15 @@ public abstract class Path : MonoBehaviour
         vacuum.velocity = normalizedDirection;
     }    
 
-    // protected void Backoff(float x, float y)
-    // {
-    //     //The direction to be launched towards
-    //     Vector3 direction = new Vector3(x, y, 0);
-    //     Vector3 normalizedDirection = direction.normalized * velocity;
-    //     vacuum.velocity = normalizedDirection;
-    // }    
+    public void SetIsTouching(bool touch){
+        isTouching = touch;
+    }
+
+    protected void Backoff(float x, float y)
+    {
+        //The direction to be launched towards
+        Vector3 direction = new Vector3(x, y, 0);
+        Vector3 normalizedDirection = direction.normalized * velocity;
+        vacuum.velocity = normalizedDirection;
+    }    
 }
