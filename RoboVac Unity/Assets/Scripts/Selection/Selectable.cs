@@ -26,7 +26,6 @@ public class Selectable : MonoBehaviour
 
     public void Select()
     {
-        Debug.Log("Clicked!");
         Selection.selected = this.gameObject;
     }
 }

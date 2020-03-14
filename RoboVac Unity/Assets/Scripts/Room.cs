@@ -53,40 +53,46 @@ public class Room : MonoBehaviour, IResizable
 
     public Vector2 SetStart(Vector2 position)
     {
+        Vector2 temp = this.start;
         this.start.x = Mathf.Round(position.x + 0.5f);
         this.start.y = Mathf.Round(position.y + 0.5f);
+        if(this.width < 2 || this.height < 2)
+        {
+            this.start = temp;
+        }
         return start;
     }
 
     public Vector2 SetStop(Vector2 position)
     {
+        Vector2 temp = this.stop;
         this.stop.x = Mathf.Round(position.x + 0.5f);
         this.stop.y = Mathf.Round(position.y + 0.5f);
+        if(this.width < 2 || this.height < 2)
+        {
+            this.stop = temp;
+        }
         return stop;
     }
 
     public Vector2 SetLeft(float position)
     {
-        this.start.x = Mathf.Round(position + 0.5f);
-        return start;
+        return this.SetStart(new Vector2(position, this.start.y));
     }
 
     public Vector2 SetRight(float position)
     {
-        this.stop.x = Mathf.Round(position + 0.5f);
-        return stop;
+        return this.SetStop(new Vector2(position, this.stop.y));
     }
 
     public Vector2 SetTop(float position)
     {
-        this.stop.y = Mathf.Round(position + 0.5f);
-        return stop;
+        return this.SetStop(new Vector2(this.stop.x, position));
     }
 
     public Vector2 SetBottom(float position)
     {
-        this.start.y = Mathf.Round(position + 0.5f);
-        return start;
+        return this.SetStart(new Vector2(this.start.x, position));
     }
 
     // Start is called before the first frame update
@@ -113,7 +119,6 @@ public class Room : MonoBehaviour, IResizable
             
             if(Physics.Raycast(ray, out hit, 100))
             {
-                
                 foreach(GameObject cell in cells)
                 {
                     if(hit.transform.parent.gameObject == cell)
@@ -145,6 +150,7 @@ public class Room : MonoBehaviour, IResizable
             for(int i = 0; i < this.width; i++)
             {
                 newCells[i, j] = Instantiate(cell, new Vector3(this.start.x + i, this.start.y + j,0), Quaternion.identity);
+                newCells[i, j].transform.parent = this.transform;
                 GameObject[] newCellWalls = GetWalls(newCells[i,j]);
                 if(j != 0)
                     Destroy(newCellWalls[2]);

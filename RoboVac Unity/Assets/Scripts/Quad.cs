@@ -25,7 +25,7 @@ public class Quad : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        gameObject.GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, dirtiness);
     }
 
     private void OnTriggerExit2D(Collider2D other) {

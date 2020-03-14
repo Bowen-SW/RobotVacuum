@@ -15,7 +15,7 @@ public class Cell : MonoBehaviour
         {
             for(int i = 0; i < 6; i++)
             {
-                GameObject q = Instantiate(quad, new Vector3(this.transform.position.x - 0.4168f + (i * 0.16672f), this.transform.position.y - 0.4168f + (j * 0.08336f), 0), Quaternion.identity);
+                GameObject q = Instantiate(quad, new Vector3(this.transform.position.x - 0.4168f + (i * 0.16672f), this.transform.position.y - 0.4168f + (j * 0.16672f), 0f), Quaternion.identity);
                 q.transform.parent = this.transform;
                 quads.Add(q.GetComponent<Quad>());
             }
