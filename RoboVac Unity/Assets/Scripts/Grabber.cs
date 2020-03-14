@@ -22,6 +22,8 @@ public class Grabber : MonoBehaviour
     public GameObject parent;
     private GrabberPosition grabberPosition;
 
+    private Selectable parentSelect;
+
     private bool dragging = false;
 
     // Start is called before the first frame update
@@ -59,12 +61,13 @@ public class Grabber : MonoBehaviour
 
         }
         ResetPosition();
+        this.parentSelect = parent.GetComponent<Selectable>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!dragging)
+        if(!dragging || !parentSelect.isSelected)
         {
             ResetPosition();
         } else {
@@ -72,6 +75,14 @@ public class Grabber : MonoBehaviour
             target.z = transform.position.z;
             transform.position = target;
             grabberPosition.SetParent(parent.GetComponent<IResizable>(), transform.position);
+        }
+
+        if(parentSelect.isSelected && !gameObject.GetComponent<Renderer>().enabled)
+        {
+            gameObject.GetComponent<Renderer>().enabled = true;
+        }else if(!parentSelect.isSelected && gameObject.GetComponent<Renderer>().enabled)
+        {
+            gameObject.GetComponent<Renderer>().enabled = false;
         }
     }
 

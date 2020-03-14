@@ -9,8 +9,6 @@ public class SaveLoad : MonoBehaviour
     //public Roomba roomba;
     //public FloorPlan/Simulation (room aggregator) floorplan;
 
-    public List<GameObject> objects = new List<GameObject>();
-
     [HideInInspector] public List<Room> rooms = new List<Room>();
     [HideInInspector] public List<Chest> chests;
     [HideInInspector] public List<Chest> chairs;

@@ -30,6 +30,15 @@ public class Room : MonoBehaviour, IResizable
         private set {}
     }
 
+    public int sqft
+    {
+        get
+        {
+            return width * height;
+        }
+        set {}
+    }
+
     private GameObject[,] cells;
 
     public Vector2 GetStart()
@@ -93,7 +102,28 @@ public class Room : MonoBehaviour, IResizable
            Mathf.Abs(this.start.y - this.prevStart.y) >= 0.2 ||
            Mathf.Abs(this.stop.x - this.prevStop.x) >= 0.2 ||
            Mathf.Abs(this.stop.y - this.prevStop.y) >= 0.2)
+        {
             cells = CreateRoom();
+        }
+
+        if(Input.GetMouseButton(0))
+         {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            
+            if(Physics.Raycast(ray, out hit, 100))
+            {
+                
+                foreach(GameObject cell in cells)
+                {
+                    if(hit.transform.parent.gameObject == cell)
+                    {
+                        gameObject.GetComponent<Selectable>().Select();
+                        break;
+                    }
+                }
+            }
+         }
     }
 
     private void ClearRoom()
@@ -108,7 +138,6 @@ public class Room : MonoBehaviour, IResizable
 
     private GameObject[,] CreateRoom()
     {
-        Debug.Log("Creating room...");
         ClearRoom();
         GameObject[,] newCells = new GameObject[this.width, this.height];
         for(int j = 0; j < this.height; j++)
@@ -144,5 +173,15 @@ public class Room : MonoBehaviour, IResizable
             walls[i] = cell.transform.GetChild(i+1).gameObject;
         }
         return walls;
+    }
+
+    public float getCoverage()
+    {
+        float total = 0.0f;
+        foreach(GameObject c in cells)
+        {
+            total += c.GetComponent<Cell>().GetCoverage();
+        }
+        return total;
     }
 }
