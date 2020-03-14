@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class Roomba : MonoBehaviour
 {
     public Text simTimeText;
-    public Collider2D wallSensor;
+    //public Collider2D wallSensor;
     private Text timeText;
     private Rigidbody2D vacuum;
     private int batteryLife;
@@ -52,7 +52,7 @@ public class Roomba : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col) { 
         //Debug.Log("Collision");
-        path.SetIsTouching(isTouching);
+        //path.SetIsTouching(isTouching);
         path.Move();
     }
 
@@ -64,27 +64,27 @@ public class Roomba : MonoBehaviour
     //         //path.SetIsTouching(true);
     //     } 
     // }
-    void OnTriggerEnter2D(Collider2D col){
-        if(col.IsTouching(wallSensor) && col.gameObject.tag != "whiskers" && col.gameObject.tag != "vacuum"){
-            //Debug.Log("Wall sensor is touching a wall");
-            isTouching = true;
-            path.SetIsTouching(true);
-            ++count;
-        }
-    }
+    // void OnTriggerEnter2D(Collider2D col){
+    //     if(col.IsTouching(wallSensor) && col.gameObject.tag != "whiskers" && col.gameObject.tag != "vacuum"){
+    //         //Debug.Log("Wall sensor is touching a wall");
+    //         isTouching = true;
+    //         path.SetIsTouching(true);
+    //         ++count;
+    //     }
+    // }
 
-    void OnTriggerExit2D(Collider2D col){
-        if(!col.IsTouching(wallSensor) && col.gameObject.tag != "whiskers" && col.gameObject.tag != "vacuum"){
-            //Debug.Log("Wall sensor is no longer touching a wall");
-            isTouching = false;
-            path.SetIsTouching(false);
-            --count;
-            if(count == 0){
-                path.Move();
-            }
-            // path.Move();
-        }
-    }
+    // void OnTriggerExit2D(Collider2D col){
+    //     if(!col.IsTouching(wallSensor) && col.gameObject.tag != "whiskers" && col.gameObject.tag != "vacuum"){
+    //         //Debug.Log("Wall sensor is no longer touching a wall");
+    //         isTouching = false;
+    //         path.SetIsTouching(false);
+    //         --count;
+    //         if(count == 0){
+    //             path.Move();
+    //         }
+    //         // path.Move();
+    //     }
+    // }
 
     void Update(){
         Debug.Log("Count = " + count);
@@ -163,6 +163,10 @@ public class Roomba : MonoBehaviour
     public void Finish(){
         Time.timeScale = 0F;
         //Debug.Log("Simulation Finished");
+    }
+
+    public Path GetPath(){
+        return path;
     }
 
  }

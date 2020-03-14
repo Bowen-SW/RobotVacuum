@@ -44,14 +44,12 @@ public class HandleGame : MonoBehaviour
         pauseBtn.onClick.AddListener(PauseAndResume);
 
         roombaSpeedSlider.onValueChanged.AddListener(delegate {SetRoombaSpeed();});
-        //TODO add battery life slider
         batterySlider.onValueChanged.AddListener(delegate {SetBatteryLife();});
     }
 
     void SetRoombaSpeed(){
         Text txt = speedText.GetComponent<Text>();
 
-        //Debug.Log("Slider value = " + roombaSpeedSlider.value.ToString());
         txt.text = roombaSpeedSlider.value.ToString();
         roombaSpeed = roombaSpeedSlider.value;
     }
@@ -61,8 +59,6 @@ public class HandleGame : MonoBehaviour
 
         batteryLife = batterySlider.value;
         txt.text = batteryLife.ToString();
-
-        Debug.Log("Slider value = " + txt.text);
     }
 
     void SetSimSpeed(){
