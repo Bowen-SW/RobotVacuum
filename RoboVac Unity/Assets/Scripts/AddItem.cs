@@ -11,6 +11,7 @@ public class AddItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Setup the button with its callback
         button.onClick.AddListener(TaskOnClick);
     }
 
@@ -20,8 +21,10 @@ public class AddItem : MonoBehaviour
         
     }
 
+    // Called when the button is clicked
     void TaskOnClick()
     {
+        // Adds the item this button is set up for to the scene at the origin with no rotation modifiers
         Instantiate(objectToAdd, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
     }
 
