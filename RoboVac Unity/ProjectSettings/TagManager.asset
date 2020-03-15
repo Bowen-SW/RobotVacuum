@@ -9,6 +9,9 @@ TagManager:
   - West
   - South
   - East
+  - SettingsMenu
+  - NewFloorPlanMenu
+  - SimulationReportMenu
   layers:
   - Default
   - TransparentFX
@@ -45,4 +48,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Top
+    uniqueID: 1651368769
     locked: 0
