@@ -9,6 +9,9 @@ TagManager:
   - West
   - South
   - East
+  - SettingsMenu
+  - NewFloorPlanMenu
+  - SimulationReportMenu
   layers:
   - Default
   - TransparentFX
