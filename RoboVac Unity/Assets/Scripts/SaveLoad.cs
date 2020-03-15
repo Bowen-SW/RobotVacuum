@@ -12,6 +12,8 @@ public class SaveLoad : MonoBehaviour
     [HideInInspector] public List<Room> rooms = new List<Room>();
     [HideInInspector] public List<Chest> chests;
     [HideInInspector] public List<Chest> chairs;
+    [HideInInspector] public List<RunReport> reports = new List<RunReport>();
+    public int totalSqFt;
 
     public bool AddRoom(GameObject room)
     {
@@ -41,6 +43,19 @@ public class SaveLoad : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void AddRun(RunReport run)
+    {
+        reports.Add(run);
+    }
+
+    public void getTotalSqFt(List<Room> roomList)
+    {
+        foreach (Room room in roomList)
+        {
+            totalSqFt += room.sqft;
+        }
     }
 
     public void Save()
