@@ -17,8 +17,6 @@ public class WallFollowTrigger : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col){
         if(col.IsTouching(wallSensor) && col.gameObject.tag != "whiskers" && col.gameObject.tag != "vacuum"){
-            //Debug.Log("Wall sensor is touching a wall");
-            //isTouching = true;
             roomba.GetPath().SetIsTouching(true);
             ++count;
         }
@@ -26,14 +24,11 @@ public class WallFollowTrigger : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D col){
         if(!col.IsTouching(wallSensor) && col.gameObject.tag != "whiskers" && col.gameObject.tag != "vacuum"){
-            //Debug.Log("Wall sensor is no longer touching a wall");
-            //isTouching = false;
             roomba.GetPath().SetIsTouching(false);
             --count;
             if(count == 0){
                 roomba.GetPath().Move();
             }
-            // path.Move();
         }
     }
 

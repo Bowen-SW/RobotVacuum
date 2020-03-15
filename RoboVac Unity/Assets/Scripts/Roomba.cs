@@ -51,43 +51,10 @@ public class Roomba : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D col) { 
-        //Debug.Log("Collision");
-        //path.SetIsTouching(isTouching);
         path.Move();
     }
 
-    // private void OnTriggerStay2D(Collider2D other) {
-    //     if(other.IsTouching(wallSensor) && other.gameObject.tag != "whiskers" && other.gameObject.tag != "vacuum"){
-    //         //Debug.Log("Wall sensor is touching a wall");
-    //         isTouching = true;
-    //         Debug.Log(other.gameObject.tag);
-    //         //path.SetIsTouching(true);
-    //     } 
-    // }
-    // void OnTriggerEnter2D(Collider2D col){
-    //     if(col.IsTouching(wallSensor) && col.gameObject.tag != "whiskers" && col.gameObject.tag != "vacuum"){
-    //         //Debug.Log("Wall sensor is touching a wall");
-    //         isTouching = true;
-    //         path.SetIsTouching(true);
-    //         ++count;
-    //     }
-    // }
-
-    // void OnTriggerExit2D(Collider2D col){
-    //     if(!col.IsTouching(wallSensor) && col.gameObject.tag != "whiskers" && col.gameObject.tag != "vacuum"){
-    //         //Debug.Log("Wall sensor is no longer touching a wall");
-    //         isTouching = false;
-    //         path.SetIsTouching(false);
-    //         --count;
-    //         if(count == 0){
-    //             path.Move();
-    //         }
-    //         // path.Move();
-    //     }
-    // }
-
     void Update(){
-        Debug.Log("Count = " + count);
         if(timerStarted){
 
             timer = timer + Time.deltaTime;
@@ -114,7 +81,6 @@ public class Roomba : MonoBehaviour
             unit += Time.deltaTime / 15F;
             transform.Rotate(Vector3.forward, angle * Time.deltaTime);
             //vacuum.angularVelocity = vacuum.angularVelocity - (Time.deltaTime * .1F);
-        //} else if(pathType == PathType.WallFollow){
             
         }
         else{        

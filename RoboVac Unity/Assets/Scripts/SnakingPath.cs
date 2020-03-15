@@ -20,7 +20,7 @@ public class SnakingPath : Path
     }
 
     private IEnumerator SnakingMove(){
-        Backoff(-currentDirection.x, -currentDirection.y);
+        //Backoff(-currentDirection.x, -currentDirection.y);
         Stop();
         
         if(inCurrentCollision) {
@@ -125,7 +125,7 @@ public class SnakingPath : Path
         return angleChange;
     }
 
-    // public void Backoff(float x, float y)
+    // private override void Backoff(float x, float y)
     // {
     //     Debug.Log("Backoff");
     //     //The direction to be launched towards
