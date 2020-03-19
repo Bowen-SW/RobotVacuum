@@ -1321,7 +1321,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 724569688}
-  objectToAdd: {fileID: 0}
+  objectToAdd: {fileID: 5964590402416469136, guid: 543f49a7ee52e774b97724a725a62c1f,
+    type: 3}
 --- !u!114 &724569688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4414,7 +4415,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 5954143139458764701}
-  objectToAdd: {fileID: 0}
+  objectToAdd: {fileID: 5964590402416469136, guid: 543f49a7ee52e774b97724a725a62c1f,
+    type: 3}
 --- !u!1 &5954143139458764699
 GameObject:
   m_ObjectHideFlags: 0
@@ -4703,7 +4705,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 6808774814597359483}
-  objectToAdd: {fileID: 0}
+  objectToAdd: {fileID: 3347921352153231088, guid: 5f99ae4e997a3c14ba5e514534d07303,
+    type: 3}
 --- !u!114 &6808774814597359480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4992,7 +4995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 7277580015017657160}
-  objectToAdd: {fileID: 1769365686524290548, guid: ffcede956ccf71d4e90fc5681cf8e0d9,
+  objectToAdd: {fileID: 5964590402416469136, guid: 14e1d46c6e8af99478f1ac35c56f921d,
     type: 3}
 --- !u!114 &7277580015017657160
 MonoBehaviour:

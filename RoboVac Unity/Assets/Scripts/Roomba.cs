@@ -18,12 +18,11 @@ public class Roomba : MonoBehaviour
     private PathType pathType;
 
     private bool timerStarted = false;
-    float timer = 0F;
-    private int count = 0;
-
-    float unit = .1F;
-    float angle = 55F;
-    bool isTouching = false;
+    private bool doSprial = true;
+    private float simSpeed = 1F;
+    private float timer = 0F;
+    private float unit = .1F;
+    private float angle = 55F;
 
     void Awake() {
         vacuum = GetComponent<Rigidbody2D>();
@@ -33,6 +32,7 @@ public class Roomba : MonoBehaviour
     public void init(float roombaSpeed, float simSpeed, int batteryLife, PathType pathType)
     {
         //TODO: set the current direction based on where the roomba is pointing
+        this.simSpeed = simSpeed;
         Time.timeScale = simSpeed;      //Sets the simulation speed
         this.batteryLife = batteryLife;
 
@@ -51,6 +51,9 @@ public class Roomba : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D col) { 
+        if(pathType == PathType.Spiral){
+            doSprial = false;
+        }
         path.Move();
     }
 
@@ -74,7 +77,7 @@ public class Roomba : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(pathType == PathType.Spiral){
+        if(pathType == PathType.Spiral && doSprial){
             //Debug.Log("Spiraling");
             Vector3 moveVector = new Vector3(unit*(float)Math.Cos(timer), unit*(float)Math.Sin(timer),0);
             transform.position += moveVector * Time.deltaTime;
@@ -123,7 +126,7 @@ public class Roomba : MonoBehaviour
     }
 
     public void Resume(){
-        Time.timeScale = 1F;
+        Time.timeScale = simSpeed;
     }
 
     public void Finish(){
@@ -133,6 +136,14 @@ public class Roomba : MonoBehaviour
 
     public Path GetPath(){
         return path;
+    }
+
+    public PathType GetPathType(){
+        return pathType;
+    }
+
+    public void SetDoSpirla(bool spiral){
+        doSprial = spiral;
     }
 
  }
