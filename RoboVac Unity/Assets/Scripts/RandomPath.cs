@@ -5,18 +5,21 @@ using UnityEngine;
 public class RandomPath : Path
 {
     public override void Move(){
+        //Debug.Log("Random Move");
         StartCoroutine(RandomMove());
     }
 
     protected IEnumerator RandomMove(){
         Backoff(-currentDirection.x, -currentDirection.y);
         yield return new WaitForSeconds(.1F);
+        //Debug.Log("Stop");
         Stop();
 
         float randomX = Random.Range(-1F, 1F);
         float randomY = Random.Range(-1F, 1F);
 
         float angleChange = CalculateAngleChange(randomX, randomY);
+        //Debug.Log("Angle change = " + angleChange);
 
         vacuum.angularVelocity = angularVelocity;
 
@@ -25,6 +28,7 @@ public class RandomPath : Path
         yield return new WaitForSeconds(waitTime);
         vacuum.angularVelocity = 0;
 
+        //Debug.Log("Ready for launch");
         Launch(randomX, randomY);
     }
 

@@ -39,10 +39,10 @@ public class Roomba : MonoBehaviour
         SetPathType(pathType);
         path.SetFields(roombaSpeed, vacuum);
 
-        if(pathType != PathType.Spiral){
-            path.Launch();
+        if(pathType == PathType.Spiral){
+            path.SetDirection(new Vector3(0, 1F, 0));
         } else {
-            //vacuum.angularVelocity = 45F * simSpeed;
+            path.Launch();
         }
 
         timerStarted = true;
@@ -142,8 +142,10 @@ public class Roomba : MonoBehaviour
         return pathType;
     }
 
-    public void SetDoSpirla(bool spiral){
+    public void SetDoSpiral(bool spiral){
         doSprial = spiral;
+        //Reset the spiral values
+        unit = .1F;
     }
 
  }
