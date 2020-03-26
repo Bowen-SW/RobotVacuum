@@ -55,7 +55,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cell: {fileID: 434048641962084061, guid: 2d01660478f4bac498da7cd0fa481fa4, type: 3}
   start: {x: 0, y: 0}
-  stop: {x: 2, y: 4}
+  stop: {x: 2, y: 2}
 --- !u!114 &5701215730001829822
 MonoBehaviour:
   m_ObjectHideFlags: 0
