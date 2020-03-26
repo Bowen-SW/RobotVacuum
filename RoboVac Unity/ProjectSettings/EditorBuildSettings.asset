@@ -8,4 +8,25 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/master.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/tj.unity
+    guid: d3c4fa8c7a2ca864c90529df288e48db
+  - enabled: 1
+    path: Assets/Scenes/NewFileInput.unity
+    guid: 8a03229ea5fcb4941a329c5ededf910b
+  - enabled: 1
+    path: Assets/Scenes/spencer.unity
+    guid: 2d57bef5fec39e24ea67783e9e4a40ec
+  - enabled: 1
+    path: Assets/Scenes/adam.unity
+    guid: 4a418689b5c34e74698f15f5f2b5d86d
+  - enabled: 1
+    path: Assets/Scenes/drew.unity
+    guid: 47671ccd657b2334db04633ea1f4e41e
+  - enabled: 1
+    path: Assets/Scenes/Scene_For_GUI_Presentation.unity
+    guid: eed7b51e0300fa94ca3979a22b75d2cf
+  - enabled: 1
+    path: Assets/Scenes/dev.unity
+    guid: 8f7df79737b780447a86650911befe12
   m_configObjects: {}
