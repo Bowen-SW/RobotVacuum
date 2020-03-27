@@ -1037,6 +1037,24 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2065904802}
     m_Modifications:
+    - target: {fileID: 1952554367091362584, guid: 16cb95dcfc768dd46953459f0a82ddcb,
+        type: 3}
+      propertyPath: objectToAdd
+      value: 
+      objectReference: {fileID: 5964590402416469136, guid: 14e1d46c6e8af99478f1ac35c56f921d,
+        type: 3}
+    - target: {fileID: 2421341430404476715, guid: 16cb95dcfc768dd46953459f0a82ddcb,
+        type: 3}
+      propertyPath: objectToAdd
+      value: 
+      objectReference: {fileID: 3347921352153231088, guid: 5f99ae4e997a3c14ba5e514534d07303,
+        type: 3}
+    - target: {fileID: 9216605285944280586, guid: 16cb95dcfc768dd46953459f0a82ddcb,
+        type: 3}
+      propertyPath: objectToAdd
+      value: 
+      objectReference: {fileID: 5964590402416469136, guid: 543f49a7ee52e774b97724a725a62c1f,
+        type: 3}
     - target: {fileID: 9216605286636623585, guid: 16cb95dcfc768dd46953459f0a82ddcb,
         type: 3}
       propertyPath: canvas
