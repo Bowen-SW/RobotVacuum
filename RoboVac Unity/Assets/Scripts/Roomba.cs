@@ -3,20 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 
 
 public class Roomba : MonoBehaviour
 {
-    public Text simTimeText;
+    public TMP_Text simTimeText;
     //public Collider2D wallSensor;
-    private Text timeText;
+    private TMP_Text timeText;
     private Rigidbody2D vacuum;
     private int batteryLife;
 
     private Path path;
     private PathType pathType;
 
+    
+    private float vacEff = 75F;
+    private float whiskerEff = 30F;
     private bool timerStarted = false;
     private bool doSprial = true;
     private float simSpeed = 1F;
@@ -26,10 +30,10 @@ public class Roomba : MonoBehaviour
 
     void Awake() {
         vacuum = GetComponent<Rigidbody2D>();
-        timeText = simTimeText.GetComponent<Text>();
+        timeText = simTimeText.GetComponent<TMP_Text>();
     }
 
-    public void init(float roombaSpeed, float simSpeed, int batteryLife, PathType pathType)
+    public void init(float roombaSpeed = 12f, float simSpeed = 1F, int batteryLife = 150, PathType pathType = PathType.Random)
     {
         //TODO: set the current direction based on where the roomba is pointing
         this.simSpeed = simSpeed;
@@ -114,7 +118,7 @@ public class Roomba : MonoBehaviour
             case PathType.All:
                 //TODO
                 break;
-            default:
+            default: //TODO Default to all
                 Debug.Log("Error setting path. Default to Random.");
                 path = gameObject.AddComponent<RandomPath>();
                 break;
@@ -146,6 +150,22 @@ public class Roomba : MonoBehaviour
         doSprial = spiral;
         //Reset the spiral values
         unit = .1F;
+    }
+
+    public float GetVacEff(){
+        return vacEff;
+    }
+
+    public void SetVacEff(float eff){
+        vacEff = eff;
+    }
+
+    public float GetWhiskerEff(){
+        return whiskerEff;
+    }
+
+    public void SetWhiskerEff(float eff){
+        whiskerEff = eff;
     }
 
  }

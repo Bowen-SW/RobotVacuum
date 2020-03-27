@@ -24,7 +24,7 @@ public class HandleGame : MonoBehaviour
     private Button pathTypeBtn;
     private Button startBtn;
     private Button pauseBtn;
-    private PathType pathType;
+    private PathType pathType = PathType.Random;
     private float roombaSpeed = 12F; //Defualt value 12 in/sec
     private float batteryLife = 150F; //Default value
     private float simSpeed = 1F;    
