@@ -5,20 +5,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-
-
-public class Roomba : MonoBehaviour
+public class Roomba : MonoBehaviour, IMovable
 {
     public TMP_Text simTimeText;
     //public Collider2D wallSensor;
     private TMP_Text timeText;
     private Rigidbody2D vacuum;
     private int batteryLife;
-
     private Path path;
     private PathType pathType;
-
-    
     private float vacEff = 75F;
     private float whiskerEff = 30F;
     private bool timerStarted = false;
@@ -27,6 +22,32 @@ public class Roomba : MonoBehaviour
     private float timer = 0F;
     private float unit = .1F;
     private float angle = 55F;
+    private float xCoordinate = 0;
+    private float yCoordinate = 0;
+
+    private Vector3 target;
+    private bool moving = false;
+
+    //IMovable functions
+    public void SetTarget(Vector2 position)
+    {
+        target = new Vector3(position.x, position.y, transform.position.z);
+    }
+
+    public Vector2 GetTarget()
+    {
+        return new Vector3(target.x, target.y);
+    }
+
+    public void SetMoving(bool move)
+    {
+        moving = move;
+    }
+
+    public bool IsMoving()
+    {
+        return moving;
+    }
 
     void Awake() {
         vacuum = GetComponent<Rigidbody2D>();
@@ -40,7 +61,9 @@ public class Roomba : MonoBehaviour
         Time.timeScale = simSpeed;      //Sets the simulation speed
         this.batteryLife = batteryLife;
 
-        SetPathType(pathType);
+        SetStartPosition();
+
+        SetPathType(pathType.ToString());
         path.SetFields(roombaSpeed, vacuum);
 
         if(pathType == PathType.Spiral){
@@ -50,8 +73,6 @@ public class Roomba : MonoBehaviour
         }
 
         timerStarted = true;
-
-        
     }
 
     void OnCollisionEnter2D(Collision2D col) { 
@@ -63,32 +84,36 @@ public class Roomba : MonoBehaviour
 
     void Update(){
         if(timerStarted){
+            if(Selection.selected == this.gameObject)
+            {
+                Selection.selected = null;
+            }
 
             timer = timer + Time.deltaTime;
 
             string minutes = Mathf.Floor(timer / 60).ToString("00");
             string seconds = (timer % 60).ToString("00");
 
-            //TODO: Change to the user selected battery life for production
-            //if(Mathf.Floor(timer / 60) >= batterLife){
-            if(Mathf.Floor(timer / 60) >= 1){
-                Finish();
+            if(Mathf.Floor(timer / 60) >= batteryLife){
+                Stop();
             }
 
             timeText.text = string.Format("{0}:{1}", minutes, seconds);          
+        }
+        else if(moving)
+        {
+            transform.position = target;
         }
     }
 
     void FixedUpdate()
     {
         if(pathType == PathType.Spiral && doSprial){
-            //Debug.Log("Spiraling");
             Vector3 moveVector = new Vector3(unit*(float)Math.Cos(timer), unit*(float)Math.Sin(timer),0);
             transform.position += moveVector * Time.deltaTime;
             unit += Time.deltaTime / 15F;
             transform.Rotate(Vector3.forward, angle * Time.deltaTime);
-            //vacuum.angularVelocity = vacuum.angularVelocity - (Time.deltaTime * .1F);
-            
+            //vacuum.angularVelocity = vacuum.angularVelocity - (Time.deltaTime * .1F);    
         }
         else{        
             float moveHorizontal = Input.GetAxis("Horizontal");
@@ -99,28 +124,35 @@ public class Roomba : MonoBehaviour
         }
     }
 
-    public void SetPathType(PathType pathType){
+    public void SetPathType(String pathType){
         Debug.Log("Path selection = " + pathType);
-        this.pathType = pathType;
-        switch(pathType){
+        PathType result;
+        Enum.TryParse(pathType, out result);
+        switch(result){
             case PathType.Random:
                 path = gameObject.AddComponent<RandomPath>();
+                this.pathType = PathType.Random;
                 break;
             case PathType.Snaking:
                 path = gameObject.AddComponent<SnakingPath>();
+                this.pathType = PathType.Snaking;
                 break;
             case PathType.Spiral:
                 path = gameObject.AddComponent<SpiralPath>();
+                this.pathType = PathType.Spiral;
                 break;
             case PathType.WallFollow:
                 path = gameObject.AddComponent<WallFollow>();
+                this.pathType = PathType.WallFollow;
                 break;
             case PathType.All:
+                this.pathType = PathType.All;
                 //TODO
                 break;
             default: //TODO Default to all
                 Debug.Log("Error setting path. Default to Random.");
                 path = gameObject.AddComponent<RandomPath>();
+                this.pathType = PathType.Random;
                 break;
         }
     }
@@ -133,9 +165,13 @@ public class Roomba : MonoBehaviour
         Time.timeScale = simSpeed;
     }
 
-    public void Finish(){
+    public void Stop(){
         Time.timeScale = 0F;
-        //Debug.Log("Simulation Finished");
+        Debug.Log("Simulation Stopped");
+        vacuum.position = new Vector2(xCoordinate, yCoordinate);
+        vacuum.rotation = 0F;
+        transform.position = new Vector3(xCoordinate, yCoordinate, 0);
+        transform.rotation = Quaternion.identity;
     }
 
     public Path GetPath(){
@@ -168,4 +204,20 @@ public class Roomba : MonoBehaviour
         whiskerEff = eff;
     }
 
+    private void SetStartPosition(){
+        xCoordinate = vacuum.position.x;
+        yCoordinate = vacuum.position.y;
+    }
+
+    public void SetSimSpeed(float speed){
+        simSpeed = speed;
+        Time.timeScale = simSpeed;
+    }
+
+    public void ResetRunTime(){
+        timer = 0;
+        string minutes = Mathf.Floor(timer / 60).ToString("00");
+        string seconds = (timer % 60).ToString("00");
+        timeText.text = string.Format("{0}:{1}", minutes, seconds); 
+    }
  }
