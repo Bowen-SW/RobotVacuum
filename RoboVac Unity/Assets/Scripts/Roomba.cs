@@ -39,7 +39,7 @@ public class Roomba : MonoBehaviour
 
         SetStartPosition();
 
-        SetPathType(pathType);
+        SetPathType(pathType.ToString());
         path.SetFields(roombaSpeed, vacuum);
 
         if(pathType == PathType.Spiral){
@@ -92,28 +92,35 @@ public class Roomba : MonoBehaviour
         }
     }
 
-    public void SetPathType(PathType pathType){
+    public void SetPathType(String pathType){
         Debug.Log("Path selection = " + pathType);
-        this.pathType = pathType;
-        switch(pathType){
+        PathType result;
+        Enum.TryParse(pathType, out result);
+        switch(result){
             case PathType.Random:
                 path = gameObject.AddComponent<RandomPath>();
+                this.pathType = PathType.Random;
                 break;
             case PathType.Snaking:
                 path = gameObject.AddComponent<SnakingPath>();
+                this.pathType = PathType.Snaking;
                 break;
             case PathType.Spiral:
                 path = gameObject.AddComponent<SpiralPath>();
+                this.pathType = PathType.Spiral;
                 break;
             case PathType.WallFollow:
                 path = gameObject.AddComponent<WallFollow>();
+                this.pathType = PathType.WallFollow;
                 break;
             case PathType.All:
+                this.pathType = PathType.All;
                 //TODO
                 break;
             default: //TODO Default to all
                 Debug.Log("Error setting path. Default to Random.");
                 path = gameObject.AddComponent<RandomPath>();
+                this.pathType = PathType.Random;
                 break;
         }
     }
