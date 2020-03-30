@@ -24,7 +24,7 @@ public class HandleGame : MonoBehaviour
     private Button pathTypeBtn;
     private Button startBtn;
     private Button pauseBtn;
-    private PathType pathType;
+    private PathType pathType = PathType.Random;
     private float roombaSpeed = 12F; //Defualt value 12 in/sec
     private float batteryLife = 150F; //Default value
     private float simSpeed = 1F;    
@@ -44,14 +44,12 @@ public class HandleGame : MonoBehaviour
         pauseBtn.onClick.AddListener(PauseAndResume);
 
         roombaSpeedSlider.onValueChanged.AddListener(delegate {SetRoombaSpeed();});
-        //TODO add battery life slider
         batterySlider.onValueChanged.AddListener(delegate {SetBatteryLife();});
     }
 
     void SetRoombaSpeed(){
         Text txt = speedText.GetComponent<Text>();
 
-        //Debug.Log("Slider value = " + roombaSpeedSlider.value.ToString());
         txt.text = roombaSpeedSlider.value.ToString();
         roombaSpeed = roombaSpeedSlider.value;
     }
@@ -61,8 +59,6 @@ public class HandleGame : MonoBehaviour
 
         batteryLife = batterySlider.value;
         txt.text = batteryLife.ToString();
-
-        Debug.Log("Slider value = " + txt.text);
     }
 
     void SetSimSpeed(){

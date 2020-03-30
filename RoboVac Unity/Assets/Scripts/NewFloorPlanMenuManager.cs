@@ -37,7 +37,7 @@ public class NewFloorPlanMenuManager : MonoBehaviour
 
     public void Close()
     {
-        simScript.SaySomething(fileName.text);
+        // simScript.SaySomething(fileName.text);
 
         Destroy(menu);
     }

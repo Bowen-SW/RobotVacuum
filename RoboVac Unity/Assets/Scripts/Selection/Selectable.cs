@@ -16,7 +16,10 @@ public class Selectable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Selection.selected != this.gameObject)
+        {
+            isSelected = false;
+        }
     }
 
     private void OnMouseUpAsButton()
