@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Roomba : MonoBehaviour
+public class Roomba : MonoBehaviour, IMovable
 {
     public TMP_Text simTimeText;
     //public Collider2D wallSensor;
@@ -24,6 +24,30 @@ public class Roomba : MonoBehaviour
     private float angle = 55F;
     private float xCoordinate = 0;
     private float yCoordinate = 0;
+
+    private Vector3 target;
+    private bool moving = false;
+
+    //IMovable functions
+    public void SetTarget(Vector2 position)
+    {
+        target = new Vector3(position.x, position.y, transform.position.z);
+    }
+
+    public Vector2 GetTarget()
+    {
+        return new Vector3(target.x, target.y);
+    }
+
+    public void SetMoving(bool move)
+    {
+        moving = move;
+    }
+
+    public bool IsMoving()
+    {
+        return moving;
+    }
 
     void Awake() {
         vacuum = GetComponent<Rigidbody2D>();
@@ -60,6 +84,10 @@ public class Roomba : MonoBehaviour
 
     void Update(){
         if(timerStarted){
+            if(Selection.selected == this.gameObject)
+            {
+                Selection.selected = null;
+            }
 
             timer = timer + Time.deltaTime;
 
@@ -71,6 +99,10 @@ public class Roomba : MonoBehaviour
             }
 
             timeText.text = string.Format("{0}:{1}", minutes, seconds);          
+        }
+        else if(moving)
+        {
+            transform.position = target;
         }
     }
 
