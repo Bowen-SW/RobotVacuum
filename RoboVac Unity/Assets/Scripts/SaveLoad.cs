@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System.IO;
 
 [System.Serializable]
 public class SaveLoad : MonoBehaviour
@@ -9,58 +11,47 @@ public class SaveLoad : MonoBehaviour
     //public Roomba roomba;
     //public FloorPlan/Simulation (room aggregator) floorplan;
 
-    [HideInInspector] public List<Room> rooms = new List<Room>();
-    [HideInInspector] public List<Chest> chests;
-    [HideInInspector] public List<Chest> chairs;
+    [HideInInspector] public List<Room> rooms;
+    [HideInInspector] public List<Chest> chests = UserInputInformation.chests;
+    [HideInInspector] public List<Chest> chairs = UserInputInformation.chairs;
     [HideInInspector] public List<RunReport> reports = new List<RunReport>();
-    public int totalSqFt;
+    [HideInInspector] public List<Vector2> startValues;
+    [HideInInspector] public List<Vector2> stopValues;
+    public string fileName;
+    public int totalSqft;
 
-    public bool AddRoom(GameObject room)
-    {
-        if(room.GetComponent<Room>() != null)
-        {
-            rooms.Add(room.GetComponent<Room>());
-            return true;
-        }
-        return false;
-    }
-
-    public bool AddChest(GameObject chest)
-    {
-        if(chest.GetComponent<Chest>() != null)
-        {
-            chests.Add(chest.GetComponent<Chest>());
-            return true;
-        }
-        return false;
-    }
-
-    public bool AddChair(GameObject chair)
-    {
-        if(chair.GetComponent<Chest>() != null)
-        {
-            chairs.Add(chair.GetComponent<Chest>());
-            return true;
-        }
-        return false;
-    }
 
     public void AddRun(RunReport run)
     {
         reports.Add(run);
     }
 
-    public void getTotalSqFt(List<Room> roomList)
+    public void getTotalSqft()
     {
-        foreach (Room room in roomList)
+        totalSqft = 0;
+        for(int i = 0; i < startValues.Count; i++)
         {
-            totalSqFt += room.sqft;
+            int width = ((int)(stopValues[i].x - startValues[i].x));
+            int height = ((int)(stopValues[i].y - startValues[i].y));
+            totalSqft += (width*height);
         }
+    }
+
+    public void Load()
+    {
+        string filePath = EditorUtility.OpenFilePanel("Open a Floor Plan", Application.persistentDataPath, "json");
     }
 
     public void Save()
     {
+    	rooms = new List<Room>();
+        startValues = UserInputInformation.startVals;
+        stopValues = UserInputInformation.stopVals;
+
+        getTotalSqft();
+    	fileName = UserInputInformation.FileNameGS;
         Debug.Log(JsonUtility.ToJson(this));
+        File.WriteAllText(Application.persistentDataPath + "/" + fileName + ".json", JsonUtility.ToJson(this));
     }
 
 }

@@ -26,6 +26,23 @@ public class AddItem : MonoBehaviour
     {
         // Adds the item this button is set up for to the scene at the origin with no rotation modifiers
         Instantiate(objectToAdd, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+        UserInputInformation.AddRoom(objectToAdd);
     }
+
+    // public void AddChair()
+    // {
+    //     UserInputInformation.AddChair(objectToAdd);
+    // }
+
+    // public void AddChest()
+    // {
+    //     UserInputInformation.AddChest(objectToAdd);
+    // }
+
+    // public void AddRoom()
+    // {
+    //     Instantiate(objectToAdd, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+    //     UserInputInformation.AddRoom(objectToAdd);
+    // }
 
 }
