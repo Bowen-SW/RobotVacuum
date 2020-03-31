@@ -23,6 +23,7 @@ public class Room : MonoBehaviour, IResizable
         set
         {
             RoomID = value;
+            Debug.Log("Setting roomID for this room to: " + RoomID);
         }
     }
 
@@ -77,7 +78,7 @@ public class Room : MonoBehaviour, IResizable
         {
             this.start = temp;
         }
-        Debug.Log("Using Room ID: " + RoomID);
+        //Debug.Log("Using Room ID: " + RoomID);
         UserInputInformation.AddStartVector(RoomID, start);
         return start;
 

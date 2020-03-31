@@ -88,7 +88,6 @@ public static class UserInputInformation
         {
             rooms.Add(room);
             room.GetComponent<Room>().id = RoomIDNum;
-            Debug.Log("Setting new room ID to: " + room.GetComponent<Room>().id);
             RoomIDNum ++;
             return true;
         }

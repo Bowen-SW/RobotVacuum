@@ -45,6 +45,11 @@ public class SaveLoad : MonoBehaviour
     public void Save()
     {
     	rooms = new List<Room>();
+        foreach(GameObject room in UserInputInformation.rooms)
+        {
+            Debug.Log(room.GetComponent<Room>().id);
+            rooms.Add(room.GetComponent<Room>());
+        }
         startValues = UserInputInformation.startVals;
         stopValues = UserInputInformation.stopVals;
 
