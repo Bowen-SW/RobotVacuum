@@ -8,7 +8,6 @@ using TMPro;
 public class Roomba : MonoBehaviour, IMovable
 {
     public TMP_Text simTimeText;
-    //public Collider2D wallSensor;
     private TMP_Text timeText;
     private Rigidbody2D vacuum;
     private int batteryLife;
@@ -18,6 +17,7 @@ public class Roomba : MonoBehaviour, IMovable
     private float whiskerEff = 30F;
     private bool timerStarted = false;
     private bool doSprial = true;
+    private bool timeLimitReached = false;
     private float simSpeed = 1F;
     private float timer = 0F;
     private float unit = .1F;
@@ -49,6 +49,12 @@ public class Roomba : MonoBehaviour, IMovable
         return moving;
     }
 
+    private void SetDefaults(){
+        timerStarted = false;
+        doSprial = true;
+        timeLimitReached = false;
+    }
+
     void Awake() {
         vacuum = GetComponent<Rigidbody2D>();
         timeText = simTimeText.GetComponent<TMP_Text>();
@@ -56,6 +62,7 @@ public class Roomba : MonoBehaviour, IMovable
 
     public void init(float roombaSpeed = 12f, float simSpeed = 1F, int batteryLife = 150, PathType pathType = PathType.Random)
     {
+        SetDefaults();
         //TODO: set the current direction based on where the roomba is pointing
         this.simSpeed = simSpeed;
         Time.timeScale = simSpeed;      //Sets the simulation speed
@@ -73,6 +80,7 @@ public class Roomba : MonoBehaviour, IMovable
         }
 
         timerStarted = true;
+        timeLimitReached = false;
     }
 
     void OnCollisionEnter2D(Collision2D col) { 
@@ -94,7 +102,8 @@ public class Roomba : MonoBehaviour, IMovable
             string minutes = Mathf.Floor(timer / 60).ToString("00");
             string seconds = (timer % 60).ToString("00");
 
-            if(Mathf.Floor(timer / 60) >= batteryLife){
+            if(Mathf.Floor(timer / 60) >= 1){
+                timeLimitReached = true;
                 Stop();
             }
 
@@ -219,5 +228,13 @@ public class Roomba : MonoBehaviour, IMovable
         string minutes = Mathf.Floor(timer / 60).ToString("00");
         string seconds = (timer % 60).ToString("00");
         timeText.text = string.Format("{0}:{1}", minutes, seconds); 
+    }
+
+    public bool IsTimeLimitReached(){
+        return timeLimitReached;
+    }
+
+    public void SetTimeLimitReached(bool limitReached){
+        timeLimitReached = limitReached;
     }
  }

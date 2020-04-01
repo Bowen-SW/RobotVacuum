@@ -390,6 +390,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f1b4eaba76c90140b81bb2ebedc732d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &661668115 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3160643662923642046, guid: a11c057f602876c4ab245b55fcb7e506,
+    type: 3}
+  m_PrefabInstance: {fileID: 1260643011353567981}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f669bb99f1e6649a2e5eed8472ded4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &864089171
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,11 +550,26 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
+      value: 0.27646828
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time
+      value: 0.0052490234
+      objectReference: {fileID: 0}
     - target: {fileID: 2675807127965337571, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: simTimeText
       value: 
       objectReference: {fileID: 211817075}
+    - target: {fileID: 2675807127965337571, guid: 12f13358cc8f4af4e9e67b3091bba7de,
+        type: 3}
+      propertyPath: simulation
+      value: 
+      objectReference: {fileID: 661668115}
     - target: {fileID: 2675807127965337580, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1232,6 +1259,16 @@ PrefabInstance:
       propertyPath: simSpeedText
       value: 
       objectReference: {fileID: 1871080673}
+    - target: {fileID: 3160643662923642046, guid: a11c057f602876c4ab245b55fcb7e506,
+        type: 3}
+      propertyPath: startStopButton
+      value: 
+      objectReference: {fileID: 525073573}
+    - target: {fileID: 3160643662923642046, guid: a11c057f602876c4ab245b55fcb7e506,
+        type: 3}
+      propertyPath: pauseButton
+      value: 
+      objectReference: {fileID: 868491702}
     - target: {fileID: 8768774828694831210, guid: a11c057f602876c4ab245b55fcb7e506,
         type: 3}
       propertyPath: m_LocalPosition.x

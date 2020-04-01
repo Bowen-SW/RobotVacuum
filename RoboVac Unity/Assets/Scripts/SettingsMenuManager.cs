@@ -53,7 +53,11 @@ public class SettingsMenuManager : MonoBehaviour
 
     void Accept() //Call this when the accept button is
     {
-        roombaSettings.initRoomba();
+        //roombaSettings.SetRoombaSpeed(roombaSpeed);
+        // roombaSettings.SetBatteryLife(batteryLife);
+        // roombaSettings.SetPathType(pathType);
+        // roombaSettings.SetVacuumEfficiency(eff);
+        // roombaSettings.SetWhiskerEfficiency(eff);  
     }
 
     public void Close()
