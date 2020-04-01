@@ -34,13 +34,13 @@ public class NewFloorPlanMenuManager : MonoBehaviour
 
     public void Close()
     {
-        roomHeight.text = Regex.Replace(roomHeight.text, "[^.0-9]", "");
-        roomWidth.text = Regex.Replace(roomWidth.text, "[^.0-9]", "");
+        //roomHeight.text = Regex.Replace(roomHeight.text, "[^.0-9]", "");
+        //roomWidth.text = Regex.Replace(roomWidth.text, "[^.0-9]", "");
         UserInputInformation.FileNameGS = fileName.text;
         //check if width and height are numbers
         //check if the numbers are of the appropriate range
-        UserInputInformation.RoomHeightGS = int.Parse(roomHeight.text);
-        UserInputInformation.RoomWidthGS = int.Parse(roomWidth.text);
+        //UserInputInformation.RoomHeightGS = int.Parse(roomHeight.text);
+        //UserInputInformation.RoomWidthGS = int.Parse(roomWidth.text);
 
         Destroy(menu);
     }

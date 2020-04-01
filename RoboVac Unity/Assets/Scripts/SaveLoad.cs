@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using System;
+using System.Globalization;
 
 [System.Serializable]
 public class SaveLoad : MonoBehaviour
@@ -17,8 +19,13 @@ public class SaveLoad : MonoBehaviour
     [HideInInspector] public List<RunReport> reports = new List<RunReport>();
     [HideInInspector] public List<Vector2> startValues;
     [HideInInspector] public List<Vector2> stopValues;
-    public string fileName;
-    public int totalSqft;
+    [HideInInspector] public string fileName;
+    [HideInInspector] public int totalSqft;
+    [HideInInspector] public DateTime timeStamp;
+    [HideInInspector] public string timeStampString;
+    [HideInInspector] public TimeSpan duration;
+    [HideInInspector] public string durationString;
+    [HideInInspector] public static int timeStampCount = 0;
 
 
     public void AddRun(RunReport run)
@@ -26,7 +33,7 @@ public class SaveLoad : MonoBehaviour
         reports.Add(run);
     }
 
-    public void getTotalSqft()
+    public void setTotalSqft()
     {
         totalSqft = 0;
         for(int i = 0; i < startValues.Count; i++)
@@ -37,6 +44,23 @@ public class SaveLoad : MonoBehaviour
         }
     }
 
+    public void setTimeStamp()
+    {
+        if(timeStampCount == 0)
+        {
+            timeStamp = DateTime.Now;
+            timeStampString = timeStamp.ToString("MM-dd-yyyy", DateTimeFormatInfo.InvariantInfo);
+            timeStampCount++;
+        }
+    }
+
+    public void setDuration()
+    {
+        DateTime currentTime = DateTime.Now;
+        duration = currentTime.Subtract(timeStamp);
+        durationString = duration.ToString(@"dd\.hh\:mm\:ss");
+    }
+
     public void Load()
     {
         string filePath = EditorUtility.OpenFilePanel("Open a Floor Plan", Application.persistentDataPath, "json");
@@ -44,17 +68,24 @@ public class SaveLoad : MonoBehaviour
 
     public void Save()
     {
+        
     	rooms = new List<Room>();
         foreach(GameObject room in UserInputInformation.rooms)
         {
-            Debug.Log(room.GetComponent<Room>().id);
             rooms.Add(room.GetComponent<Room>());
         }
         startValues = UserInputInformation.startVals;
         stopValues = UserInputInformation.stopVals;
-
-        getTotalSqft();
+        setTimeStamp();
+        setDuration();
+        setTotalSqft();
+        // make sure that the filename is valid
+        // insert here:
+        //<
+        //             >
     	fileName = UserInputInformation.FileNameGS;
+        Debug.Log(timeStamp);
+        Debug.Log(duration);
         Debug.Log(JsonUtility.ToJson(this));
         File.WriteAllText(Application.persistentDataPath + "/" + fileName + ".json", JsonUtility.ToJson(this));
     }
