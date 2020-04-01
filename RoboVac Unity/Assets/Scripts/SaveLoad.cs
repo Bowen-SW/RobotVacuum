@@ -68,7 +68,6 @@ public class SaveLoad : MonoBehaviour
 
     public void Save()
     {
-        
     	rooms = new List<Room>();
         foreach(GameObject room in UserInputInformation.rooms)
         {
@@ -89,5 +88,4 @@ public class SaveLoad : MonoBehaviour
         Debug.Log(JsonUtility.ToJson(this));
         File.WriteAllText(Application.persistentDataPath + "/" + fileName + ".json", JsonUtility.ToJson(this));
     }
-
 }
