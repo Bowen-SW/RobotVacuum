@@ -9,6 +9,12 @@ public class SettingsMenuManager : MonoBehaviour
     public GameObject menu;
     public RoombaSettingsScript roombaSettings;
 
+    public Slider vacuumEffSlider;
+    public Slider whiskerEffSlider;
+    public Slider batteryLifeSlider;
+    public Slider speedSlider;
+    public TextMeshProUGUI pathType;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,43 +27,43 @@ public class SettingsMenuManager : MonoBehaviour
         
     }
 
-    void SetRoombaSpeed() //Called onChange for roomba speed slider
+    public void SetRoombaSpeed() //Called onChange for roomba speed slider
     {
-        //int roombaSpeed = //value from speed slider
-        //roombaSettings.SetRoombaSpeed(roombaSpeed);
+
+        roombaSettings.SetRoombaSpeed((int)speedSlider.value);
+
     }
 
-    void SetBatteryLife() //Called onChange for battery life slider
+    public void SetBatteryLife() //Called onChange for battery life slider
     {
-        // int batteryLife = //value from the slider
-        // roombaSettings.SetBatteryLife(batteryLife);
+        roombaSettings.SetBatteryLife((int)batteryLifeSlider.value);
     }
 
-    void SetPathType()
+    public void SetPathType()
     {
-        // String pathType = //string value from the dropdown menu
-        // roombaSettings.SetPathType(pathType);
+        roombaSettings.SetPathType(pathType.text);
     }
 
-    void SetVacuumEfficiency()
+    public void SetVacuumEfficiency()
     {
-        // int eff = //value from slider
-        // roombaSettings.SetVacuumEfficiency(eff);
+        roombaSettings.SetVacuumEfficiency((int)vacuumEffSlider.value);
     }
 
-    void SetWhiskerEfficiency()
+    public void SetWhiskerEfficiency()
     {
-        // int eff = //value from slider
-        // roombaSettings.SetWhiskerEfficiency(eff);   
+        roombaSettings.SetWhiskerEfficiency((int)whiskerEffSlider.value);
     }
 
-    void Accept() //Call this when the accept button is
+    public void Accept() //Call this when the accept button is
     {
-        //roombaSettings.SetRoombaSpeed(roombaSpeed);
-        // roombaSettings.SetBatteryLife(batteryLife);
-        // roombaSettings.SetPathType(pathType);
-        // roombaSettings.SetVacuumEfficiency(eff);
-        // roombaSettings.SetWhiskerEfficiency(eff);  
+        SetRoombaSpeed();
+        SetBatteryLife();
+        SetPathType();
+        SetVacuumEfficiency();
+        SetWhiskerEfficiency();
+
+        //roombaSettings.initRoomba();
+        Close();
     }
 
     public void Close()

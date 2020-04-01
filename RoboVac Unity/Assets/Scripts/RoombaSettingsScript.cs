@@ -50,6 +50,15 @@ public class RoombaSettingsScript : MonoBehaviour
         roomba.SetWhiskerEff(whiskerEff);
     }
 
+    public void initRoomba()
+    {
+        //Debug.Log(roomba.GetPath().ToString());
+        Debug.Log(roomba.GetVacEff().ToString());
+        Debug.Log(roomba.GetWhiskerEff().ToString());
+
+        roomba.init(roombaSpeed, simSpeed, batteryLife, pathType);
+    }
+
     public void Pause()
     {
         roomba.Pause();

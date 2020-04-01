@@ -3805,6 +3805,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menu: {fileID: 6585375035362770919}
+  roombaSettings: {fileID: 0}
+  vacuumEffSlider: {fileID: 3086587007709620621}
+  whiskerEffSlider: {fileID: 4474887090395531250}
+  batteryLifeSlider: {fileID: 1467609730195250240}
+  speedSlider: {fileID: 1467609730703670895}
+  pathType: {fileID: 6585375034704735898}
 --- !u!1 &6585375035364800512
 GameObject:
   m_ObjectHideFlags: 0
@@ -3951,7 +3957,7 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Snaking
       m_Image: {fileID: 0}
-    - m_Text: Wall-Follow
+    - m_Text: Wall Follow
       m_Image: {fileID: 0}
     - m_Text: Spiral
       m_Image: {fileID: 0}
@@ -4077,7 +4083,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6585375035362770915}
-        m_MethodName: Close
+        m_MethodName: Accept
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
