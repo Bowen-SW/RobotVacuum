@@ -11,11 +11,28 @@ public class Room : MonoBehaviour, IResizable
     private Vector2 prevStart = new Vector2(0,0);
     public Vector2 stop;
     private Vector2 prevStop = new Vector2(0,0);
+    private int RoomID;
+
+    
+    public int id
+    {
+        get
+        {
+            return RoomID;
+        }
+        set
+        {
+            RoomID = value;
+            Debug.Log("Setting roomID for this room to: " + RoomID);
+        }
+    }
+
 
     public int width
     {
         get
         {
+            UserInputInformation.RoomWidthGS = ((int)(this.stop.x - this.start.x));
             return (int)(this.stop.x - this.start.x);
         }
         private set {}
@@ -25,6 +42,7 @@ public class Room : MonoBehaviour, IResizable
     {
         get
         {
+            UserInputInformation.RoomHeightGS = ((int)(this.stop.y - this.start.y));
             return (int)(this.stop.y - this.start.y);
         }
         private set {}
@@ -60,7 +78,11 @@ public class Room : MonoBehaviour, IResizable
         {
             this.start = temp;
         }
+        //Debug.Log("Using Room ID: " + RoomID);
+        UserInputInformation.AddStartVector(RoomID, start);
         return start;
+
+
     }
 
     public Vector2 SetStop(Vector2 position)
@@ -72,6 +94,7 @@ public class Room : MonoBehaviour, IResizable
         {
             this.stop = temp;
         }
+        UserInputInformation.AddStopVector(RoomID, stop);
         return stop;
     }
 
