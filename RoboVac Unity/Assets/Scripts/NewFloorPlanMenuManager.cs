@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Text.RegularExpressions;
 
 public class NewFloorPlanMenuManager : MonoBehaviour
 {
@@ -28,16 +29,18 @@ public class NewFloorPlanMenuManager : MonoBehaviour
 
     public void SendData()
     {
-        //Debug.Log(fileName.text);
-        //Debug.Log(roomWidth.text);
-        //Debug.Log(roomHeight.text);
-        //Debug.Log(carpetType.text);
 
     }
 
     public void Close()
     {
-        // simScript.SaySomething(fileName.text);
+        roomHeight.text = Regex.Replace(roomHeight.text, "[^.0-9]", "");
+        roomWidth.text = Regex.Replace(roomWidth.text, "[^.0-9]", "");
+        UserInputInformation.FileNameGS = fileName.text;
+        //check if width and height are numbers
+        //check if the numbers are of the appropriate range
+        UserInputInformation.RoomHeightGS = int.Parse(roomHeight.text);
+        UserInputInformation.RoomWidthGS = int.Parse(roomWidth.text);
 
         Destroy(menu);
     }

@@ -24,8 +24,26 @@ public class AddItem : MonoBehaviour
     // Called when the button is clicked
     void TaskOnClick()
     {
-        // Adds the item this button is set up for to the scene at the origin with no rotation modifiers
-        Instantiate(objectToAdd, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+        if(button.name == "Item Button 1")
+        {
+            Debug.Log("b1");
+        }
+        else if(button.name == "Item Button 2")
+        {
+            Debug.Log("b2");
+        }
+        else if(button.name == "Item Button 3")
+        {
+            Debug.Log("b3");
+        }
+        else if(button.name == "Item Button 4")
+        {
+            Debug.Log("b4");
+        }
+        else if(button.name == "Item Button 5")
+        {
+            UserInputInformation.AddRoom((GameObject)Instantiate(objectToAdd, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)));
+        }
     }
 
 }
