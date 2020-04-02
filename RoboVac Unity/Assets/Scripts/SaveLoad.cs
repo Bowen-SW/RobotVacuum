@@ -23,8 +23,8 @@ public class SaveLoad : MonoBehaviour
     [HideInInspector] public int totalSqft;
     [HideInInspector] public DateTime timeStamp;
     [HideInInspector] public string timeStampString;
-    [HideInInspector] public TimeSpan duration;
-    [HideInInspector] public string durationString;
+    [HideInInspector] public string duration;
+    [HideInInspector] public string carpetType;
     [HideInInspector] public static int timeStampCount = 0;
 
 
@@ -54,13 +54,6 @@ public class SaveLoad : MonoBehaviour
         }
     }
 
-    public void setDuration()
-    {
-        DateTime currentTime = DateTime.Now;
-        duration = currentTime.Subtract(timeStamp);
-        durationString = duration.ToString(@"dd\.hh\:mm\:ss");
-    }
-
     public void Load()
     {
         string filePath = EditorUtility.OpenFilePanel("Open a Floor Plan", Application.persistentDataPath, "json");
@@ -75,13 +68,10 @@ public class SaveLoad : MonoBehaviour
         }
         startValues = UserInputInformation.startVals;
         stopValues = UserInputInformation.stopVals;
+        carpetType = UserInputInformation.carpetType;
+        duration = UserInputInformation.durationGS;
         setTimeStamp();
-        setDuration();
         setTotalSqft();
-        // make sure that the filename is valid
-        // insert here:
-        //<
-        //             >
     	fileName = UserInputInformation.FileNameGS;
         Debug.Log(timeStamp);
         Debug.Log(duration);

@@ -98,7 +98,8 @@ public class Roomba : MonoBehaviour, IMovable
                 Stop();
             }
 
-            timeText.text = string.Format("{0}:{1}", minutes, seconds);          
+            timeText.text = string.Format("{0}:{1}", minutes, seconds);
+            UserInputInformation.durationGS = string.Format("{0}:{1}", minutes, seconds);          
         }
         else if(moving)
         {
@@ -132,27 +133,33 @@ public class Roomba : MonoBehaviour, IMovable
             case PathType.Random:
                 path = gameObject.AddComponent<RandomPath>();
                 this.pathType = PathType.Random;
+                UserInputInformation.pathTypeGS = "Random";
                 break;
             case PathType.Snaking:
                 path = gameObject.AddComponent<SnakingPath>();
                 this.pathType = PathType.Snaking;
+                UserInputInformation.pathTypeGS = "Snaking";
                 break;
             case PathType.Spiral:
                 path = gameObject.AddComponent<SpiralPath>();
                 this.pathType = PathType.Spiral;
+                UserInputInformation.pathTypeGS = "Spiral";
                 break;
             case PathType.WallFollow:
                 path = gameObject.AddComponent<WallFollow>();
                 this.pathType = PathType.WallFollow;
+                UserInputInformation.pathTypeGS = "Wall Follow";
                 break;
             case PathType.All:
                 this.pathType = PathType.All;
+                UserInputInformation.pathTypeGS = "All";
                 //TODO
                 break;
             default: //TODO Default to all
                 Debug.Log("Error setting path. Default to Random.");
                 path = gameObject.AddComponent<RandomPath>();
                 this.pathType = PathType.Random;
+                UserInputInformation.pathTypeGS = "Random";
                 break;
         }
     }
