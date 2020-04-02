@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+
 namespace QuantumTek.SimpleMenu
 {
     /// <summary> A script that will play audio clips using the given audio source. </summary>
