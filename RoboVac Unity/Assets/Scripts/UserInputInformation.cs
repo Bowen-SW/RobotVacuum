@@ -64,17 +64,13 @@ public static class UserInputInformation
         {
             Debug.Log("start count before " + startVals.Count);
             startVals.Add(startVector);
-            // Debug.Log("start vector after add " + startVals);
         }
         else
         {
-            // Debug.Log("start count before else " + startVals.Count);
-            startVals[roomID] = startVector; 
-            // Debug.Log("start vector after else " + startVals);          
+            startVals[roomID] = startVector;          
         }
-        
-        // Debug.Log("StartVal Vector List: " + startVals);
     }
+
     public static void AddStopVector(int roomID, Vector2 stopVector)
     {
         if(stopVals.Count == roomID)
@@ -85,8 +81,6 @@ public static class UserInputInformation
         {
             stopVals[roomID] = stopVector;           
         }
-
-        //  Debug.Log("StopVal Vector List" +  stopVals);
     }    
 
     public static string FileNameGS

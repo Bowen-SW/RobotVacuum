@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9, y: 126}
+  m_AnchoredPosition: {x: 9.9, y: 139.8}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &203181720127487666
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -98.96303, y: 20.42096, z: -91.108765, w: 0}
+  m_margin: {x: -144.96619, y: 20.42096, z: -126.07123, w: 0}
   m_textInfo:
     textComponent: {fileID: 1535964184852240517}
     characterCount: 0
@@ -1878,6 +1878,7 @@ MonoBehaviour:
   roomHeight: {fileID: 4174627269885316680}
   carpetType: {fileID: 5710015611377938459}
   simScript: {fileID: 0}
+  warningCount: 0
 --- !u!1 &5710015611979179649
 GameObject:
   m_ObjectHideFlags: 0

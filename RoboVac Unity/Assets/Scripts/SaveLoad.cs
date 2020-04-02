@@ -9,10 +9,6 @@ using System.Globalization;
 [System.Serializable]
 public class SaveLoad : MonoBehaviour
 {
-
-    //public Roomba roomba;
-    //public FloorPlan/Simulation (room aggregator) floorplan;
-
     [HideInInspector] public List<Room> rooms;
     [HideInInspector] public List<Chest> chests = UserInputInformation.chests;
     [HideInInspector] public List<Chest> chairs = UserInputInformation.chairs;
@@ -21,17 +17,13 @@ public class SaveLoad : MonoBehaviour
     [HideInInspector] public List<Vector2> stopValues;
     [HideInInspector] public string fileName;
     [HideInInspector] public int totalSqft;
-    [HideInInspector] public DateTime timeStamp;
-    [HideInInspector] public string timeStampString;
-    [HideInInspector] public string duration;
-    [HideInInspector] public string carpetType;
+    [HideInInspector] public static DateTime timeStamp;
+    [HideInInspector] public static string timeStampString;
+    [HideInInspector] public static string duration;
+    [HideInInspector] public static string carpetType;
+    [HideInInspector] public static string pathType;
     [HideInInspector] public static int timeStampCount = 0;
-
-
-    public void AddRun(RunReport run)
-    {
-        reports.Add(run);
-    }
+    [HideInInspector] public static int coverage;
 
     public void setTotalSqft()
     {
@@ -54,6 +46,28 @@ public class SaveLoad : MonoBehaviour
         }
     }
 
+    public void recordRun()
+    {
+        carpetType = UserInputInformation.carpetType;
+        duration = UserInputInformation.durationGS;
+        pathType = UserInputInformation.pathTypeGS;
+        coverage = 0;
+        RunReport newRun = new RunReport(timeStampString, duration, pathType, coverage);
+        Debug.Log(newRun);
+        reports.Add(newRun);
+    }
+
+    public void setFurniture()
+    {
+        rooms = new List<Room>();
+        foreach(GameObject room in UserInputInformation.rooms)
+        {
+            rooms.Add(room.GetComponent<Room>());
+        }
+        startValues = UserInputInformation.startVals;
+        stopValues = UserInputInformation.stopVals;
+    }
+
     public void Load()
     {
         string filePath = EditorUtility.OpenFilePanel("Open a Floor Plan", Application.persistentDataPath, "json");
@@ -61,20 +75,13 @@ public class SaveLoad : MonoBehaviour
 
     public void Save()
     {
-    	rooms = new List<Room>();
-        foreach(GameObject room in UserInputInformation.rooms)
-        {
-            rooms.Add(room.GetComponent<Room>());
-        }
-        startValues = UserInputInformation.startVals;
-        stopValues = UserInputInformation.stopVals;
-        carpetType = UserInputInformation.carpetType;
-        duration = UserInputInformation.durationGS;
         setTimeStamp();
         setTotalSqft();
+        setFurniture();
+        recordRun();
+        recordRun();
+        recordRun();
     	fileName = UserInputInformation.FileNameGS;
-        Debug.Log(timeStamp);
-        Debug.Log(duration);
         Debug.Log(JsonUtility.ToJson(this));
         File.WriteAllText(Application.persistentDataPath + "/" + fileName + ".json", JsonUtility.ToJson(this));
     }
