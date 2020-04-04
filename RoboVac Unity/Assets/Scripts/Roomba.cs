@@ -86,10 +86,12 @@ public class Roomba : MonoBehaviour, IMovable
     }
 
     void OnCollisionEnter2D(Collision2D col) { 
-        if(pathType == PathType.Spiral){
-            doSprial = false;
+        if(timerStarted){
+            if(pathType == PathType.Spiral){
+                doSprial = false;
+            }
+            path.Move();
         }
-        path.Move();
     }
 
     void Update(){
