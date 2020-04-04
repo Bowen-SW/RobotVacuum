@@ -97,8 +97,8 @@ public class NewFloorPlanMenuManager : MonoBehaviour
         {
             UserInputInformation.FileNameGS = fileName.text.Replace("\u200B", "");
             UserInputInformation.carpetTypeGS = carpetType.text.Replace("\u200B", "");
-            Destroy(menu);
             UserInputInformation.AddRoom((GameObject)Instantiate(objectToAdd, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)));
+            Destroy(menu);
         }
     }
 }

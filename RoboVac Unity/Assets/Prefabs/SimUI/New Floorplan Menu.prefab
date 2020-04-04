@@ -1872,6 +1872,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menu: {fileID: 5710015611977146726}
+  objectToAdd: {fileID: 3347921352153231088, guid: 5f99ae4e997a3c14ba5e514534d07303,
+    type: 3}
   errorMessage: {fileID: 1535964184852240517}
   fileName: {fileID: 5710015612254317014}
   roomWidth: {fileID: 5639021811874580275}
