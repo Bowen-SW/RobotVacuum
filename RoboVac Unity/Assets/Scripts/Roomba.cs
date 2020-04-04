@@ -106,7 +106,7 @@ public class Roomba : MonoBehaviour, IMovable
             string minutes = Mathf.Floor(timer / 60).ToString("00");
             string seconds = (timer % 60).ToString("00");
 
-            if(Mathf.Floor(timer / 60) >= 1){
+            if(Mathf.Floor(timer / 60) >= 3){
                 timeLimitReached = true;
                 // Stop();
             }
@@ -192,6 +192,7 @@ public class Roomba : MonoBehaviour, IMovable
         vacuum.rotation = 0F;
         transform.position = new Vector3(xCoordinate, yCoordinate, 0);
         transform.rotation = Quaternion.identity;
+        unit = .1F;
     }
 
     public Path GetPath(){
