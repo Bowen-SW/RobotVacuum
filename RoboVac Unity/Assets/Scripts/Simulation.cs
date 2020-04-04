@@ -21,14 +21,14 @@ public class Simulation : MonoBehaviour
     private TMP_Text simText;
 
     private PathType pathType = PathType.Snaking; //TODO Change default All
-    private float roombaSpeed = 12F; //Defualt value 12 in/sec
-    private int batteryLife = 150; //Default value
     private int simSpeed = 1;    
     private bool isPaused = false;
     private bool isPlaying = false;
     private bool isStopped = true;
+    private bool usingAllPaths = false;
 
     private Queue<PathType> pathList;
+    private RoombaSettingsScript roombaSettings;
 
     void Start() {
         startStopBtn = startStopButton.GetComponent<Button>();
@@ -39,6 +39,7 @@ public class Simulation : MonoBehaviour
         pauseBtn.interactable = false;
 
         simSlowBtn = simSlowButton.GetComponent<Button>();
+
         simSlowBtn.onClick.AddListener(SlowDown);
         simSlowBtn.interactable = false;
 
@@ -49,19 +50,28 @@ public class Simulation : MonoBehaviour
         simText = simSpeedText.GetComponent<TMP_Text>();
 
         pathList = new Queue<PathType>();
+
+        roombaSettings = GetComponentInParent<RoombaSettingsScript>();
     }
 
     void Update(){
         if(roomba.IsTimeLimitReached()){
+            Debug.Log("Time limit has been reached");
             isPaused = false;
             isPlaying = false;
             isStopped = true;
             roomba.SetTimeLimitReached(false);
             SetDefaults();
+            roomba.Stop();
             if(pathList.Count != 0){
                 pathType = pathList.Peek();
+                Debug.Log("Next path type is: " + pathType);
                 pathList.Dequeue();
                 StartStopRoomba();
+            } else {
+                if(pathType == PathType.WallFollow && usingAllPaths){
+                    usingAllPaths = false;
+                }
             }
         }
     }
@@ -70,6 +80,10 @@ public class Simulation : MonoBehaviour
         simFastBtn.interactable = true;
         pauseBtn.interactable = true;
 
+        if(pathType != roombaSettings.GetPathType() && !usingAllPaths){
+            pathType = roombaSettings.GetPathType();
+        }
+
         if(isPaused){   //Roomba is paused and needs to be resumed
             roomba.Resume();
             isPaused = false;
@@ -77,11 +91,12 @@ public class Simulation : MonoBehaviour
             isPlaying = true;
             //TODO set the icon to a stop button
         } else if(isPlaying){
-            roomba.Stop();
+            //roomba.Stop();
             isPaused = false;
             isPlaying = false;
             isStopped = true;
             SetDefaults();
+            roomba.Stop();
             pathList = new Queue<PathType>(); //Reset the queue if the stop button is clicked
             //TODO Set icon to the Play icon
         } else if(isStopped) {        //Roomba started for the first time  
@@ -145,15 +160,23 @@ public class Simulation : MonoBehaviour
 
     private void InitRoomba()
     {
-        roomba.init(roombaSpeed, simSpeed, batteryLife, pathType);
+        Debug.Log(roombaSettings.GetRoombaSpeed());
+        Debug.Log(roombaSettings.GetBatteryLife());
+        Debug.Log(roombaSettings.GetPathType());
+        Debug.Log(roombaSettings.GetVacuumEfficiency());
+        Debug.Log(roombaSettings.GetWhiskerEfficiency());
+        roomba.Init(roombaSettings.GetRoombaSpeed(), roombaSettings.GetBatteryLife(), 
+                    pathType, roombaSettings.GetVacuumEfficiency(), roombaSettings.GetWhiskerEfficiency());
         isStopped = false;
         isPlaying = true;
     }
 
     void SetDefaults(){
         simSpeed = 1;
+        roomba.SetSimSpeed(simSpeed);
         simText.text = "1x";
         roomba.ResetRunTime();
+
         pauseBtn.interactable = false;
         simSlowBtn.interactable = false;
         simFastBtn.interactable = false;
@@ -164,6 +187,8 @@ public class Simulation : MonoBehaviour
         pathList.Enqueue(PathType.Snaking);
         pathList.Enqueue(PathType.Spiral);
         pathList.Enqueue(PathType.WallFollow);
+
+        usingAllPaths = true;
         Debug.Log("All paths chosen");
     }
 

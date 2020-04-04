@@ -25,7 +25,7 @@ public class WallFollow : Path
     }
 
     private IEnumerator TurnClock(){
-        Debug.Log("Turning Clock");
+        // Debug.Log("Turning Clock");
         vacuum.angularVelocity = -angularVelocity;
 
         float waitTime = rightAngle / Mathf.Abs(angularVelocity);
@@ -38,7 +38,7 @@ public class WallFollow : Path
     }
 
     private IEnumerator TurnCounter(){
-        Debug.Log("Turning CounterClockwise");
+        // Debug.Log("Turning CounterClockwise");
         vacuum.angularVelocity = angularVelocity;
 
         float waitTime = rightAngle / Mathf.Abs(angularVelocity);
@@ -96,7 +96,7 @@ public class WallFollow : Path
             Debug.Log("Error finding next X clockwise position");
         }
 
-        Debug.Log("Current X = " + currentDirection.x + " New X = " + roundedX);
+        // Debug.Log("Current X = " + currentDirection.x + " New X = " + roundedX);
         return roundedX;
     }
     private int FindNextYCounter(){
@@ -113,7 +113,7 @@ public class WallFollow : Path
             Debug.Log("Error finding next Y clockwise position");
         }
 
-        Debug.Log("Current Y = " + currentDirection.y + " New Y = " + roundedY);
+        // Debug.Log("Current Y = " + currentDirection.y + " New Y = " + roundedY);
         return roundedY;
     }
 }
