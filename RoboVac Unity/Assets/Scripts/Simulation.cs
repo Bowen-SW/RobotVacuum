@@ -8,33 +8,38 @@ using TMPro;
 public class Simulation : MonoBehaviour
 {
     public Roomba roomba;
-    public Button startButton;
-    public Button pauseStopButton;
+    public Button startStopButton;
+    public Button pauseButton;
     public Button simSlowButton;
     public Button simFastButton;
     public TMP_Text simSpeedText;
 
-    private Button startBtn;
-    private Button pauseStopBtn;
+    private Button startStopBtn;
+    private Button pauseBtn;
     private Button simSlowBtn;
     private Button simFastBtn;
     private TMP_Text simText;
 
-    private PathType pathType = PathType.Random; //TODO Change default All
-    private float roombaSpeed = 12F; //Defualt value 12 in/sec
-    private int batteryLife = 150; //Default value
+    private PathType pathType = PathType.Snaking; //TODO Change default All
     private int simSpeed = 1;    
-    private bool isPaused;
+    private bool isPaused = false;
+    private bool isPlaying = false;
+    private bool isStopped = true;
+    private bool usingAllPaths = false;
+
+    private Queue<PathType> pathList;
+    private RoombaSettingsScript roombaSettings;
 
     void Start() {
-        startBtn = startButton.GetComponent<Button>();
-        startBtn.onClick.AddListener(StartRoomba);
+        startStopBtn = startStopButton.GetComponent<Button>();
+        startStopBtn.onClick.AddListener(StartStopRoomba);
 
-        pauseStopBtn = pauseStopButton.GetComponent<Button>();
-        pauseStopBtn.onClick.AddListener(PauseStopRoomba);
-        pauseStopBtn.interactable = false;
+        pauseBtn = pauseButton.GetComponent<Button>();
+        pauseBtn.onClick.AddListener(PauseRoomba);
+        pauseBtn.interactable = false;
 
         simSlowBtn = simSlowButton.GetComponent<Button>();
+
         simSlowBtn.onClick.AddListener(SlowDown);
         simSlowBtn.interactable = false;
 
@@ -43,37 +48,72 @@ public class Simulation : MonoBehaviour
         simFastBtn.interactable = false;
         
         simText = simSpeedText.GetComponent<TMP_Text>();
+
+        pathList = new Queue<PathType>();
+
+        roombaSettings = GetComponentInParent<RoombaSettingsScript>();
     }
 
-    void StartRoomba(){
-        startBtn.interactable = false;
-        simFastBtn.interactable = true;
-        pauseStopBtn.interactable = true;
-
-        if(isPaused){   //Roomba is paused and needs to be resumed
-            roomba.Resume();
+    void Update(){
+        if(roomba.IsTimeLimitReached()){
+            Debug.Log("Time limit has been reached");
             isPaused = false;
-        } else {        //Roomba started for the first time  
-            if(pathType == PathType.All){
-                StartAllPaths();
+            isPlaying = false;
+            isStopped = true;
+            roomba.SetTimeLimitReached(false);
+            SetDefaults();
+            roomba.Stop();
+            if(pathList.Count != 0){
+                pathType = pathList.Peek();
+                Debug.Log("Next path type is: " + pathType);
+                pathList.Dequeue();
+                StartStopRoomba();
             } else {
-                roomba.init(roombaSpeed, simSpeed, batteryLife, pathType);
+                if(pathType == PathType.WallFollow && usingAllPaths){
+                    usingAllPaths = false;
+                }
             }
         }
     }
 
-    void PauseStopRoomba(){
-        if(isPaused) {  //Roomba is already paused, and the stop button is hit
-            roomba.Stop();
-            isPaused = false;
-            SetDefaults();
-            //TODO change to the pause icon
-        } else{         //Roomba is being paused
-            roomba.Pause();
-            isPaused = true;
-            //TODO change to the stop icon
+    public void StartStopRoomba(){
+        simFastBtn.interactable = true;
+        pauseBtn.interactable = true;
+
+        if(pathType != roombaSettings.GetPathType() && !usingAllPaths){
+            pathType = roombaSettings.GetPathType();
         }
-        startBtn.interactable = true;
+
+        if(isPaused){   //Roomba is paused and needs to be resumed
+            roomba.Resume();
+            isPaused = false;
+            isStopped = false;
+            isPlaying = true;
+            //TODO set the icon to a stop button
+        } else if(isPlaying){
+            //roomba.Stop();
+            isPaused = false;
+            isPlaying = false;
+            isStopped = true;
+            SetDefaults();
+            roomba.Stop();
+            pathList = new Queue<PathType>(); //Reset the queue if the stop button is clicked
+            //TODO Set icon to the Play icon
+        } else if(isStopped) {        //Roomba started for the first time  
+            if(pathType == PathType.All){
+                StartAllPaths();
+            }
+            InitRoomba();
+            //TODO set the icon to a stop button
+        }
+    }
+
+    void PauseRoomba(){
+        roomba.Pause();
+        isPaused = true;
+        isPlaying = false;
+        pauseBtn.interactable = false;
+        //TODO turn the stop button into a play button
     }
 
     void SlowDown(){       
@@ -118,18 +158,37 @@ public class Simulation : MonoBehaviour
         roomba.SetSimSpeed(simSpeed);
     }
 
+    private void InitRoomba()
+    {
+        Debug.Log(roombaSettings.GetRoombaSpeed());
+        Debug.Log(roombaSettings.GetBatteryLife());
+        Debug.Log(roombaSettings.GetPathType());
+        Debug.Log(roombaSettings.GetVacuumEfficiency());
+        Debug.Log(roombaSettings.GetWhiskerEfficiency());
+        roomba.Init(roombaSettings.GetRoombaSpeed(), roombaSettings.GetBatteryLife(), 
+                    pathType, roombaSettings.GetVacuumEfficiency(), roombaSettings.GetWhiskerEfficiency());
+        isStopped = false;
+        isPlaying = true;
+    }
+
     void SetDefaults(){
-        pathType = PathType.Random; //TODO Change default All
-        roombaSpeed = 12F; //Defualt value 12 in/sec
-        batteryLife = 150; //Default value
         simSpeed = 1;
+        roomba.SetSimSpeed(simSpeed);
         simText.text = "1x";
         roomba.ResetRunTime();
-        pauseStopBtn.interactable = false;
+
+        pauseBtn.interactable = false;
+        simSlowBtn.interactable = false;
+        simFastBtn.interactable = false;
     }
 
     void StartAllPaths(){
-        //TODO
+        pathType = PathType.Random;
+        pathList.Enqueue(PathType.Snaking);
+        pathList.Enqueue(PathType.Spiral);
+        pathList.Enqueue(PathType.WallFollow);
+
+        usingAllPaths = true;
         Debug.Log("All paths chosen");
     }
 

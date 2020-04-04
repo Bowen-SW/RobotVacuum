@@ -52,7 +52,7 @@ public class SnakingPath : Path
             //StartCoroutine(TurnCounterClock()); 
             Launch(-xDirection, 0);
             
-            yield return new WaitForSeconds(1F / velocity);
+            yield return new WaitForSeconds(.35F / velocity);
             //If a collision happens here, it will be detected and dealt with using the inCurrentCollision boolean
 
             Stop();
@@ -73,7 +73,7 @@ public class SnakingPath : Path
         } else { //Turn clockwise
             //StartCoroutine(TurnClockwise());
             Launch(0, yDirection);
-            yield return new WaitForSeconds(1F / velocity);
+            yield return new WaitForSeconds(.35F / velocity);
             //If a collision happens here, it will be detected and dealt with using the inCurrentCollision boolean
 
             Stop();

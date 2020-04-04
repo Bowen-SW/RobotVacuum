@@ -29,9 +29,7 @@ public class SettingsMenuManager : MonoBehaviour
 
     public void SetRoombaSpeed() //Called onChange for roomba speed slider
     {
-
         roombaSettings.SetRoombaSpeed((int)speedSlider.value);
-
     }
 
     public void SetBatteryLife() //Called onChange for battery life slider
@@ -62,7 +60,6 @@ public class SettingsMenuManager : MonoBehaviour
         SetVacuumEfficiency();
         SetWhiskerEfficiency();
 
-        roombaSettings.initRoomba();
         Close();
     }
 

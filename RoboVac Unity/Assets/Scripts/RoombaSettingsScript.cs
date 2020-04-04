@@ -9,24 +9,30 @@ public class RoombaSettingsScript : MonoBehaviour
     
     public Roomba roomba;
 
-    private int roombaSpeed;
-    private int simSpeed = 1;
-    private int batteryLife;
-    private PathType pathType;
+    private int roombaSpeed = 12;
+    private int batteryLife = 150;
+    private float vacEff = .75F;
+    private float whiskerEff = .3F;
+    private PathType pathType = PathType.All;
 
-
-    public void SetRoombaSpeed(int roombaSpeed)
-    {
+    public int GetRoombaSpeed(){
+        return roombaSpeed;
+    }
+    public void SetRoombaSpeed(int roombaSpeed){
         this.roombaSpeed = roombaSpeed;
     }
 
-    public void SetBatteryLife(int batteryLife)
-    {
+    public int GetBatteryLife(){
+        return batteryLife;
+    }
+    public void SetBatteryLife(int batteryLife){
         this.batteryLife = batteryLife;
     }
 
-    public void SetPathType(String path)
-    {
+    public PathType GetPathType(){
+        return pathType;
+    }
+    public void SetPathType(String path){
         if(String.Equals(path, "Random")){
             pathType = PathType.Random;
         } else if (String.Equals(path, "Snaking")) {
@@ -40,27 +46,26 @@ public class RoombaSettingsScript : MonoBehaviour
         }
     }
 
-    public void SetVacuumEfficiency(int vacEff)
-    {
-        roomba.SetVacEff(vacEff);
+    public float GetVacuumEfficiency(){
+        return vacEff;
+    }
+    public void SetVacuumEfficiency(float vacEff){
+        this.vacEff = vacEff;
+    }
+ 
+    public float GetWhiskerEfficiency(){
+        return whiskerEff;
+    }
+    public void SetWhiskerEfficiency(float whiskerEff){
+        this.whiskerEff = whiskerEff;
     }
 
-    public void SetWhiskerEfficiency(int whiskerEff)
-    {
-        roomba.SetWhiskerEff(whiskerEff);
-    }
+    // public void initRoomba()
+    // {
+    //     //Debug.Log(roomba.GetPath().ToString());
+    //     Debug.Log(roomba.GetVacEff().ToString());
+    //     Debug.Log(roomba.GetWhiskerEff().ToString());
 
-    public void initRoomba()
-    {
-        //Debug.Log(roomba.GetPath().ToString());
-        Debug.Log(roomba.GetVacEff().ToString());
-        Debug.Log(roomba.GetWhiskerEff().ToString());
-
-        roomba.init(roombaSpeed, simSpeed, batteryLife, pathType);
-    }
-
-    public void Pause()
-    {
-        roomba.Pause();
-    }
+    //     roomba.init(roombaSpeed, simSpeed, batteryLife, pathType);
+    // }
 }
