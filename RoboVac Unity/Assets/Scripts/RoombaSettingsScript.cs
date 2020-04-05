@@ -11,8 +11,8 @@ public class RoombaSettingsScript : MonoBehaviour
 
     private int roombaSpeed = 12;
     private int batteryLife = 150;
-    private float vacEff = .75F;
-    private float whiskerEff = .3F;
+    private float vacEff = 75F;
+    private float whiskerEff = 30F;
     private PathType pathType = PathType.All;
 
     public int GetRoombaSpeed(){
@@ -59,13 +59,4 @@ public class RoombaSettingsScript : MonoBehaviour
     public void SetWhiskerEfficiency(float whiskerEff){
         this.whiskerEff = whiskerEff;
     }
-
-    // public void initRoomba()
-    // {
-    //     //Debug.Log(roomba.GetPath().ToString());
-    //     Debug.Log(roomba.GetVacEff().ToString());
-    //     Debug.Log(roomba.GetWhiskerEff().ToString());
-
-    //     roomba.init(roombaSpeed, simSpeed, batteryLife, pathType);
-    // }
 }

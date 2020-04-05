@@ -67,6 +67,8 @@ public class Simulation : MonoBehaviour
             roomba.SetTimeLimitReached(false);
             SetDefaults();
             roomba.Stop();
+            startStopBtn.GetComponent<Image>().sprite = playImage;
+            startStopBtn.GetComponent<Image>().color = new Color(182, 214, 204, 255);
             if(pathList.Count != 0){
                 pathType = pathList.Peek();
                 Debug.Log("Next path type is: " + pathType);
