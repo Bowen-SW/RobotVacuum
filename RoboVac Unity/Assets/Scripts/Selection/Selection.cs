@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Selection : MonoBehaviour
+public class Selection
 {
 
     private static GameObject _selected;
@@ -17,18 +17,6 @@ public class Selection : MonoBehaviour
         {
             Select(value);
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public static void Select(GameObject o)
@@ -50,7 +38,7 @@ public class Selection : MonoBehaviour
     public static void DeleteSelected()
     {
         if(selected == null) return;
-        Destroy(selected);
+        Object.Destroy(selected);
         selected = null;
     }
 }

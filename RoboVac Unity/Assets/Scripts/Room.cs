@@ -8,9 +8,9 @@ public class Room : MonoBehaviour, IResizable
     public GameObject cell;
 
     public Vector2 start;
-    private Vector2 prevStart = new Vector2(0,0);
+    private Vector2 prevStart = new Vector2(-1000,-1000);
     public Vector2 stop;
-    private Vector2 prevStop = new Vector2(0,0);
+    private Vector2 prevStop = new Vector2(-1000,-1000);
     private int RoomID;
 
     
@@ -81,8 +81,6 @@ public class Room : MonoBehaviour, IResizable
         //Debug.Log("Using Room ID: " + RoomID);
         UserInputInformation.AddStartVector(RoomID, start);
         return start;
-
-
     }
 
     public Vector2 SetStop(Vector2 position)
@@ -100,29 +98,31 @@ public class Room : MonoBehaviour, IResizable
 
     public Vector2 SetLeft(float position)
     {
-        return this.SetStart(new Vector2(position, this.start.y));
+        return this.SetStart(new Vector2(position, this.prevStart.y));
     }
 
     public Vector2 SetRight(float position)
     {
-        return this.SetStop(new Vector2(position, this.stop.y));
+        return this.SetStop(new Vector2(position, this.prevStop.y));
     }
 
     public Vector2 SetTop(float position)
     {
-        return this.SetStop(new Vector2(this.stop.x, position));
+        return this.SetStop(new Vector2(this.prevStop.x, position));
     }
 
     public Vector2 SetBottom(float position)
     {
-        return this.SetStart(new Vector2(this.start.x, position));
+        return this.SetStart(new Vector2(this.prevStart.x, position));
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        SetStart(new Vector2(-1.5f,-1.5f));
-        SetStop(new Vector2(0.5f,0.5f));
+        float pos1 = Random.Range(-20f, 20f);
+        float pos2 = Random.Range(-20f, 20f);
+        SetStart(new Vector2(pos1-1.5f,pos2-1.5f));
+        SetStop(new Vector2(pos1+0.5f,pos2+0.5f));
     }
 
     // Update is called once per frame
@@ -136,16 +136,17 @@ public class Room : MonoBehaviour, IResizable
             cells = CreateRoom();
         }
 
-        if(Input.GetMouseButton(0))
+        if(Input.GetMouseButtonUp(0))
          {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             
             if(Physics.Raycast(ray, out hit, 100))
             {
+                Debug.Log(hit.transform.parent.gameObject);
                 foreach(GameObject cell in cells)
                 {
-                    if(hit.transform.parent.gameObject == cell)
+                    if(hit.transform.parent.gameObject == cell || hit.transform.parent.gameObject == gameObject)
                     {
                         gameObject.GetComponent<Selectable>().Select();
                         break;
@@ -167,6 +168,8 @@ public class Room : MonoBehaviour, IResizable
 
     private GameObject[,] CreateRoom()
     {
+        Debug.Log("Prev start: " + prevStart + ", Start: " + start);
+        Debug.Log("Prev stop: " + prevStop + ", Stop: " + stop);
         ClearRoom();
         GameObject[,] newCells = new GameObject[this.width, this.height];
         for(int j = 0; j < this.height; j++)

@@ -16,6 +16,15 @@ public class Selectable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!Object.FindObjectOfType<Simulation>().IsStopped())
+        {
+            if(Selection.selected == this.gameObject)
+            {
+                Selection.selected = null;
+            }
+            isSelected = false;
+        }
+
         if(Selection.selected != this.gameObject)
         {
             isSelected = false;
