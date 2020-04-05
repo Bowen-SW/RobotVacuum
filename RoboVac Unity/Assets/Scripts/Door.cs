@@ -56,14 +56,16 @@ public class Door : MonoBehaviour, IMovable
 
             if(currentWall != null)
             {
-                transform.position = currentWall.transform.position + new Vector3(0f,0f,-1f);
+                transform.position = currentWall.transform.position;
                 if(currentWall.tag == "West" || currentWall.tag == "East")
                 {
                     transform.rotation = Quaternion.Euler(0,0,90);
+                    transform.position += new Vector3(0f,0.5f,0f);
                 }
                 else
                 {
                     transform.rotation = Quaternion.Euler(0,0,0);
+                    transform.position += new Vector3(0.5f,0f,0f);
                 }
                 List<GameObject> nearby = NearbyWalls();
                 foreach(GameObject wall in nearby)

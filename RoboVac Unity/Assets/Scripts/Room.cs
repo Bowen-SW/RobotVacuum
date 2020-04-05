@@ -121,7 +121,8 @@ public class Room : MonoBehaviour, IResizable
     // Start is called before the first frame update
     void Start()
     {
-        
+        SetStart(new Vector2(-1.5f,-1.5f));
+        SetStop(new Vector2(0.5f,0.5f));
     }
 
     // Update is called once per frame

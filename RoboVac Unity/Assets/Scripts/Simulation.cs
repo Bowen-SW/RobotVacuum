@@ -212,4 +212,14 @@ public class Simulation : MonoBehaviour
         Debug.Log("All paths chosen");
     }
 
+    public bool IsPlaying()
+    {
+        return isPlaying;
+    }
+
+    public bool IsStopped()
+    {
+        return isStopped;
+    }
+
 }
