@@ -904,6 +904,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1181358604 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 552511397267884309, guid: 16cb95dcfc768dd46953459f0a82ddcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 656516831}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1181358610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181358604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94e45bf17a404864a862c610021ffd16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rooms: []
+  chests: []
+  chairs: []
+  reports: []
+  startValues: []
+  stopValues: []
+  fileName: 
+  totalSqft: 0
+  room: {fileID: 3347921352153231088, guid: 5f99ae4e997a3c14ba5e514534d07303, type: 3}
+  chair: {fileID: 0}
+  chest: {fileID: 0}
+  table: {fileID: 0}
+  door: {fileID: 0}
 --- !u!1001 &1225594381
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1029,12 +1060,12 @@ PrefabInstance:
     - target: {fileID: 2675807127965337580, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2675807127965337580, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2675807127965337580, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
@@ -1449,6 +1480,11 @@ MonoBehaviour:
   stopValues: []
   fileName: 
   totalSqft: 0
+  room: {fileID: 3347921352153231088, guid: 5f99ae4e997a3c14ba5e514534d07303, type: 3}
+  chair: {fileID: 0}
+  chest: {fileID: 0}
+  table: {fileID: 0}
+  door: {fileID: 0}
 --- !u!114 &2065904805
 MonoBehaviour:
   m_ObjectHideFlags: 0
