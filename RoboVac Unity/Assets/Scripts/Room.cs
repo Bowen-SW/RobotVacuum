@@ -13,6 +13,8 @@ public class Room : MonoBehaviour, IResizable
     private Vector2 prevStop = new Vector2(-1000,-1000);
     private int RoomID;
 
+    private bool loaded = false;
+
     
     public int id
     {
@@ -116,13 +118,23 @@ public class Room : MonoBehaviour, IResizable
         return this.SetStart(new Vector2(this.prevStart.x, position));
     }
 
+    public void LoadPositions(Vector2 start, Vector2 stop)
+    {
+        this.SetStart(start);
+        this.SetStop(stop);
+        loaded = true;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        float pos1 = Random.Range(-20f, 20f);
-        float pos2 = Random.Range(-20f, 20f);
-        SetStart(new Vector2(pos1-1.5f,pos2-1.5f));
-        SetStop(new Vector2(pos1+0.5f,pos2+0.5f));
+        if(!loaded)
+        {
+            int pos1 = Random.Range(-20, 20);
+            int pos2 = Random.Range(-20, 20);
+            SetStart(new Vector2((float)pos1-1.5f,(float)pos2-1.5f));
+            SetStop(new Vector2((float)pos1+0.5f,(float)pos2+0.5f));
+        }
     }
 
     // Update is called once per frame
