@@ -213,4 +213,5 @@ public class Room : MonoBehaviour, IResizable
         }
         return total;
     }
+
 }

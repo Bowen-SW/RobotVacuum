@@ -125,6 +125,9 @@ public static class UserInputInformation
             rooms.Add(room);
             room.GetComponent<Room>().id = RoomIDNum;
             RoomIDNum ++;
+            
+            // Set the width and height
+
             return true;
         }
         return false;

@@ -14,6 +14,10 @@ public class Simulation : MonoBehaviour
     public Button simFastButton;
     public TMP_Text simSpeedText;
 
+    public Sprite playImage;
+    public Sprite stopImage;
+    public Sprite pauseImage;
+
     private Button startStopBtn;
     private Button pauseBtn;
     private Button simSlowBtn;
@@ -89,7 +93,11 @@ public class Simulation : MonoBehaviour
             isPaused = false;
             isStopped = false;
             isPlaying = true;
-            //TODO set the icon to a stop button
+
+            // Change the play button icon into a stop button icon
+            startStopBtn.GetComponent<Image>().sprite = stopImage;
+            startStopBtn.GetComponent<Image>().color = new Color(255, 0, 0, 255);
+
         } else if(isPlaying){
             //roomba.Stop();
             isPaused = false;
@@ -98,13 +106,20 @@ public class Simulation : MonoBehaviour
             SetDefaults();
             roomba.Stop();
             pathList = new Queue<PathType>(); //Reset the queue if the stop button is clicked
-            //TODO Set icon to the Play icon
+
+            // Change the stop button icon into a play button icon
+            startStopBtn.GetComponent<Image>().sprite = playImage;
+            startStopBtn.GetComponent<Image>().color = new Color(182, 214, 204, 255);
+
         } else if(isStopped) {        //Roomba started for the first time  
             if(pathType == PathType.All){
                 StartAllPaths();
             }
             InitRoomba();
-            //TODO set the icon to a stop button
+
+            // Change the play button icon into a stop button icon
+            startStopBtn.GetComponent<Image>().sprite = stopImage;
+            startStopBtn.GetComponent<Image>().color = new Color(255, 0, 0, 255);
         }
     }
 
@@ -113,7 +128,11 @@ public class Simulation : MonoBehaviour
         isPaused = true;
         isPlaying = false;
         pauseBtn.interactable = false;
-        //TODO turn the stop button into a play button
+
+        // Change the stop button icon into a play button icon
+        startStopBtn.GetComponent<Image>().sprite = playImage;
+        startStopBtn.GetComponent<Image>().color = new Color(182, 214, 204, 255);
+
     }
 
     void SlowDown(){       

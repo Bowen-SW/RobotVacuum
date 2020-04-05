@@ -6,6 +6,7 @@ using System;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.IO;
+using System.Globalization;
 
 public class NewFloorPlanMenuManager : MonoBehaviour
 {
@@ -27,11 +28,6 @@ public class NewFloorPlanMenuManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        
-    }
-
-    public void SendData()
     {
 
     }
@@ -89,7 +85,7 @@ public class NewFloorPlanMenuManager : MonoBehaviour
         }
     }
 
-    public void Close()
+    public void Accept()
     {
         string roomHeightStripped = roomHeight.text.Replace("\u200B", "");
         string roomWidthStripped = roomWidth.text.Replace("\u200B", "");
@@ -97,8 +93,26 @@ public class NewFloorPlanMenuManager : MonoBehaviour
         {
             UserInputInformation.FileNameGS = fileName.text.Replace("\u200B", "");
             UserInputInformation.carpetTypeGS = carpetType.text.Replace("\u200B", "");
-            UserInputInformation.AddRoom((GameObject)Instantiate(objectToAdd, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)));
-            Destroy(menu);
+
+            GameObject newRoom = Instantiate(objectToAdd, new Vector3(0f, 0f, 0f), new Quaternion(0f, 0f, 0f, 0f));
+
+            // Set the Width and Height from what the user entered
+            int width = int.Parse(roomHeightStripped);
+            int height = int.Parse(roomWidthStripped);
+
+            newRoom.GetComponent<Room>().SetStart(new Vector2(-((float)width/2f), -((float)height/2f)));
+            newRoom.GetComponent<Room>().SetStop(new Vector2((float)width/2f, (float)height/2f));
+
+            UserInputInformation.AddRoom(newRoom);
+            Close();
         }
+
     }
+
+    public void Close()
+    {
+        Destroy(menu);
+    }
+
+
 }

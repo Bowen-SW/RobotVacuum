@@ -6,6 +6,7 @@ public class ReportMenuManager : MonoBehaviour
 {
     public GameObject menu;
     public DataCells data;
+    public CoverageColorChanger colorChanger;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,8 @@ public class ReportMenuManager : MonoBehaviour
         data.AddRow("2", "12-12-3000", "11:28:46", "Wall Follow", "100%");
 
         data.AddRow("123", "12-31-2020", "12:59:59", "Random", "69%");
+
+        colorChanger.ChangeColorBasedOnVal();
 
     }
 

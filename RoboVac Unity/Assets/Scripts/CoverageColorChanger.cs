@@ -31,14 +31,17 @@ public class CoverageColorChanger : MonoBehaviour
 
             if (val >= 80)
             {
+                Debug.Log("Green");
                 label.color = new Color32(0, 255, 0, 255);
             }
             else if (val >= 50 && val <= 79)
             {
+                Debug.Log("Yellow");
                 label.color = new Color32(255, 255, 0, 255);
             }
             else if (val <= 49)
             {
+                Debug.Log("Red");
                 label.color = new Color32(255, 0, 0, 255);
             }
         }
