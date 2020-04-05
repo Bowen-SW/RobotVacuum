@@ -65,8 +65,7 @@ public class Roomba : MonoBehaviour, IMovable
     {
         timeLimitReached = false;
         SetDefaults();
-        //TODO: set the current direction based on where the roomba is pointing
-        Time.timeScale = simSpeed;      //Sets the simulation speed
+        Time.timeScale = simSpeed;
         this.batteryLife = batteryLife; 
         this.whiskerEff = whiskerEff;
         this.vacEff = vacEff;
@@ -87,10 +86,12 @@ public class Roomba : MonoBehaviour, IMovable
     }
 
     void OnCollisionEnter2D(Collision2D col) { 
-        if(pathType == PathType.Spiral){
-            doSprial = false;
+        if(timerStarted){
+            if(pathType == PathType.Spiral){
+                doSprial = false;
+            }
+            path.Move();
         }
-        path.Move();
     }
 
     void Update(){
@@ -106,9 +107,9 @@ public class Roomba : MonoBehaviour, IMovable
             string minutes = Mathf.Floor(timer / 60).ToString("00");
             string seconds = (timer % 60).ToString("00");
 
-            if(Mathf.Floor(timer / 60) >= 1){
+            //TODO: Change the limit to be the batteryLife
+            if(Mathf.Floor(timer / 60) >= 3){
                 timeLimitReached = true;
-                // Stop();
             }
 
             timeText.text = string.Format("{0}:{1}:{2}", hours, minutes, seconds); 
@@ -126,8 +127,7 @@ public class Roomba : MonoBehaviour, IMovable
             Vector3 moveVector = new Vector3(unit*(float)Math.Cos(timer), unit*(float)Math.Sin(timer),0);
             transform.position += moveVector * Time.deltaTime;
             unit += Time.deltaTime / 15F;
-            transform.Rotate(Vector3.forward, angle * Time.deltaTime);
-            //vacuum.angularVelocity = vacuum.angularVelocity - (Time.deltaTime * .1F);    
+            transform.Rotate(Vector3.forward, angle * Time.deltaTime);  
         }
         else{        
             float moveHorizontal = Input.GetAxis("Horizontal");
@@ -140,8 +140,6 @@ public class Roomba : MonoBehaviour, IMovable
 
     public void SetPathType(PathType pathType){
         Debug.Log("Path selection = " + pathType);
-        //PathType result;
-        //Enum.TryParse(pathType, out result);
         switch(pathType){
             case PathType.Random:
                 path = gameObject.AddComponent<RandomPath>();
@@ -187,11 +185,11 @@ public class Roomba : MonoBehaviour, IMovable
     public void Stop(){
         Time.timeScale = 0F;
         Debug.Log("Simulation Stopped");
-        SaveRunInfo();
         vacuum.position = new Vector2(xCoordinate, yCoordinate);
         vacuum.rotation = 0F;
         transform.position = new Vector3(xCoordinate, yCoordinate, 0);
         transform.rotation = Quaternion.identity;
+        unit = .1F;
     }
 
     public Path GetPath(){
@@ -232,14 +230,6 @@ public class Roomba : MonoBehaviour, IMovable
     public void SetSimSpeed(float speed){
         simSpeed = speed;
         Time.timeScale = simSpeed;
-    }
-
-    public void SetBatteryLife(int batteryLife){
-        this.batteryLife = batteryLife;
-    }
-
-    public void SetRoombaSpeed(float roombaSpeed){
-        this.roombaSpeed = roombaSpeed;
     }
 
     public void ResetRunTime(){
