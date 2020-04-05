@@ -6,21 +6,39 @@ using TMPro;
 
 public static class UserInputInformation
 {
-	private static string fileName = "samp";
+	private static string fileName = "";
     private static int width;
     private static int height;
     private static int RoomIDNum = 0;
-    private static int ChestIDNum = 0;
-    private static int ChairIDNum = 0;
-    private static int TableIDNum = 0;
+    // private static int ChestIDNum = 0;
+    // private static int ChairIDNum = 0;
+    // private static int TableIDNum = 0;
     public static List<GameObject> rooms = new List<GameObject>();
-    public static List<Chest> chairs = new List<Chest>();
-    public static List<Chest> chests = new List<Chest>();
+    public static List<GameObject> chairs = new List<GameObject>();
+    public static List<GameObject> chests = new List<GameObject>();
     public static List<Vector2> startVals = new List<Vector2>();
     public static List<Vector2> stopVals = new List<Vector2>();
     public static string pathTypeUsed;
     public static string carpetType;
     public static string duration;
+    public static List<RunReport> prevReports;
+
+    public static int fileOverwriteWarning;
+
+
+    
+
+    public static int overwriteWarningGS
+    {
+        get
+        {
+            return fileOverwriteWarning;
+        }
+        set
+        {
+            fileOverwriteWarning = value;
+        }
+    }
 
     public static string pathTypeGS
     {
@@ -62,7 +80,6 @@ public static class UserInputInformation
     {
         if(startVals.Count == roomID)
         {
-            Debug.Log("start count before " + startVals.Count);
             startVals.Add(startVector);
         }
         else
@@ -118,6 +135,7 @@ public static class UserInputInformation
             height = value;
         }
     }
+
     public static bool AddRoom(GameObject room)
     {
         if(room.GetComponent<Room>() != null)
@@ -125,9 +143,6 @@ public static class UserInputInformation
             rooms.Add(room);
             room.GetComponent<Room>().id = RoomIDNum;
             RoomIDNum ++;
-            
-            // Set the width and height
-
             return true;
         }
         return false;
@@ -137,7 +152,7 @@ public static class UserInputInformation
     {
         if(chest.GetComponent<Chest>() != null)
         {
-            chests.Add(chest.GetComponent<Chest>());
+            chests.Add(chest);
             return true;
         }
         return false;
@@ -147,10 +162,9 @@ public static class UserInputInformation
     {
         if(chair.GetComponent<Chest>() != null)
         {
-            chairs.Add(chair.GetComponent<Chest>());
+            chairs.Add(chair);
             return true;
         }
         return false;
     }
-
 }

@@ -27,10 +27,12 @@ public class AddItem : MonoBehaviour
         if(button.name == "Item Button 1")
         {
             Debug.Log("b1");
+            UserInputInformation.AddChair((GameObject)Instantiate(objectToAdd, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)));
         }
         else if(button.name == "Item Button 2")
         {
             Debug.Log("b2");
+            UserInputInformation.AddChest((GameObject)Instantiate(objectToAdd, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)));
         }
         else if(button.name == "Item Button 3")
         {
