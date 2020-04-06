@@ -1021,6 +1021,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d57be6624108a1c4facae6b558427b95, type: 3}
+--- !u!114 &1991205563 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8605656064789344728, guid: 16cb95dcfc768dd46953459f0a82ddcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 656516831}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd80a1ee4193be34e9384db36464e253, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2030935836 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2675807127965337571, guid: 12f13358cc8f4af4e9e67b3091bba7de,
@@ -1149,6 +1161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomba: {fileID: 2030935836}
+  furnitureWindowManager: {fileID: 1991205563}
 --- !u!114 &2065904804
 MonoBehaviour:
   m_ObjectHideFlags: 0

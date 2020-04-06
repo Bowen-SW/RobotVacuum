@@ -56,9 +56,6 @@ public class FurnitureWindowManager : MonoBehaviour
     public void UpdateSettingsFloorType()
     {
         roombaSettings.SetFloorTypeNoNotify(floorType.text);
-
-        Debug.Log(roombaSettings.GetFloorType().ToString());
-
     }
 
 }

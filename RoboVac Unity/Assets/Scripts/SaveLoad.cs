@@ -238,7 +238,7 @@ public class SaveLoad : MonoBehaviour
         setFurniture();
         // this should only be called when the roomba is done or the user stops the simulation
         // recordRun() is in place now for testing purposes only
-        //recordRun(); 
+        recordRun(); 
         Debug.Log(JsonUtility.ToJson(this));
         File.WriteAllText(Application.persistentDataPath + "/" + fileName + ".json", JsonUtility.ToJson(this));
     }
