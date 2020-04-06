@@ -68,7 +68,7 @@ public class Simulation : MonoBehaviour
             
             roomba.SetTimeLimitReached(false);
             SetDefaults();
-            // roomba.Stop();
+
             startStopBtn.GetComponent<Image>().sprite = playImage;
             startStopBtn.GetComponent<Image>().color = new Color(182, 214, 204, 255);
             
@@ -105,9 +105,13 @@ public class Simulation : MonoBehaviour
 
         } else if(isPlaying){
             SetDefaults();
-            // roomba.Stop();
+
             settingsBtn.interactable = true;
             pathList = new Queue<PathType>(); //Reset the queue if the stop button is clicked
+
+            if(usingAllPaths){
+                pathType = PathType.All;
+            }
 
             // Change the stop button icon into a play button icon
             startStopBtn.GetComponent<Image>().sprite = playImage;
