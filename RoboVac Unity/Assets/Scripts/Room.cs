@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Room : MonoBehaviour, IResizable
 {
+
+    private static int range = 10;
     public GameObject cell;
 
     public Vector2 start;
@@ -120,8 +122,8 @@ public class Room : MonoBehaviour, IResizable
 
     public void LoadPositions(Vector2 start, Vector2 stop)
     {
-        this.SetStart(start);
-        this.SetStop(stop);
+        this.start = start;
+        this.stop = stop;
         loaded = true;
     }
 
@@ -130,10 +132,15 @@ public class Room : MonoBehaviour, IResizable
     {
         if(!loaded)
         {
-            int pos1 = Random.Range(-20, 20);
-            int pos2 = Random.Range(-20, 20);
-            SetStart(new Vector2((float)pos1-1.5f,(float)pos2-1.5f));
-            SetStop(new Vector2((float)pos1+0.5f,(float)pos2+0.5f));
+            int pos1, pos2;
+            do {
+                pos1 = Random.Range(-range, range);
+                pos2 = Random.Range(-range, range);
+            }while(Physics.CheckSphere(new Vector3(pos1, pos2, transform.position.z),2f));
+
+            range ++;
+            start = new Vector2((float)pos1, (float)pos2);
+            stop = new Vector2((float) pos1+2, (float)pos2+2);
         }
     }
 

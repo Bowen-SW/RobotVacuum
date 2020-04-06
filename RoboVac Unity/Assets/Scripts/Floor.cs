@@ -37,9 +37,6 @@ public class Floor : MonoBehaviour
         if(roomba == null)
         {
             roomba = GameObject.FindGameObjectWithTag("roomba").GetComponent<Roomba>();
-            Debug.Log("Vac Eff: " + roomba.GetVacEff());
-            Debug.Log("Whisker Eff: " + roomba.GetWhiskerEff());
-            Debug.Log(roomba != null);
         }
         else if(Object.FindObjectOfType<Simulation>().IsPlaying())
         {

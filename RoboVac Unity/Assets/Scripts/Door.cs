@@ -70,7 +70,11 @@ public class Door : MonoBehaviour, IMovable
                 List<GameObject> nearby = NearbyWalls();
                 foreach(GameObject wall in nearby)
                 {
-                    wall.gameObject.SetActive(false);
+                    if(((currentWall.tag == "East" || currentWall.tag == "West") && (wall.tag == "East" || wall.tag == "West")
+                     || (currentWall.tag == "North" || currentWall.tag == "South") && (wall.tag == "North" || wall.tag == "South")))
+                    {
+                        wall.gameObject.SetActive(false);
+                    }
                 }
             }
 
