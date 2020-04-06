@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Floor : MonoBehaviour
 {
+
+    public Material[] floorTypes;
     
     Roomba roomba = null;
     public float dirtiness = 1.0f;
@@ -20,7 +22,7 @@ public class Floor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameObject.GetComponent<MeshRenderer>().material = floorTypes[0];
     }
 
     // Update is called once per frame

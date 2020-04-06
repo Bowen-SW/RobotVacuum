@@ -265,6 +265,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 416a23dea2762454bb591d4b16dd867b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floorTypes:
+  - {fileID: 2100000, guid: a4cd507a5c22fa947bb2d0919fa5ed94, type: 2}
+  - {fileID: 2100000, guid: f7d54a88373508642afae3471e02fb39, type: 2}
+  - {fileID: 2100000, guid: b4e7ec6d04a40094e962f354b2354c75, type: 2}
+  - {fileID: 2100000, guid: 490490e8a5454d444ab4e92384752f35, type: 2}
   dirtiness: 1
 --- !u!1 &8037909901127523506
 GameObject:
