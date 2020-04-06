@@ -56,12 +56,16 @@ public class RoombaSettingsScript : MonoBehaviour
     public void SetFloorType(String floor){
         if (String.Equals(floor, "Cut Pile")){
             floorType = FloorType.CutPile;
+            vacEff = 70;
         } else if (String.Equals(floor, "Loop Pile")){
             floorType = FloorType.LoopPile;
+            vacEff = 75;
         } else if (String.Equals(floor, "Hardwood")){
             floorType = FloorType.Hardwood;
+            vacEff = 90;
         } else if (String.Equals(floor, "Frieze-Cut Pile")){
             floorType = FloorType.FreezeCutPile;
+            vacEff = 65;
         }
 
         furnitureWindowManager.SetFloorTypeDropdownVal(floorType);
@@ -73,18 +77,22 @@ public class RoombaSettingsScript : MonoBehaviour
         if (String.Equals(floor, "Cut Pile"))
         {
             floorType = FloorType.CutPile;
+            vacEff = 70;
         }
         else if (String.Equals(floor, "Loop Pile"))
         {
             floorType = FloorType.LoopPile;
+            vacEff = 75;
         }
         else if (String.Equals(floor, "Hardwood"))
         {
             floorType = FloorType.Hardwood;
+            vacEff = 90;
         }
         else if (String.Equals(floor, "Frieze-Cut Pile"))
         {
             floorType = FloorType.FreezeCutPile;
+            vacEff = 65;
         }
     }
 

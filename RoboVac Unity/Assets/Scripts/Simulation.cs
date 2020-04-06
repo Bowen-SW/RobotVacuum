@@ -65,14 +65,13 @@ public class Simulation : MonoBehaviour
     void Update(){
         if(roomba.IsTimeLimitReached()){
             Debug.Log("Time limit has been reached");
-            isPaused = false;
-            isPlaying = false;
-            isStopped = true;
+            
             roomba.SetTimeLimitReached(false);
             SetDefaults();
-            roomba.Stop();
+            // roomba.Stop();
             startStopBtn.GetComponent<Image>().sprite = playImage;
             startStopBtn.GetComponent<Image>().color = new Color(182, 214, 204, 255);
+            
             if(pathList.Count != 0){
                 pathType = pathList.Peek();
                 Debug.Log("Next path type is: " + pathType);
@@ -105,12 +104,8 @@ public class Simulation : MonoBehaviour
             startStopBtn.GetComponent<Image>().color = new Color(255, 0, 0, 255);
 
         } else if(isPlaying){
-            //roomba.Stop();
-            isPaused = false;
-            isPlaying = false;
-            isStopped = true;
             SetDefaults();
-            roomba.Stop();
+            // roomba.Stop();
             settingsBtn.interactable = true;
             pathList = new Queue<PathType>(); //Reset the queue if the stop button is clicked
 
@@ -204,11 +199,17 @@ public class Simulation : MonoBehaviour
         simSpeed = 1;
         roomba.SetSimSpeed(simSpeed);
         simText.text = "1x";
+        roomba.Stop();
         roomba.ResetRunTime();
+
+        isPaused = false;
+        isPlaying = false;
+        isStopped = true;
 
         pauseBtn.interactable = false;
         simSlowBtn.interactable = false;
         simFastBtn.interactable = false;
+        settingsBtn.interactable = true;
     }
 
     void StartAllPaths(){

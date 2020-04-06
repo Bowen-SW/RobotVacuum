@@ -46,6 +46,14 @@ public class Door : MonoBehaviour, IMovable
         {
             allWalls = AllWalls();
         }
+        foreach(GameObject wall in allWalls)
+        {
+            if(wall == null)
+            {
+                allWalls = AllWalls();
+            }
+        }
+        
 
         if(!moving)
         {
@@ -83,7 +91,7 @@ public class Door : MonoBehaviour, IMovable
         {
             if(currentWall != null)
             {
-                List<GameObject> nearby = NearbyWalls();
+                List<GameObject> nearby = allWalls;
                 foreach(GameObject wall in nearby)
                 {
                     wall.gameObject.SetActive(true);

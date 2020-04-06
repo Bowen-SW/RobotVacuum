@@ -78,7 +78,7 @@ public class Room : MonoBehaviour, IResizable
         Vector2 temp = this.start;
         this.start.x = Mathf.Round(position.x + 0.5f);
         this.start.y = Mathf.Round(position.y + 0.5f);
-        if(this.width < 2 || this.height < 2)
+        if(this.sqft < 4)
         {
             this.start = temp;
         }
@@ -92,7 +92,7 @@ public class Room : MonoBehaviour, IResizable
         Vector2 temp = this.stop;
         this.stop.x = Mathf.Round(position.x + 0.5f);
         this.stop.y = Mathf.Round(position.y + 0.5f);
-        if(this.width < 2 || this.height < 2)
+        if(this.sqft < 4)
         {
             this.stop = temp;
         }

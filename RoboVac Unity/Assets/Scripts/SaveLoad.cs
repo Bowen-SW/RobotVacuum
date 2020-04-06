@@ -28,7 +28,7 @@ public class SaveLoad : MonoBehaviour
     [HideInInspector] public static int timeStampCount = 0;
     [HideInInspector] public static int coverage;
     [HideInInspector] private static JsonData saveData;
-    [HideInInspector] public static GameObject room;
+    public GameObject room;
     [HideInInspector] public static GameObject chair;
     [HideInInspector] public static GameObject chest;
     [HideInInspector] public static GameObject table;
@@ -212,8 +212,7 @@ public class SaveLoad : MonoBehaviour
             Debug.Log(start + ";" + stop);
 
             room = (GameObject)Instantiate(room, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
-            room.GetComponent<Room>().SetStart(start);
-            room.GetComponent<Room>().SetStart(stop);
+            room.GetComponent<Room>().LoadPositions(start, stop);
             UserInputInformation.AddRoom(room);
         }
     }
