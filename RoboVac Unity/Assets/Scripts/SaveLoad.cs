@@ -199,6 +199,8 @@ public class SaveLoad : MonoBehaviour
     {
         UserInputInformation.stopVals.Clear();
         UserInputInformation.startVals.Clear();
+        UserInputInformation.RoomIDNum = 0;
+        UserInputInformation.rooms.Clear();
         for(int i = 0; i < saveInformation["rooms"].Count; i++)
         {
             double stopX = (double)saveData["stopValues"][i]["x"];
@@ -219,27 +221,35 @@ public class SaveLoad : MonoBehaviour
 
     public void Load()
     {
-        removeFurniture();
-        reports.Clear();
-        string filePath = EditorUtility.OpenFilePanel("Open a Floor Plan", Application.persistentDataPath, "json");
-        string jsonString = File.ReadAllText(filePath);
-        saveData = JsonMapper.ToObject(jsonString);
-        UserInputInformation.saveDataGS = saveData;
-        fileName = (string)saveData["fileName"];
-        for(int i = 0; i < saveData["reports"].Count; i++)
+        try
         {
-            int id = (int)(saveData["reports"][i]["reportID"]);
-            string date = (string)saveData["reports"][i]["dateStamp"];
-            string duration = (string)saveData["reports"][i]["duration"];
-            string alg = (string)saveData["reports"][i]["algorithmType"];
-            int coverage =(int)(saveData["reports"][i]["coverageValue"]);
-            floorPlanIDGS = i;
-            RunReport prevRun = new RunReport(id, date, duration, alg, coverage);
-            reports.Add(prevRun);
+            removeFurniture();
+            reports.Clear();
+            string filePath = EditorUtility.OpenFilePanel("Open a Floor Plan", Application.persistentDataPath, "json");
+            string jsonString = File.ReadAllText(filePath);
+            saveData = JsonMapper.ToObject(jsonString);
+            UserInputInformation.saveDataGS = saveData;
+            fileName = (string)saveData["fileName"];
+            for(int i = 0; i < saveData["reports"].Count; i++)
+            {
+                int id = (int)(saveData["reports"][i]["reportID"]);
+                string date = (string)saveData["reports"][i]["dateStamp"];
+                string duration = (string)saveData["reports"][i]["duration"];
+                string alg = (string)saveData["reports"][i]["algorithmType"];
+                int coverage =(int)(saveData["reports"][i]["coverageValue"]);
+                floorPlanIDGS = i;
+                RunReport prevRun = new RunReport(id, date, duration, alg, coverage);
+                reports.Add(prevRun);
+            }
+
+            UserInputInformation.prevReports = reports;
+            loadRooms(saveData);
+        }
+        catch
+        {
+            Debug.Log("cannot open NULL or incompatiable JSON");
         }
 
-        UserInputInformation.prevReports = reports;
-        loadRooms(saveData);
         
         // for(int i = 0; i<reports.Count; i++)
         // {
