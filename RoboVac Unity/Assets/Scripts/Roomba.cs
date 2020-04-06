@@ -63,6 +63,8 @@ public class Roomba : MonoBehaviour, IMovable
 
     public void Init(float roombaSpeed, int batteryLife, PathType pathType, float vacEff, float whiskerEff)
     {
+        UserInputInformation.RoombaStop = false;
+        UserInputInformation.setstartTime();
         timeLimitReached = false;
         SetDefaults();
         Time.timeScale = simSpeed;
@@ -185,6 +187,7 @@ public class Roomba : MonoBehaviour, IMovable
     public void Stop(){
         Time.timeScale = 0F;
         Debug.Log("Simulation Stopped");
+        UserInputInformation.roombaStopGS = true;
         vacuum.position = new Vector2(xCoordinate, yCoordinate);
         vacuum.rotation = 0F;
         transform.position = new Vector3(xCoordinate, yCoordinate, 0);

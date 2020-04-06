@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEditor;
 using System.IO;
 using System;
@@ -26,14 +27,54 @@ public class SaveLoad : MonoBehaviour
     [HideInInspector] public static string pathType;
     [HideInInspector] public static int timeStampCount = 0;
     [HideInInspector] public static int coverage;
-    [HideInInspector] private JsonData saveData;
-    public GameObject room;
-    public GameObject chair;
-    public GameObject chest;
-    public GameObject table;
-    public GameObject door;
+    [HideInInspector] private static JsonData saveData;
+    [HideInInspector] public static GameObject room;
+    [HideInInspector] public static GameObject chair;
+    [HideInInspector] public static GameObject chest;
+    [HideInInspector] public static GameObject table;
+    [HideInInspector] public static GameObject door;
+    [HideInInspector] public static int stopCount = 0;
+    //public GameObject roomba;
+    // public Button button;
+    void start()
+    {
 
+    }
 
+    void Update()
+    {
+       if(UserInputInformation.roombaStopGS == true || (stopCount % 2 == 0 && stopCount != 0))
+       {
+            recordRun();
+            Save();
+            UserInputInformation.roombaStopGS = false;
+            stopCount = 0;
+       }
+    }
+
+    public void pause()
+    {
+        stopCount = 1;
+    }
+    public void setStopCount()
+    {   
+        stopCount++;
+        Debug.Log(stopCount);
+    }
+
+    public void setCoverage()
+    {   
+        coverage = 0;
+        foreach(GameObject room in UserInputInformation.rooms)
+        {
+            coverage += (int)room.GetComponent<Room>().getCoverage();
+        }
+    }
+
+    public void setDuration()
+    {
+        duration = UserInputInformation.durationGS;
+    }
 
     public void setTotalSqft()
     {
@@ -48,12 +89,7 @@ public class SaveLoad : MonoBehaviour
 
     public void setTimeStamp()
     {
-        if(timeStampCount == 0)
-        {
-            timeStamp = DateTime.Now;
-            timeStampString = timeStamp.ToString("MM-dd-yyyy @ HH:mm", DateTimeFormatInfo.InvariantInfo);
-            timeStampCount++;
-        }
+        timeStampString = UserInputInformation.timeStampString;
     }
 
     public static int floorPlanIDGS
@@ -88,14 +124,15 @@ public class SaveLoad : MonoBehaviour
 
     public void recordRun()
     {
-        if(UserInputInformation.overwriteWarningGS == 1)
+        if(reports.Count < 1)
         {
             floorPlanIDGS = 1;
         }
+        setTimeStamp();
+        setCoverage();
         carpetType = UserInputInformation.carpetType;
         duration = UserInputInformation.durationGS;
         pathType = UserInputInformation.pathTypeGS;
-        coverage = 0;
         RunReport newRun = new RunReport(floorPlanIDGS, timeStampString, duration, pathType, coverage);
         Debug.Log(newRun);
         reports.Add(newRun);
@@ -188,6 +225,7 @@ public class SaveLoad : MonoBehaviour
         string filePath = EditorUtility.OpenFilePanel("Open a Floor Plan", Application.persistentDataPath, "json");
         string jsonString = File.ReadAllText(filePath);
         saveData = JsonMapper.ToObject(jsonString);
+        UserInputInformation.saveDataGS = saveData;
         fileName = (string)saveData["fileName"];
         for(int i = 0; i < saveData["reports"].Count; i++)
         {
@@ -220,9 +258,11 @@ public class SaveLoad : MonoBehaviour
         setTimeStamp();
         setTotalSqft();
         setFurniture();
+        setCoverage();
+        setDuration();
         // this should only be called when the roomba is done or the user stops the simulation
         // recordRun() is in place now for testing purposes only
-        recordRun(); 
+        //recordRun(); 
         Debug.Log(JsonUtility.ToJson(this));
         File.WriteAllText(Application.persistentDataPath + "/" + fileName + ".json", JsonUtility.ToJson(this));
     }

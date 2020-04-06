@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using LitJson;
 
 public static class UserInputInformation
 {
@@ -21,12 +25,33 @@ public static class UserInputInformation
     public static string pathTypeUsed;
     public static string carpetType;
     public static string duration;
+    public static DateTime timeStamp;
+    public static string timeStampString;
+    public static JsonData saveData;
     public static List<RunReport> prevReports;
+
+    public static bool RoombaStop;
 
     public static int fileOverwriteWarning;
 
+    public static string setstartTime()
+    {
+        timeStamp = DateTime.Now;
+        timeStampString = timeStamp.ToString("MM-dd-yyyy @ HH:mm", DateTimeFormatInfo.InvariantInfo);
+        return timeStampString;
+    }
 
-    
+    public static JsonData saveDataGS
+    {
+        get
+        {
+            return saveData;
+        }
+        set
+        {
+            saveData = value;
+        }
+    }
 
     public static int overwriteWarningGS
     {
@@ -37,6 +62,18 @@ public static class UserInputInformation
         set
         {
             fileOverwriteWarning = value;
+        }
+    }
+
+    public static bool roombaStopGS
+    {
+        get
+        {
+            return RoombaStop;
+        }
+        set
+        {
+            RoombaStop = value;
         }
     }
 
