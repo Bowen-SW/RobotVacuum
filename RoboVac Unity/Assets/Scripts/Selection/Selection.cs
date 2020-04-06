@@ -28,10 +28,13 @@ public class Selection
             s.isSelected = false;
         }
         _selected = o;
-        s = o.GetComponent<Selectable>();
-        if(s != null)
+        if(o != null)
         {
-            s.isSelected = true;
+            s = o.GetComponent<Selectable>();
+            if(s != null)
+            {
+                s.isSelected = true;
+            }
         }
     }
 
