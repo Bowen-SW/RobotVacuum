@@ -40,7 +40,7 @@ public class Selection
 
     public static void DeleteSelected()
     {
-        if(selected == null) return;
+        if(selected == null || selected.GetComponentInChildren<Roomba>()) return;
         Object.Destroy(selected);
         selected = null;
     }
