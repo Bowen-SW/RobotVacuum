@@ -11,9 +11,10 @@ public class RoombaSettingsScript : MonoBehaviour
 
     private int roombaSpeed = 12;
     private int batteryLife = 150;
-    private float vacEff = 75F;
+    private float vacEff = 90F;
     private float whiskerEff = 30F;
     private PathType pathType = PathType.All;
+    private FloorType floorType = FloorType.Hardwood;
 
     public int GetRoombaSpeed(){
         return roombaSpeed;
@@ -45,6 +46,14 @@ public class RoombaSettingsScript : MonoBehaviour
         } else if (String.Equals(path, "All")){
             pathType = PathType.All;
         }
+    }
+
+    public FloorType GetFloorType(){
+        return floorType;
+    }
+
+    public void SetFloorType(FloorType floorType){
+        this.floorType = floorType;
     }
 
     public float GetVacuumEfficiency(){
