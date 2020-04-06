@@ -12,6 +12,7 @@ public class Simulation : MonoBehaviour
     public Button pauseButton;
     public Button simSlowButton;
     public Button simFastButton;
+    public Button settingsButton;
     public TMP_Text simSpeedText;
 
     public Sprite playImage;
@@ -22,6 +23,7 @@ public class Simulation : MonoBehaviour
     private Button pauseBtn;
     private Button simSlowBtn;
     private Button simFastBtn;
+    private Button settingsBtn;
     private TMP_Text simText;
 
     private PathType pathType = PathType.Snaking; //TODO Change default All
@@ -50,6 +52,8 @@ public class Simulation : MonoBehaviour
         simFastBtn = simFastButton.GetComponent<Button>();
         simFastBtn.onClick.AddListener(SpeedUp);
         simFastBtn.interactable = false;
+
+        settingsBtn = settingsButton.GetComponent<Button>();
         
         simText = simSpeedText.GetComponent<TMP_Text>();
 
@@ -107,6 +111,7 @@ public class Simulation : MonoBehaviour
             isStopped = true;
             SetDefaults();
             roomba.Stop();
+            settingsBtn.interactable = true;
             pathList = new Queue<PathType>(); //Reset the queue if the stop button is clicked
 
             // Change the stop button icon into a play button icon
@@ -117,6 +122,8 @@ public class Simulation : MonoBehaviour
             if(pathType == PathType.All){
                 StartAllPaths();
             }
+            settingsBtn.interactable = false;
+
             InitRoomba();
 
             // Change the play button icon into a stop button icon
