@@ -109,8 +109,7 @@ public class Roomba : MonoBehaviour, IMovable
             string minutes = Mathf.Floor(timer / 60).ToString("00");
             string seconds = (timer % 60).ToString("00");
 
-            //TODO: Change the limit to be the batteryLife
-            if(Mathf.Floor(timer / 60) >= 3){
+            if(Mathf.Floor(timer / 60) >= batteryLife){
                 timeLimitReached = true;
             }
 
@@ -237,9 +236,7 @@ public class Roomba : MonoBehaviour, IMovable
 
     public void ResetRunTime(){
         timer = 0;
-        string minutes = Mathf.Floor(timer / 60).ToString("00");
-        string seconds = (timer % 60).ToString("00");
-        timeText.text = string.Format("{0}:{1}", minutes, seconds); 
+        timeText.text = string.Format("00:00:00"); 
     }
 
     public bool IsTimeLimitReached(){
