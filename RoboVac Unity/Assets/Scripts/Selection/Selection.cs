@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Selection
+public class Selection 
 {
 
     private static GameObject _selected;

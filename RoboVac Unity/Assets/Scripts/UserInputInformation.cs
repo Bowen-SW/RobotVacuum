@@ -173,6 +173,36 @@ public static class UserInputInformation
         }
     }
 
+    public static bool RemoveItem(GameObject item)
+    {
+        if (item.GetComponent<Room>() != null)
+        {
+            rooms.Remove(item);
+            return true;
+        }
+        else if (item.GetComponent<Chest>() != null)
+        {
+            chests.Remove(item);
+            return true;
+        }
+        /*else if (item.GetComponent<Chair>() != null)
+        {
+            // remove the item from the list of chairs
+
+            chairs.Remove(item);
+            return true;
+        }
+        else if (item.GetComponent<Door>() != null)
+        {
+            // remove the item from the list of doors
+
+            doors.Remove(item);
+            return true;
+        }*/
+
+        return false;
+    }
+
     public static bool AddRoom(GameObject room)
     {
         if(room.GetComponent<Room>() != null)
