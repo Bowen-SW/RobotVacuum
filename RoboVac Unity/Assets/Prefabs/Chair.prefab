@@ -55,8 +55,8 @@ GameObject:
   - component: {fileID: 5964590402550700011}
   - component: {fileID: 5964590402550700004}
   - component: {fileID: 5964590402550700005}
-  - component: {fileID: 5964590402550700010}
   - component: {fileID: 4114436830292856173}
+  - component: {fileID: 8267023902810975369}
   m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
@@ -125,20 +125,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &5964590402550700010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5964590402550700007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c6ac33956bd6f74dbdf3f5ba9b06db6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  start: {x: 0, y: 0}
-  stop: {x: 2, y: 2}
 --- !u!114 &4114436830292856173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +138,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
+--- !u!114 &8267023902810975369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5964590402550700007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 221aff6ed2f4e744fb0a58f640dd7fb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  start: {x: 0, y: 0}
+  stop: {x: 2, y: 2}
 --- !u!1001 &2341636547179419950
 PrefabInstance:
   m_ObjectHideFlags: 0
