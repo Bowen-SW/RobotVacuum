@@ -13,7 +13,7 @@ public static class UserInputInformation
 	private static string fileName = "";
     private static int width;
     private static int height;
-    private static int RoomIDNum = 0;
+    public static int RoomIDNum = 0;
     // private static int ChestIDNum = 0;
     // private static int ChairIDNum = 0;
     // private static int TableIDNum = 0;
