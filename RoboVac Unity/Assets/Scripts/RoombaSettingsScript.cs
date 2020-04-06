@@ -32,6 +32,7 @@ public class RoombaSettingsScript : MonoBehaviour
     public PathType GetPathType(){
         return pathType;
     }
+
     public void SetPathType(String path){
         if(String.Equals(path, "Random")){
             pathType = PathType.Random;
