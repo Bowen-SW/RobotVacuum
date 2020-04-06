@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEditor;
 using System.IO;
 using System;
@@ -27,13 +28,27 @@ public class SaveLoad : MonoBehaviour
     [HideInInspector] public static int timeStampCount = 0;
     [HideInInspector] public static int coverage;
     [HideInInspector] private JsonData saveData;
-    public GameObject room;
-    public GameObject chair;
-    public GameObject chest;
-    public GameObject table;
-    public GameObject door;
+    [HideInInspector] public GameObject room;
+    [HideInInspector] public GameObject chair;
+    [HideInInspector] public GameObject chest;
+    [HideInInspector] public GameObject table;
+    [HideInInspector] public GameObject door;
+    [HideInInspector] public int stopCount;
+    // public GameObject roomba;
+    // // public Button button;
+    // void start()
+    // {
 
-
+    // }
+    // public void setStopCount()
+    // {   
+    //     stopCount++;
+    //     if(stopCount%2 == 0)
+    //     {
+    //         recordRun();
+    //         Save();
+    //     }
+    // }
 
     public void setTotalSqft()
     {
@@ -188,6 +203,7 @@ public class SaveLoad : MonoBehaviour
         string filePath = EditorUtility.OpenFilePanel("Open a Floor Plan", Application.persistentDataPath, "json");
         string jsonString = File.ReadAllText(filePath);
         saveData = JsonMapper.ToObject(jsonString);
+        UserInputInformation.saveDataGS = saveData;
         fileName = (string)saveData["fileName"];
         for(int i = 0; i < saveData["reports"].Count; i++)
         {
@@ -222,7 +238,7 @@ public class SaveLoad : MonoBehaviour
         setFurniture();
         // this should only be called when the roomba is done or the user stops the simulation
         // recordRun() is in place now for testing purposes only
-        recordRun(); 
+        //recordRun(); 
         Debug.Log(JsonUtility.ToJson(this));
         File.WriteAllText(Application.persistentDataPath + "/" + fileName + ".json", JsonUtility.ToJson(this));
     }
