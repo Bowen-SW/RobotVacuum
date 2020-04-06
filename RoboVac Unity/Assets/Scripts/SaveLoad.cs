@@ -115,6 +115,7 @@ public class SaveLoad : MonoBehaviour
             {
                 appendedNum++;
                 fileName = "floorPlan"+ appendedNum.ToString();
+                UserInputInformation.FileNameGS = fileName;
             }        
         }
         else

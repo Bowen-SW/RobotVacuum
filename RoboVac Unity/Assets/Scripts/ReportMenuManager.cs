@@ -24,6 +24,11 @@ public class ReportMenuManager : MonoBehaviour
     public void PopulateData()
     {
 
+        if (UserInputInformation.saveDataGS == null)
+        {
+            Debug.Log("howdy");
+        }
+
         if (UserInputInformation.saveDataGS != null)
         {
             int count = UserInputInformation.saveDataGS["reports"].Count;
