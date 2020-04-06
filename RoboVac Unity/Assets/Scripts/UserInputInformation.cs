@@ -175,6 +175,10 @@ public static class UserInputInformation
 
     public static bool RemoveItem(GameObject item)
     {
+        if(item == null)
+        {
+            return false;
+        }
         if (item.GetComponent<Room>() != null)
         {
             rooms.Remove(item);
