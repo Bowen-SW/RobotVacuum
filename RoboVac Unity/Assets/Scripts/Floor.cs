@@ -22,12 +22,12 @@ public class Floor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.GetComponent<MeshRenderer>().material = floorTypes[0];
     }
 
     // Update is called once per frame
     void Update()
     {
+        gameObject.GetComponent<MeshRenderer>().material = floorTypes[(int)(Object.FindObjectOfType<RoombaSettingsScript>().GetFloorType())];
         gameObject.GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, dirtiness);
         if(dirtiness < 1.0f && Object.FindObjectOfType<Simulation>().IsStopped())
         {
