@@ -148,8 +148,8 @@ public class NewFloorPlanMenuManager : MonoBehaviour
                 int width = int.Parse(roomHeightStripped);
                 int height = int.Parse(roomWidthStripped);
 
-                newRoom.GetComponent<Room>().SetStart(new Vector2(-((float)width/2f), -((float)height/2f)));
-                newRoom.GetComponent<Room>().SetStop(new Vector2((float)width/2f, (float)height/2f));
+                // Create the new default room with the user specified dimensions
+                newRoom.GetComponent<Room>().LoadPositions(new Vector2(-((float)width / 2f), -((float)height / 2f)), new Vector2((float)width / 2f, (float)height / 2f));
             }
             UserInputInformation.AddRoom(newRoom);
             Close();
