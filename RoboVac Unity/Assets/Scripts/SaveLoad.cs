@@ -64,11 +64,12 @@ public class SaveLoad : MonoBehaviour
 
     public void setCoverage()
     {   
-        coverage = 0;
+        float _coverage = 0;
         foreach(GameObject room in UserInputInformation.rooms)
         {
-            coverage += (int)room.GetComponent<Room>().getCoverage();
+            _coverage += room.GetComponent<Room>().getCoverage();
         }
+        coverage = (int)_coverage;
     }
 
     public void setDuration()

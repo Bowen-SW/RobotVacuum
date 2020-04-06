@@ -234,7 +234,7 @@ public class Room : MonoBehaviour, IResizable
         {
             total += c.GetComponent<Cell>().GetCoverage();
         }
-        return total;
+        return total / (float)cells.Length;
     }
 
 }
