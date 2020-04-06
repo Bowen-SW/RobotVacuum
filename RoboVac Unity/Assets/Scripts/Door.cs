@@ -46,6 +46,14 @@ public class Door : MonoBehaviour, IMovable
         {
             allWalls = AllWalls();
         }
+        foreach(GameObject wall in allWalls)
+        {
+            if(wall == null)
+            {
+                allWalls = AllWalls();
+            }
+        }
+        
 
         if(!moving)
         {
