@@ -780,6 +780,7 @@ MonoBehaviour:
   chest: {fileID: 0}
   table: {fileID: 0}
   door: {fileID: 0}
+  stopCount: 0
 --- !u!1001 &1225594381
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1046,8 +1047,6 @@ GameObject:
   - component: {fileID: 2065904799}
   - component: {fileID: 2065904803}
   - component: {fileID: 2065904804}
-  - component: {fileID: 2065904806}
-  - component: {fileID: 2065904805}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1175,39 +1174,7 @@ MonoBehaviour:
   chest: {fileID: 0}
   table: {fileID: 0}
   door: {fileID: 0}
---- !u!114 &2065904805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2065904798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f1b4eaba76c90140b81bb2ebedc732d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2065904806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2065904798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09457b04795706e4d9c5b408f5a24b6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 0}
-  objectToAdd: {fileID: 0}
-  errorMessage: {fileID: 0}
-  fileName: {fileID: 0}
-  roomWidth: {fileID: 0}
-  roomHeight: {fileID: 0}
-  carpetType: {fileID: 0}
-  simScript: {fileID: 2065904805}
-  warningCount: 0
+  stopCount: 0
 --- !u!1001 &1260643011353567981
 PrefabInstance:
   m_ObjectHideFlags: 0

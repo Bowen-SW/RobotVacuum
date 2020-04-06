@@ -15,7 +15,7 @@ public class SettingsMenuManager : MonoBehaviour
     public Slider speedSlider;
     public TextMeshProUGUI pathType;
 
-    public TMPro.TMP_Dropdown pathDropdown;
+    public TMP_Dropdown pathDropdown;
 
     // Start is called before the first frame update
     void Start()

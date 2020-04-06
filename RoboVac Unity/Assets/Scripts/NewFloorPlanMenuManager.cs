@@ -16,13 +16,13 @@ public class NewFloorPlanMenuManager : MonoBehaviour
     public TextMeshProUGUI roomWidth;
     public TextMeshProUGUI roomHeight;
     public TextMeshProUGUI carpetType;
-    public TestSimScript simScript;
+    public RoombaSettingsScript roombaSettings;
     public int warningCount = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        simScript = GetComponentInParent<TestSimScript>();
+        roombaSettings = GetComponentInParent<RoombaSettingsScript>();
     }
 
     // Update is called once per frame
@@ -127,6 +127,9 @@ public class NewFloorPlanMenuManager : MonoBehaviour
 
     public void Accept()
     {
+
+        roombaSettings.SetFloorType(carpetType.text);
+
         string roomHeightStripped = roomHeight.text.Replace("\u200B", "");
         string roomWidthStripped = roomWidth.text.Replace("\u200B", "");
 
