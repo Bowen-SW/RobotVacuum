@@ -65,11 +65,14 @@ public class SaveLoad : MonoBehaviour
     public void setCoverage()
     {   
         float _coverage = 0;
+        int _sqft = 0;
         foreach(GameObject room in UserInputInformation.rooms)
         {
-            _coverage += room.GetComponent<Room>().getCoverage();
+            Room _room = room.GetComponent<Room>(); 
+            _coverage += _room.getCoverage();
+            _sqft += _room.sqft;
         }
-        coverage = (int)_coverage;
+        coverage = (int)(_coverage/(float)_sqft * 100.0f);
     }
 
     public void setDuration()
