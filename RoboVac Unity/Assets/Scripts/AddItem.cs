@@ -39,6 +39,7 @@ public class AddItem : MonoBehaviour
         else if(button.name == "Item Button 4")
         {
             Debug.Log("b4");
+            Instantiate(objectToAdd, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
         }
         else if(button.name == "Item Button 5")
         {
