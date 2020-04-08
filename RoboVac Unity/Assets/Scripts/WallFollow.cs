@@ -7,25 +7,30 @@ public class WallFollow : Path
 {
     private float rightAngle = 90F;
     private bool firstTurn = true;
+    private bool inCollision = false;
     public override void Move(){
         //If collision and sensor not touching, turn counterclockwise 90 degrees, then proceed.
         //else if collision and sensor is touching, turn 90 degrees clockwise, then proceed
-        Backoff(-currentDirection.x, -currentDirection.y);
-        Stop();
+        //Backoff(-currentDirection.x, -currentDirection.y);
+        if(!inCollision){
+            inCollision = true;
+            Stop();
 
-        if(isTouching || firstTurn){ //Turn clockwise
-            
-            StartCoroutine(TurnCounter());
-            firstTurn = false;
-            
-        } else { //Turn counter clockwise
-            StartCoroutine(TurnClock());
-            
+            if((isTouching || firstTurn)){ //Turn Counter-clockwise
+                
+                StartCoroutine(TurnCounter());
+                firstTurn = false;
+                
+            } else{ //Turn counter clockwise
+                StartCoroutine(TurnClock());
+                
+            }
+            inCollision = false;
         }
     }
 
     private IEnumerator TurnClock(){
-        // Debug.Log("Turning Clock");
+        Debug.Log("Turning Clockwise");
         vacuum.angularVelocity = -angularVelocity;
 
         float waitTime = rightAngle / Mathf.Abs(angularVelocity);
@@ -38,7 +43,7 @@ public class WallFollow : Path
     }
 
     private IEnumerator TurnCounter(){
-        // Debug.Log("Turning CounterClockwise");
+        Debug.Log("Turning CounterClockwise");
         vacuum.angularVelocity = angularVelocity;
 
         float waitTime = rightAngle / Mathf.Abs(angularVelocity);
