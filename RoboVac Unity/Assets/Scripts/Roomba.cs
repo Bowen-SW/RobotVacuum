@@ -68,6 +68,7 @@ public class Roomba : MonoBehaviour, IMovable
         timeLimitReached = false;
         SetDefaults();
         Time.timeScale = simSpeed;
+
         this.batteryLife = batteryLife; 
         this.whiskerEff = whiskerEff;
         this.vacEff = vacEff;
@@ -139,28 +140,29 @@ public class Roomba : MonoBehaviour, IMovable
         }
     }
 
+    //This function also sets the path version
     public void SetPathType(PathType pathType){
         Debug.Log("Path selection = " + pathType);
         switch(pathType){
             case PathType.Random:
                 path = gameObject.AddComponent<RandomPath>();
                 this.pathType = PathType.Random;
-                UserInputInformation.pathTypeGS = "Random";
+                UserInputInformation.pathTypeGS = "Random v1.2";
                 break;
             case PathType.Snaking:
                 path = gameObject.AddComponent<SnakingPath>();
                 this.pathType = PathType.Snaking;
-                UserInputInformation.pathTypeGS = "Snaking";
+                UserInputInformation.pathTypeGS = "Snaking v1.1";
                 break;
             case PathType.Spiral:
                 path = gameObject.AddComponent<SpiralPath>();
                 this.pathType = PathType.Spiral;
-                UserInputInformation.pathTypeGS = "Spiral";
+                UserInputInformation.pathTypeGS = "Spiral v3.0";
                 break;
             case PathType.WallFollow:
                 path = gameObject.AddComponent<WallFollow>();
                 this.pathType = PathType.WallFollow;
-                UserInputInformation.pathTypeGS = "Wall Follow";
+                UserInputInformation.pathTypeGS = "Wall Follow v2.0";
                 break;
             case PathType.All:
                 this.pathType = PathType.All;
@@ -170,7 +172,7 @@ public class Roomba : MonoBehaviour, IMovable
                 Debug.Log("Error setting path. Default to Random.");
                 path = gameObject.AddComponent<RandomPath>();
                 this.pathType = PathType.Random;
-                UserInputInformation.pathTypeGS = "Random";
+                UserInputInformation.pathTypeGS = "Random v1.2";
                 break;
         }
     }
