@@ -106,6 +106,14 @@ public class Door : MonoBehaviour, IMovable
         }
     }
 
+    void OnDestroy() {
+        List<GameObject> nearby = allWalls;
+        foreach(GameObject wall in nearby)
+        {
+            wall.gameObject.SetActive(true);
+        }
+    }
+
     GameObject NearestWall()
     {
         GameObject closest = null;

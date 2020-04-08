@@ -15,10 +15,15 @@ public class RandomPath : Path
         //Debug.Log("Stop");
         Stop();
 
-        float randomX = Random.Range(-1F, 1F);
-        float randomY = Random.Range(-1F, 1F);
+        float currentAngle = GetCurrentAngle();
+        float nextAngle = Random.Range(0f,180f);
+        if(nextAngle < 90f)
+        {
+            nextAngle -= 180f;
+        }
+        Vector2 current = new Vector2(Mathf.Cos(currentAngle+nextAngle), Mathf.Sin(currentAngle+nextAngle));
 
-        float angleChange = CalculateAngleChange(randomX, randomY);
+        float angleChange = CalculateAngleChange(current.x, current.y);
         //Debug.Log("Angle change = " + angleChange);
 
         vacuum.angularVelocity = angularVelocity;
@@ -29,7 +34,7 @@ public class RandomPath : Path
         vacuum.angularVelocity = 0;
 
         //Debug.Log("Ready for launch");
-        Launch(randomX, randomY);
+        Launch(current.x, current.y);
     }
 
     protected float CalculateAngleChange(float randomX, float randomY){

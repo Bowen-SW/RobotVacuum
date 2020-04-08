@@ -64,11 +64,15 @@ public class SaveLoad : MonoBehaviour
 
     public void setCoverage()
     {   
-        coverage = 0;
+        float _coverage = 0;
+        int _sqft = 0;
         foreach(GameObject room in UserInputInformation.rooms)
         {
-            coverage += (int)room.GetComponent<Room>().getCoverage();
+            Room _room = room.GetComponent<Room>(); 
+            _coverage += _room.getCoverage();
+            _sqft += _room.sqft;
         }
+        coverage = (int)(_coverage/(float)_sqft * 100.0f);
     }
 
     public void setDuration()
@@ -114,6 +118,7 @@ public class SaveLoad : MonoBehaviour
             {
                 appendedNum++;
                 fileName = "floorPlan"+ appendedNum.ToString();
+                UserInputInformation.FileNameGS = fileName;
             }        
         }
         else
