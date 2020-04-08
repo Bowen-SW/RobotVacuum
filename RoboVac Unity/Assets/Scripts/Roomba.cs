@@ -237,6 +237,7 @@ public class Roomba : MonoBehaviour, IMovable
     }
 
     public void ResetRunTime(){
+        timerStarted = false;
         timer = 0;
         timeText.text = string.Format("00:00:00"); 
     }
