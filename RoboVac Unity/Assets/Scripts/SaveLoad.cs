@@ -279,5 +279,8 @@ public class SaveLoad : MonoBehaviour
         //recordRun(); 
         Debug.Log(JsonUtility.ToJson(this));
         File.WriteAllText(Application.persistentDataPath + "/" + fileName + ".json", JsonUtility.ToJson(this));
+        string jsonString = File.ReadAllText(Application.persistentDataPath + "/" + fileName + ".json");
+        saveData = JsonMapper.ToObject(jsonString);
+        UserInputInformation.saveDataGS = saveData;
     }
 }
