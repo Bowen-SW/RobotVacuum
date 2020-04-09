@@ -26,23 +26,25 @@ public class CoverageColorChanger : MonoBehaviour
         // Look at each value and see if it falls in the right bound
         foreach (TextMeshProUGUI label in labelList)
         {
-            // Parse the value to an integer ignoring any non digits for units or etc.
-            int val = int.Parse(Regex.Replace(label.text, "[^.0-9]", ""));
+            if (label.text != "")
+            {
+                // Parse the value to an integer ignoring any non digits for units or etc.
+                string labelStripped = label.text.Replace("\u200B", "");
 
-            if (val >= 80)
-            {
-                Debug.Log("Green");
-                label.color = new Color32(0, 255, 0, 255);
-            }
-            else if (val >= 50 && val <= 79)
-            {
-                Debug.Log("Yellow");
-                label.color = new Color32(255, 255, 0, 255);
-            }
-            else if (val <= 49)
-            {
-                Debug.Log("Red");
-                label.color = new Color32(255, 0, 0, 255);
+                int val = int.Parse(Regex.Replace(labelStripped, "[^.0-9]", ""));
+
+                if (val >= 80)
+                {
+                    label.color = new Color32(0, 255, 0, 255);
+                }
+                else if (val >= 50 && val <= 79)
+                {
+                    label.color = new Color32(255, 255, 0, 255);
+                }
+                else if (val <= 49)
+                {
+                    label.color = new Color32(255, 0, 0, 255);
+                }
             }
         }
     }

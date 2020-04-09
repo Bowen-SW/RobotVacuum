@@ -6,7 +6,6 @@ using System;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.IO;
-using System.Globalization;
 
 public class NewFloorPlanMenuManager : MonoBehaviour
 {
@@ -17,17 +16,22 @@ public class NewFloorPlanMenuManager : MonoBehaviour
     public TextMeshProUGUI roomWidth;
     public TextMeshProUGUI roomHeight;
     public TextMeshProUGUI carpetType;
-    public TestSimScript simScript;
+    public RoombaSettingsScript roombaSettings;
     public int warningCount = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        simScript = GetComponentInParent<TestSimScript>();
+        roombaSettings = GetComponentInParent<RoombaSettingsScript>();
     }
 
     // Update is called once per frame
     void Update()
+    {
+        
+    }
+
+    public void SendData()
     {
 
     }
@@ -43,7 +47,12 @@ public class NewFloorPlanMenuManager : MonoBehaviour
                 errorMessage.text = "Err: Area must be < 8000 sq. ft.";
                 return false;
             }
-            else 
+            else if (width * height < 4)
+            {
+                errorMessage.text = "Err: Area must be >= 4 sq. ft.";
+                return false;
+            }
+            else
             {
                 return true;
             }
@@ -76,6 +85,8 @@ public class NewFloorPlanMenuManager : MonoBehaviour
             }
             else
             {
+                UserInputInformation.overwriteWarningGS = warningCount;
+                warningCount--;
                 return true;
             }      
         }
@@ -85,34 +96,67 @@ public class NewFloorPlanMenuManager : MonoBehaviour
         }
     }
 
+    void clearLists()
+    {
+        foreach(GameObject room in UserInputInformation.rooms)
+        {
+            Destroy(room);
+        }
+        UserInputInformation.rooms.Clear();
+        
+        // foreach(GameObject table in UserInputInformation.tables)
+        // {
+        //     Destroy(table);
+        // }
+        // UserInputInformation.tables.Clear();
+
+        // foreach(GameObject chest in UserInputInformation.chests)
+        // {
+        //     Destroy(chest);
+        // }
+        // UserInputInformation.chests.Clear();
+
+        // foreach(GameObject chair in UserInputInformation.chair)
+        // {
+        //     Destroy(chair);
+        // }
+        // UserInputInformation.chairs.Clear();
+        UserInputInformation.stopVals.Clear();
+        UserInputInformation.startVals.Clear();
+    }
+
     public void Accept()
     {
+
+        roombaSettings.SetFloorType(carpetType.text);
+
         string roomHeightStripped = roomHeight.text.Replace("\u200B", "");
         string roomWidthStripped = roomWidth.text.Replace("\u200B", "");
+
         if((checkFileName() == true) && (checkSqft(roomHeightStripped, roomWidthStripped) == true))
         {
             UserInputInformation.FileNameGS = fileName.text.Replace("\u200B", "");
             UserInputInformation.carpetTypeGS = carpetType.text.Replace("\u200B", "");
+            clearLists(); // on creation of a new file, all of the old information must be erased from the current scene
 
             GameObject newRoom = Instantiate(objectToAdd, new Vector3(0f, 0f, 0f), new Quaternion(0f, 0f, 0f, 0f));
+            //UserInputInformation.AddRoom((GameObject)Instantiate(objectToAdd, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f)));
 
-            // Set the Width and Height from what the user entered
-            int width = int.Parse(roomHeightStripped);
-            int height = int.Parse(roomWidthStripped);
+            if(roomHeightStripped != "" && roomWidthStripped != "")
+            {
+                // Set the Width and Height from what the user entered
+                int width = int.Parse(roomHeightStripped);
+                int height = int.Parse(roomWidthStripped);
 
-            newRoom.GetComponent<Room>().SetStart(new Vector2(-((float)width/2f), -((float)height/2f)));
-            newRoom.GetComponent<Room>().SetStop(new Vector2((float)width/2f, (float)height/2f));
-
+                // Create the new default room with the user specified dimensions
+                newRoom.GetComponent<Room>().LoadPositions(new Vector2(-((float)width / 2f), -((float)height / 2f)), new Vector2((float)width / 2f, (float)height / 2f));
+            }
             UserInputInformation.AddRoom(newRoom);
             Close();
         }
-
     }
-
     public void Close()
     {
         Destroy(menu);
     }
-
-
 }

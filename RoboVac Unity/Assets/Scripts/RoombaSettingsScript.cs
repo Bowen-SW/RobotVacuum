@@ -8,12 +8,14 @@ public class RoombaSettingsScript : MonoBehaviour
 {
     
     public Roomba roomba;
+    public FurnitureWindowManager furnitureWindowManager;
 
     private int roombaSpeed = 12;
     private int batteryLife = 150;
-    private float vacEff = .75F;
-    private float whiskerEff = .3F;
+    private float vacEff = 90F;
+    private float whiskerEff = 30F;
     private PathType pathType = PathType.All;
+    private FloorType floorType = FloorType.Hardwood;
 
     public int GetRoombaSpeed(){
         return roombaSpeed;
@@ -32,6 +34,7 @@ public class RoombaSettingsScript : MonoBehaviour
     public PathType GetPathType(){
         return pathType;
     }
+
     public void SetPathType(String path){
         if(String.Equals(path, "Random")){
             pathType = PathType.Random;
@@ -43,6 +46,53 @@ public class RoombaSettingsScript : MonoBehaviour
             pathType = PathType.WallFollow;
         } else if (String.Equals(path, "All")){
             pathType = PathType.All;
+        }
+    }
+
+    public FloorType GetFloorType(){
+        return floorType;
+    }
+
+    public void SetFloorType(String floor){
+        if (String.Equals(floor, "Cut Pile")){
+            floorType = FloorType.CutPile;
+            vacEff = 70;
+        } else if (String.Equals(floor, "Loop Pile")){
+            floorType = FloorType.LoopPile;
+            vacEff = 75;
+        } else if (String.Equals(floor, "Hardwood")){
+            floorType = FloorType.Hardwood;
+            vacEff = 90;
+        } else if (String.Equals(floor, "Frieze-Cut Pile")){
+            floorType = FloorType.FreezeCutPile;
+            vacEff = 65;
+        }
+
+        furnitureWindowManager.SetFloorTypeDropdownVal(floorType);
+
+    }
+
+    public void SetFloorTypeNoNotify(String floor)
+    {
+        if (String.Equals(floor, "Cut Pile"))
+        {
+            floorType = FloorType.CutPile;
+            vacEff = 70;
+        }
+        else if (String.Equals(floor, "Loop Pile"))
+        {
+            floorType = FloorType.LoopPile;
+            vacEff = 75;
+        }
+        else if (String.Equals(floor, "Hardwood"))
+        {
+            floorType = FloorType.Hardwood;
+            vacEff = 90;
+        }
+        else if (String.Equals(floor, "Frieze-Cut Pile"))
+        {
+            floorType = FloorType.FreezeCutPile;
+            vacEff = 65;
         }
     }
 
@@ -59,13 +109,4 @@ public class RoombaSettingsScript : MonoBehaviour
     public void SetWhiskerEfficiency(float whiskerEff){
         this.whiskerEff = whiskerEff;
     }
-
-    // public void initRoomba()
-    // {
-    //     //Debug.Log(roomba.GetPath().ToString());
-    //     Debug.Log(roomba.GetVacEff().ToString());
-    //     Debug.Log(roomba.GetWhiskerEff().ToString());
-
-    //     roomba.init(roombaSpeed, simSpeed, batteryLife, pathType);
-    // }
 }

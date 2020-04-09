@@ -6,10 +6,12 @@ Shader "Unlit/WorldspaceTiling"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _SecondTex ("Second Texture", 2D) = "white" {}
+        _Color ("Color", COLOR) = (1,1,1,1)
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" }
         LOD 100
         
         Pass
@@ -35,7 +37,10 @@ Shader "Unlit/WorldspaceTiling"
             
             // Variables to refer to the texture & transform parameters assigned in the Inspector.
             sampler2D _MainTex;
+            sampler2D _SecondTex;
             float4 _MainTex_ST;
+            float4 _SecondTex_ST;
+            float4 _Color;
             
             // Vertex shader transforms each vertex & preps data for interpolation.
             v2f vert (appdata v)
@@ -60,7 +65,7 @@ Shader "Unlit/WorldspaceTiling"
             fixed4 frag (v2f i) : SV_Target
             {
                 // Look up the right colour from the texture and output it.                   
-                fixed4 col = tex2D(_MainTex, i.uv);
+                fixed4 col = lerp(tex2D(_MainTex, i.uv), tex2D(_SecondTex, i.uv), _Color.a);
                 return col;
             }
             ENDCG

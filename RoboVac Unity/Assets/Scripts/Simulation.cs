@@ -12,6 +12,7 @@ public class Simulation : MonoBehaviour
     public Button pauseButton;
     public Button simSlowButton;
     public Button simFastButton;
+    public Button settingsButton;
     public TMP_Text simSpeedText;
 
     public Sprite playImage;
@@ -22,6 +23,7 @@ public class Simulation : MonoBehaviour
     private Button pauseBtn;
     private Button simSlowBtn;
     private Button simFastBtn;
+    private Button settingsBtn;
     private TMP_Text simText;
 
     private PathType pathType = PathType.Snaking; //TODO Change default All
@@ -50,6 +52,8 @@ public class Simulation : MonoBehaviour
         simFastBtn = simFastButton.GetComponent<Button>();
         simFastBtn.onClick.AddListener(SpeedUp);
         simFastBtn.interactable = false;
+
+        settingsBtn = settingsButton.GetComponent<Button>();
         
         simText = simSpeedText.GetComponent<TMP_Text>();
 
@@ -61,12 +65,13 @@ public class Simulation : MonoBehaviour
     void Update(){
         if(roomba.IsTimeLimitReached()){
             Debug.Log("Time limit has been reached");
-            isPaused = false;
-            isPlaying = false;
-            isStopped = true;
+            
             roomba.SetTimeLimitReached(false);
             SetDefaults();
-            roomba.Stop();
+
+            startStopBtn.GetComponent<Image>().sprite = playImage;
+            startStopBtn.GetComponent<Image>().color = new Color(182, 214, 204, 255);
+            
             if(pathList.Count != 0){
                 pathType = pathList.Peek();
                 Debug.Log("Next path type is: " + pathType);
@@ -99,13 +104,14 @@ public class Simulation : MonoBehaviour
             startStopBtn.GetComponent<Image>().color = new Color(255, 0, 0, 255);
 
         } else if(isPlaying){
-            //roomba.Stop();
-            isPaused = false;
-            isPlaying = false;
-            isStopped = true;
             SetDefaults();
-            roomba.Stop();
+
+            settingsBtn.interactable = true;
             pathList = new Queue<PathType>(); //Reset the queue if the stop button is clicked
+
+            if(usingAllPaths){
+                pathType = PathType.All;
+            }
 
             // Change the stop button icon into a play button icon
             startStopBtn.GetComponent<Image>().sprite = playImage;
@@ -115,6 +121,8 @@ public class Simulation : MonoBehaviour
             if(pathType == PathType.All){
                 StartAllPaths();
             }
+            settingsBtn.interactable = false;
+
             InitRoomba();
 
             // Change the play button icon into a stop button icon
@@ -195,11 +203,17 @@ public class Simulation : MonoBehaviour
         simSpeed = 1;
         roomba.SetSimSpeed(simSpeed);
         simText.text = "1x";
+        roomba.Stop();
         roomba.ResetRunTime();
+
+        isPaused = false;
+        isPlaying = false;
+        isStopped = true;
 
         pauseBtn.interactable = false;
         simSlowBtn.interactable = false;
         simFastBtn.interactable = false;
+        settingsBtn.interactable = true;
     }
 
     void StartAllPaths(){
@@ -210,6 +224,16 @@ public class Simulation : MonoBehaviour
 
         usingAllPaths = true;
         Debug.Log("All paths chosen");
+    }
+
+    public bool IsPlaying()
+    {
+        return isPlaying;
+    }
+
+    public bool IsStopped()
+    {
+        return isStopped;
     }
 
 }

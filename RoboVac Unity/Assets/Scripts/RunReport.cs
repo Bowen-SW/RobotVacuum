@@ -6,18 +6,45 @@ using System;
 
 public class RunReport
 {
-	public string floorPlanId;
-	public string duration;
+	public int reportID;
 	public string dateStamp;
+	public string duration;
 	public string algorithmType;
 	public int coverageValue;
 
-	public RunReport(string dateStampS, string durationS, string algorithmTypeS, int coveragePercentage)
+	public RunReport(int reportIdI, string dateStampS, string durationS, string algorithmTypeS, int coveragePercentage)
 	{
-		this.duration = durationS;
+		this.reportID = reportIdI;
 		this.dateStamp = dateStampS;
+		this.duration = durationS;
 		this.algorithmType = algorithmTypeS;
 		this.coverageValue = coveragePercentage;
 	}
+
+	public int getID()
+	{
+		return reportID;
+	}
+
+	public string getDate()
+	{
+		return dateStamp;
+	}
+
+	public string getDuration()
+	{
+		return duration;
+	}
+
+	public string getAlgorithmType()
+	{
+		return algorithmType;
+	}
+
+	public int getCoverage()
+	{
+		return coverageValue;
+	}
+
 
 }

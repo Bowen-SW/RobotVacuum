@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LitJson;
 
 public class ReportMenuManager : MonoBehaviour
 {
@@ -23,18 +24,31 @@ public class ReportMenuManager : MonoBehaviour
     public void PopulateData()
     {
 
-        // These return bools so maybe we can throw some kind of internal error if they need it or
-        // populate the return upward so that whatever is calling this func can handle trying
-        // to add too much data.
-        data.AddRow("34", "04-04-2020", "02:35:23", "Wall Follow", "67%");
-        data.AddRow("12", "04-05-2020", "03:59:42", "Snaking", "78%");
-        data.AddRow("87", "04-06-2021", "12:45:54", "Random", "45%");
-        data.AddRow("18", "01-19-2022", "07:56:12", "Spiral", "99%");
-        data.AddRow("2", "12-12-3000", "11:28:46", "Wall Follow", "100%");
+        if (UserInputInformation.saveDataGS == null)
+        {
+            Debug.Log("howdy");
+        }
 
-        data.AddRow("123", "12-31-2020", "12:59:59", "Random", "69%");
+        if (UserInputInformation.saveDataGS != null)
+        {
+            int count = UserInputInformation.saveDataGS["reports"].Count;
 
-        colorChanger.ChangeColorBasedOnVal();
+            if (count > 0)
+            {
+                for (int i = 0; i < 5 && i < count; i++)
+                {
+                    string runNumber = UserInputInformation.saveDataGS["reports"][i]["reportID"].ToString();
+                    string date = UserInputInformation.saveDataGS["reports"][i]["dateStamp"].ToString();
+                    string duration = UserInputInformation.saveDataGS["reports"][i]["duration"].ToString();
+                    string pathType = UserInputInformation.saveDataGS["reports"][i]["algorithmType"].ToString();
+                    string coverage = UserInputInformation.saveDataGS["reports"][i]["coverageValue"].ToString() + "%";
+
+                    data.AddRow(runNumber, date, duration, pathType, coverage);
+                }
+
+                colorChanger.ChangeColorBasedOnVal();
+            }
+        }
 
     }
 

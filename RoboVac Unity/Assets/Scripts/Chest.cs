@@ -37,15 +37,25 @@ public class Chest : MonoBehaviour, IResizable
 
     public Vector2 SetStart(Vector2 position)
     {
+        Vector2 temp = this.start;
         this.start.x = Mathf.Round(position.x + 0.5f);
         this.start.y = Mathf.Round(position.y + 0.5f);
+        if(this.width < 1.0f || this.height < 1.0f)
+        {
+            this.start = temp;
+        }
         return start;
     }
 
     public Vector2 SetStop(Vector2 position)
     {
+        Vector2 temp = this.stop;
         this.stop.x = Mathf.Round(position.x + 0.5f);
         this.stop.y = Mathf.Round(position.y + 0.5f);
+        if(this.width < 1.0f || this.height < 1.0f)
+        {
+            this.stop = temp;
+        }
         return stop;
     }
 

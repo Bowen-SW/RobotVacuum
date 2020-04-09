@@ -806,7 +806,18 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8605656064789344728}
+        m_MethodName: UpdateSettingsFloorType
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &552511397108941409
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,6 +829,7 @@ GameObject:
   - component: {fileID: 552511397108941408}
   - component: {fileID: 552511397108941410}
   - component: {fileID: 552511397108941411}
+  - component: {fileID: 8605656064789344728}
   m_Layer: 5
   m_Name: Furniture Window
   m_TagString: Untagged
@@ -883,6 +895,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8605656064789344728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552511397108941409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd80a1ee4193be34e9384db36464e253, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menu: {fileID: 552511397108941409}
+  roombaSettings: {fileID: 0}
+  floorDropdown: {fileID: 552511397078651050}
+  floorType: {fileID: 552511396459424356}
 --- !u!1 &552511397142516979
 GameObject:
   m_ObjectHideFlags: 0

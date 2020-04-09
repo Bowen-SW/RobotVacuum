@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Selection : MonoBehaviour
+public class Selection 
 {
 
     private static GameObject _selected;
@@ -19,18 +19,6 @@ public class Selection : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public static void Select(GameObject o)
     {
         Selectable s;
@@ -40,17 +28,20 @@ public class Selection : MonoBehaviour
             s.isSelected = false;
         }
         _selected = o;
-        s = o.GetComponent<Selectable>();
-        if(s != null)
+        if(o != null)
         {
-            s.isSelected = true;
+            s = o.GetComponent<Selectable>();
+            if(s != null)
+            {
+                s.isSelected = true;
+            }
         }
     }
 
     public static void DeleteSelected()
     {
-        if(selected == null) return;
-        Destroy(selected);
+        if(selected == null || selected.GetComponentInChildren<Roomba>()) return;
+        Object.Destroy(selected);
         selected = null;
     }
 }

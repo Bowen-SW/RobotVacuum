@@ -63,9 +63,12 @@ public class Roomba : MonoBehaviour, IMovable
 
     public void Init(float roombaSpeed, int batteryLife, PathType pathType, float vacEff, float whiskerEff)
     {
+        UserInputInformation.RoombaStop = false;
+        UserInputInformation.setstartTime();
         timeLimitReached = false;
         SetDefaults();
         Time.timeScale = simSpeed;
+
         this.batteryLife = batteryLife; 
         this.whiskerEff = whiskerEff;
         this.vacEff = vacEff;
@@ -107,8 +110,7 @@ public class Roomba : MonoBehaviour, IMovable
             string minutes = Mathf.Floor(timer / 60).ToString("00");
             string seconds = (timer % 60).ToString("00");
 
-            //TODO: Change the limit to be the batteryLife
-            if(Mathf.Floor(timer / 60) >= 3){
+            if(Mathf.Floor(timer / 60) >= batteryLife){
                 timeLimitReached = true;
             }
 
@@ -138,28 +140,29 @@ public class Roomba : MonoBehaviour, IMovable
         }
     }
 
+    //This function also sets the path version
     public void SetPathType(PathType pathType){
         Debug.Log("Path selection = " + pathType);
         switch(pathType){
             case PathType.Random:
                 path = gameObject.AddComponent<RandomPath>();
                 this.pathType = PathType.Random;
-                UserInputInformation.pathTypeGS = "Random";
+                UserInputInformation.pathTypeGS = "Random v1.2";
                 break;
             case PathType.Snaking:
                 path = gameObject.AddComponent<SnakingPath>();
                 this.pathType = PathType.Snaking;
-                UserInputInformation.pathTypeGS = "Snaking";
+                UserInputInformation.pathTypeGS = "Snaking v1.1";
                 break;
             case PathType.Spiral:
                 path = gameObject.AddComponent<SpiralPath>();
                 this.pathType = PathType.Spiral;
-                UserInputInformation.pathTypeGS = "Spiral";
+                UserInputInformation.pathTypeGS = "Spiral v3.0";
                 break;
             case PathType.WallFollow:
                 path = gameObject.AddComponent<WallFollow>();
                 this.pathType = PathType.WallFollow;
-                UserInputInformation.pathTypeGS = "Wall Follow";
+                UserInputInformation.pathTypeGS = "Wall Follow v2.0";
                 break;
             case PathType.All:
                 this.pathType = PathType.All;
@@ -169,7 +172,7 @@ public class Roomba : MonoBehaviour, IMovable
                 Debug.Log("Error setting path. Default to Random.");
                 path = gameObject.AddComponent<RandomPath>();
                 this.pathType = PathType.Random;
-                UserInputInformation.pathTypeGS = "Random";
+                UserInputInformation.pathTypeGS = "Random v1.2";
                 break;
         }
     }
@@ -185,6 +188,7 @@ public class Roomba : MonoBehaviour, IMovable
     public void Stop(){
         Time.timeScale = 0F;
         Debug.Log("Simulation Stopped");
+        UserInputInformation.roombaStopGS = true;
         vacuum.position = new Vector2(xCoordinate, yCoordinate);
         vacuum.rotation = 0F;
         transform.position = new Vector3(xCoordinate, yCoordinate, 0);
@@ -233,10 +237,9 @@ public class Roomba : MonoBehaviour, IMovable
     }
 
     public void ResetRunTime(){
+        timerStarted = false;
         timer = 0;
-        string minutes = Mathf.Floor(timer / 60).ToString("00");
-        string seconds = (timer % 60).ToString("00");
-        timeText.text = string.Format("{0}:{1}", minutes, seconds); 
+        timeText.text = string.Format("00:00:00"); 
     }
 
     public bool IsTimeLimitReached(){
@@ -250,6 +253,7 @@ public class Roomba : MonoBehaviour, IMovable
     public void SaveRunInfo(){
         String timeStamp = GetTimestamp(DateTime.Now);
 
+        
         Debug.Log("Duration: " + timeText.text);
         Debug.Log("Path Type: " + pathType);
         Debug.Log("Time Stamp: " + timeStamp);
