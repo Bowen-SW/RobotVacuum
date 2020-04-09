@@ -30,7 +30,7 @@ public class TestDoor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Object tag: " + collision.gameObject.name.ToString());
+        Debug.Log("Object name: " + collision.gameObject.name.ToString());
 
         // Disable collisions with the wall this door is attached to and the roomba
         if (collision.gameObject.CompareTag("roomba"))
