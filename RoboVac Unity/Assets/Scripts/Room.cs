@@ -7,7 +7,7 @@ public class Room : MonoBehaviour, IResizable
 {
 
     private static int range = 10;
-    public GameObject cell;
+    public Material[] floorTypes;
 
     public Vector2 start;
     private Vector2 prevStart = new Vector2(-1000,-1000);
@@ -16,6 +16,8 @@ public class Room : MonoBehaviour, IResizable
     private int RoomID;
 
     private bool loaded = false;
+
+    private float[,] cells;
 
     
     public int id
@@ -60,8 +62,6 @@ public class Room : MonoBehaviour, IResizable
         }
         set {}
     }
-
-    private GameObject[,] cells;
 
     public Vector2 GetStart()
     {
@@ -142,6 +142,8 @@ public class Room : MonoBehaviour, IResizable
             start = new Vector2((float)pos1, (float)pos2);
             stop = new Vector2((float) pos1+2, (float)pos2+2);
         }
+
+        ResetCells();
     }
 
     // Update is called once per frame
@@ -152,89 +154,144 @@ public class Room : MonoBehaviour, IResizable
            Mathf.Abs(this.stop.x - this.prevStop.x) >= 0.2 ||
            Mathf.Abs(this.stop.y - this.prevStop.y) >= 0.2)
         {
-            cells = CreateRoom();
+            CreateRoom();
         }
 
         if(Input.GetMouseButtonUp(0))
-         {
+        {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             
             if(Physics.Raycast(ray, out hit, 100))
             {
-                Debug.Log(hit.transform.parent.gameObject);
-                foreach(GameObject cell in cells)
+                for(int i = 0; i < transform.childCount; i++)
                 {
-                    if(hit.transform.parent.gameObject == cell || hit.transform.parent.gameObject == gameObject)
+                    Transform c = transform.GetChild(i);
+                    if(hit.transform == c)
                     {
-                        gameObject.GetComponent<Selectable>().Select();
+                        Selection.Select(this.gameObject);
                         break;
                     }
                 }
             }
-         }
-    }
-
-    private void ClearRoom()
-    {
-        if(cells == null || cells.Length <= 0)
-            return;
-        foreach(GameObject cell in cells)
-        {
-            Destroy(cell);
         }
+
+        if(Object.FindObjectOfType<Simulation>().IsStopped())
+        {
+            ResetCells();
+        }
+
+        GameObject floor = GetFloor();
+        floor.GetComponent<MeshRenderer>().material = floorTypes[(int)(Object.FindObjectOfType<RoombaSettingsScript>().GetFloorType())];
+        floor.GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, GetCoveragePercent());
     }
 
-    private GameObject[,] CreateRoom()
+    private void CreateRoom()
     {
-        Debug.Log("Prev start: " + prevStart + ", Start: " + start);
-        Debug.Log("Prev stop: " + prevStop + ", Stop: " + stop);
-        ClearRoom();
-        GameObject[,] newCells = new GameObject[this.width, this.height];
-        for(int j = 0; j < this.height; j++)
+        cells = new float[width,height];
+        List<GameObject> walls = GetWalls();
+        GameObject floor = GetFloor();
+        foreach(GameObject wall in walls)
         {
-            for(int i = 0; i < this.width; i++)
+            switch(wall.tag)
             {
-                newCells[i, j] = Instantiate(cell, new Vector3(this.start.x + i, this.start.y + j,0), Quaternion.identity);
-                newCells[i, j].transform.parent = this.transform;
-                GameObject[] newCellWalls = GetWalls(newCells[i,j]);
-                if(j != 0)
-                    Destroy(newCellWalls[2]);
-                if(j != this.height - 1)
-                    Destroy(newCellWalls[0]);
-                if(i != 0)
-                    Destroy(newCellWalls[1]);
-                if(i != this.width - 1)
-                    Destroy(newCellWalls[3]);
+                case "North":
+                    wall.transform.position = new Vector3((this.start.x + this.stop.x)/2 - 0.5f, this.stop.y - 0.4f, transform.position.z);
+                    wall.transform.localScale = new Vector3(this.width, 0.2f, transform.position.z);
+                    break;
+                case "East":
+                    wall.transform.position = new Vector3(this.stop.x - 0.4f, (this.start.y + this.stop.y)/2 - 0.5f, transform.position.z);
+                    wall.transform.localScale = new Vector3(0.2f, this.height, transform.position.z);
+                    break;
+                case "South":
+                    wall.transform.position = new Vector3((this.start.x + this.stop.x)/2 - 0.5f, this.start.y - 0.6f, transform.position.z);
+                    wall.transform.localScale = new Vector3(this.width, 0.2f, transform.position.z);
+                    break;
+                case "West":
+                    wall.transform.position = new Vector3(this.start.x - 0.6f, (this.start.y + this.stop.y)/2 - 0.5f, transform.position.z);
+                    wall.transform.localScale = new Vector3(0.2f, this.height, transform.position.z);
+                    break;
             }
         }
+        
+        floor.transform.position = new Vector3(this.start.x + this.width/2f - 0.5f,this.start.y + this.height/2f - 0.5f,transform.position.z);
+        floor.transform.localScale = new Vector3(this.width, this.height, 1);
 
         this.prevStart.x = this.start.x;
         this.prevStart.y = this.start.y;
         this.prevStop.x = this.stop.x;
         this.prevStop.y = this.stop.y;
-
-        return newCells;
     }
 
-    private GameObject[] GetWalls(GameObject cell)
+    private List<GameObject> GetWalls()
     {
-        GameObject[] walls = new GameObject[4];
-        for(int i = 0; i < 4; i++)
+        List<GameObject> walls = new List<GameObject>();
+        for(int i = 0; i < transform.childCount; i++)
         {
-            walls[i] = cell.transform.GetChild(i+1).gameObject;
+            GameObject wall = transform.GetChild(i).gameObject;
+            if(wall.tag == "North" || wall.tag == "East" || wall.tag == "South" || wall.tag == "West")
+            {
+                walls.Add(wall);
+            }
         }
         return walls;
+    }
+
+    private GameObject GetFloor()
+    {
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            GameObject floor = transform.GetChild(i).gameObject;
+            if(floor.tag == "floor")
+            {
+                return floor;
+            }
+        }
+        return null;
     }
 
     public float getCoverage()
     {
         float total = 0.0f;
-        foreach(GameObject c in cells)
+        foreach(float c in cells)
         {
-            total += c.GetComponent<Cell>().GetCoverage();
+            total += 1.0f - c;
         }
         return total;
+    }
+
+    public float GetCoveragePercent()
+    {
+        Debug.Log(getCoverage() / sqft);
+        return getCoverage() / sqft;
+    }
+
+    public void VacuumCell(Roomba roomba)
+    {
+        try{
+            Vector2 pos = new Vector2(roomba.transform.GetChild(1).transform.position.x, roomba.transform.GetChild(1).transform.position.y);
+            cells[Mathf.RoundToInt(pos.x - this.start.x), Mathf.RoundToInt(pos.y - this.start.y)] *= 1.0f - (roomba.GetVacEff() * Time.deltaTime / 100.0f);
+        } catch { }
+    }
+
+    public void WhiskerCell(Roomba roomba)
+    {
+        try{
+            Vector2 pos = new Vector2(roomba.transform.GetChild(2).transform.position.x, roomba.transform.GetChild(2).transform.position.y);
+            cells[Mathf.RoundToInt(pos.x - this.start.x), Mathf.RoundToInt(pos.y - this.start.y)] *= 1.0f - (roomba.GetWhiskerEff() * Time.deltaTime / 100.0f);
+        } catch { }
+    }
+
+    void ResetCells()
+    {
+        cells = new float[width, height];
+        for(int i = 0; i < width; i++)
+        {
+            for(int j = 0; j < height; j++)
+            {
+                cells[i,j] = 1.0f;
+            }
+        }
     }
 
 }

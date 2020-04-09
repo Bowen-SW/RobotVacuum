@@ -4,38 +4,24 @@ using UnityEngine;
 
 public class Floor : MonoBehaviour
 {
-
-    public Material[] floorTypes;
     
     Roomba roomba = null;
-    public float dirtiness = 1.0f;
-    public float coverage
-    {
-        get
-        {
-            return 1.0f - dirtiness;
-        }
-
-        set {}
-    }
+    public GameObject room;
+    private Room _room;
 
     // Start is called before the first frame update
     void Start()
     {
+        _room = room.GetComponent<Room>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        gameObject.GetComponent<MeshRenderer>().material = floorTypes[(int)(Object.FindObjectOfType<RoombaSettingsScript>().GetFloorType())];
-        gameObject.GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, dirtiness);
-        if(dirtiness < 1.0f && Object.FindObjectOfType<Simulation>().IsStopped())
-        {
-            ResetFloor();
-        }
+        
     }
     
-    private void OnTriggerExit2D(Collider2D other) {
+    private void OnTriggerStay2D(Collider2D other) {
         if(roomba == null)
         {
             roomba = GameObject.FindGameObjectWithTag("roomba").GetComponent<Roomba>();
@@ -44,17 +30,13 @@ public class Floor : MonoBehaviour
         {
             if(other.gameObject.tag == "whiskers")
             {
-                dirtiness *= 1.0f - (roomba.GetWhiskerEff()/100.0f);
+                _room.VacuumCell(roomba);
             }
             else if(other.gameObject.tag == "vacuum")
             {
-                dirtiness *= 1.0f - (roomba.GetVacEff()/100.0f);
+                _room.WhiskerCell(roomba);
             }
         }
-    }
-    
-    public void ResetFloor() {
-        dirtiness = 1.0f;
     }
 
 }
