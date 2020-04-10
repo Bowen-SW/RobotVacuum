@@ -775,6 +775,7 @@ MonoBehaviour:
   stopValues: []
   fileName: 
   totalSqft: 0
+  room: {fileID: 0}
 --- !u!1001 &1225594381
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -785,37 +786,37 @@ PrefabInstance:
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_Parameters.colorGradient.key0.r
-      value: 0.25655186
+      value: 0.1527071
       objectReference: {fileID: 0}
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_Parameters.colorGradient.key0.g
-      value: 0.6792453
+      value: 0.9433962
       objectReference: {fileID: 0}
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_Parameters.colorGradient.key0.b
-      value: 0.16340333
+      value: 0.06674972
       objectReference: {fileID: 0}
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_Parameters.colorGradient.key1.r
-      value: 1
+      value: 0.1527071
       objectReference: {fileID: 0}
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_Parameters.colorGradient.key1.g
-      value: 1
+      value: 0.9433962
       objectReference: {fileID: 0}
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_Parameters.colorGradient.key1.b
-      value: 1
+      value: 0.06674972
       objectReference: {fileID: 0}
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_Parameters.colorGradient.m_Mode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
@@ -830,12 +831,22 @@ PrefabInstance:
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
-      value: 0.3058796
+      value: 0.6117573
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
+        type: 3}
+      propertyPath: m_Emitting
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
+        type: 3}
+      propertyPath: m_Parameters.colorGradient.ctime0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2675807126547395047, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2675807127965337571, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
@@ -1015,6 +1026,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d57be6624108a1c4facae6b558427b95, type: 3}
+--- !u!96 &1956487262 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
+    type: 3}
+  m_PrefabInstance: {fileID: 1225594381}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1991205563 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8605656064789344728, guid: 16cb95dcfc768dd46953459f0a82ddcb,
@@ -1176,6 +1193,7 @@ MonoBehaviour:
   stopValues: []
   fileName: 
   totalSqft: 0
+  room: {fileID: 0}
 --- !u!114 &2144135135 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3828793206397614282, guid: 37bafd925285e50419153d29f3d2b960,
@@ -1268,6 +1286,11 @@ PrefabInstance:
       propertyPath: settingsButton
       value: 
       objectReference: {fileID: 2144135135}
+    - target: {fileID: 3160643662923642046, guid: a11c057f602876c4ab245b55fcb7e506,
+        type: 3}
+      propertyPath: trail
+      value: 
+      objectReference: {fileID: 1956487262}
     - target: {fileID: 8768774828694831210, guid: a11c057f602876c4ab245b55fcb7e506,
         type: 3}
       propertyPath: m_LocalPosition.x
