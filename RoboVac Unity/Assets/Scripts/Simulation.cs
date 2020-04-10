@@ -213,6 +213,7 @@ public class Simulation : MonoBehaviour
         isPaused = false;
         isPlaying = false;
         isStopped = true;
+        usingAllPaths = false;
 
         pauseBtn.interactable = false;
         simSlowBtn.interactable = false;
