@@ -53,6 +53,14 @@ public class Door : MonoBehaviour, IMovable
                 allWalls = AllWalls();
             }
         }
+
+        if(currentWall != null)
+        {
+            MeshRenderer floor = transform.GetChild(2).GetComponent<MeshRenderer>();
+            MeshRenderer parentFloor = currentWall.transform.parent.GetChild(0).GetComponent<MeshRenderer>(); 
+            floor.material = parentFloor.material;
+            floor.material.color = parentFloor.material.color;
+        }
         
 
         if(!moving)
@@ -65,56 +73,36 @@ public class Door : MonoBehaviour, IMovable
             if(currentWall != null)
             {
                 transform.position = currentWall.transform.position;
-                if(currentWall.tag == "West" || currentWall.tag == "East")
+                switch(currentWall.tag)
                 {
-                    transform.rotation = Quaternion.Euler(0,0,90);
-                    transform.position += new Vector3(0f,0.5f,0f);
-                }
-                else
-                {
-                    transform.rotation = Quaternion.Euler(0,0,0);
-                    transform.position += new Vector3(0.5f,0f,0f);
-                }
-                List<GameObject> nearby = NearbyWalls();
-                foreach(GameObject wall in nearby)
-                {
-                    if(((currentWall.tag == "East" || currentWall.tag == "West") && (wall.tag == "East" || wall.tag == "West")
-                     || (currentWall.tag == "North" || currentWall.tag == "South") && (wall.tag == "North" || wall.tag == "South")))
-                    {
-                        wall.gameObject.SetActive(false);
-                    }
+                    case "North":
+                        transform.rotation = Quaternion.Euler(0,0,0);
+                        transform.position = new Vector3(Mathf.Round(target.x)-0.5f,transform.position.y-0.1f,0f);
+                        break;
+                    case "East":
+                        transform.rotation = Quaternion.Euler(0,0,-90);
+                        transform.position = new Vector3(transform.position.x-0.1f,Mathf.Round(target.y)-0.5f,0f);
+                        break;
+                    case "South":
+                        transform.rotation = Quaternion.Euler(0,0,180);
+                        transform.position = new Vector3(Mathf.Round(target.x)-0.5f,transform.position.y+0.1f,0f);
+                        break;
+                    case "West":
+                        transform.rotation = Quaternion.Euler(0,0,90);
+                        transform.position = new Vector3(transform.position.x+0.1f,Mathf.Round(target.y)-0.5f,0f);
+                        break;
                 }
             }
 
         }
         else
         {
-            if(currentWall != null)
-            {
-                List<GameObject> nearby = allWalls;
-                foreach(GameObject wall in nearby)
-                {
-                    wall.gameObject.SetActive(true);
-                }
-                currentWall = null;
-            }
-
-            if(currentWall == null)
-            {
-                transform.position = target;
-            }
+            transform.position = target;
+            currentWall = null;
         }
     }
 
-    void OnDestroy() {
-        List<GameObject> nearby = allWalls;
-        foreach(GameObject wall in nearby)
-        {
-            wall.gameObject.SetActive(true);
-        }
-    }
-
-    GameObject NearestWall()
+    public GameObject NearestWall()
     {
         GameObject closest = null;
         float distance = Mathf.Infinity;
@@ -130,7 +118,7 @@ public class Door : MonoBehaviour, IMovable
         return closest;
     }
 
-    List<GameObject> NearbyWalls()
+    public List<GameObject> NearbyWalls()
     {
         List<GameObject> close = new List<GameObject>();
         foreach(GameObject wall in allWalls)
@@ -144,7 +132,7 @@ public class Door : MonoBehaviour, IMovable
         return close;
     }
 
-    List<GameObject> AllWalls()
+    public List<GameObject> AllWalls()
     {
         List<GameObject> gameObjects = new List<GameObject>();
         gameObjects.AddRange(GameObject.FindGameObjectsWithTag("North"));
