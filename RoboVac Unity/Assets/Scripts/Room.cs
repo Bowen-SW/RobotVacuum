@@ -30,6 +30,8 @@ public class Room : MonoBehaviour, IResizable
         {
             RoomID = value;
             Debug.Log("Setting roomID for this room to: " + RoomID);
+            UserInputInformation.AddStartVector(RoomID, start);
+            UserInputInformation.AddStopVector(RoomID, stop);
         }
     }
 
@@ -130,6 +132,7 @@ public class Room : MonoBehaviour, IResizable
     // Start is called before the first frame update
     void Start()
     {
+        GetFloor().GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         if(!loaded)
         {
             int pos1, pos2;
@@ -183,7 +186,7 @@ public class Room : MonoBehaviour, IResizable
 
         GameObject floor = GetFloor();
         floor.GetComponent<MeshRenderer>().material = floorTypes[(int)(Object.FindObjectOfType<RoombaSettingsScript>().GetFloorType())];
-        floor.GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, GetCoveragePercent());
+        floor.GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
     }
 
     private void CreateRoom()
@@ -196,31 +199,33 @@ public class Room : MonoBehaviour, IResizable
             switch(wall.tag)
             {
                 case "North":
-                    wall.transform.position = new Vector3((this.start.x + this.stop.x)/2 - 0.5f, this.stop.y - 0.4f, transform.position.z);
-                    wall.transform.localScale = new Vector3(this.width, 0.2f, transform.position.z);
+                    wall.transform.position = new Vector3((this.start.x + this.stop.x)/2 - 0.5f, this.stop.y - 0.5f, 0f);
+                    wall.transform.localScale = new Vector3(this.width-0.2f, 0.2f, transform.position.z);
                     break;
                 case "East":
-                    wall.transform.position = new Vector3(this.stop.x - 0.4f, (this.start.y + this.stop.y)/2 - 0.5f, transform.position.z);
-                    wall.transform.localScale = new Vector3(0.2f, this.height, transform.position.z);
+                    wall.transform.position = new Vector3(this.stop.x - 0.5f, (this.start.y + this.stop.y)/2 - 0.5f, 0f);
+                    wall.transform.localScale = new Vector3(0.2f, this.height-0.2f, transform.position.z);
                     break;
                 case "South":
-                    wall.transform.position = new Vector3((this.start.x + this.stop.x)/2 - 0.5f, this.start.y - 0.6f, transform.position.z);
-                    wall.transform.localScale = new Vector3(this.width, 0.2f, transform.position.z);
+                    wall.transform.position = new Vector3((this.start.x + this.stop.x)/2 - 0.5f, this.start.y - 0.5f, 0f);
+                    wall.transform.localScale = new Vector3(this.width-0.2f, 0.2f, transform.position.z);
                     break;
                 case "West":
-                    wall.transform.position = new Vector3(this.start.x - 0.6f, (this.start.y + this.stop.y)/2 - 0.5f, transform.position.z);
-                    wall.transform.localScale = new Vector3(0.2f, this.height, transform.position.z);
+                    wall.transform.position = new Vector3(this.start.x - 0.5f, (this.start.y + this.stop.y)/2 - 0.5f, 0f);
+                    wall.transform.localScale = new Vector3(0.2f, this.height-0.2f, transform.position.z);
                     break;
             }
         }
         
-        floor.transform.position = new Vector3(this.start.x + this.width/2f - 0.5f,this.start.y + this.height/2f - 0.5f,transform.position.z);
-        floor.transform.localScale = new Vector3(this.width, this.height, 1);
+        floor.transform.position = new Vector3(this.start.x + this.width/2f - 0.5f,this.start.y + this.height/2f - 0.5f, 0.1f);
+        floor.transform.localScale = new Vector3(this.width-0.2f, this.height-0.2f, 1);
 
         this.prevStart.x = this.start.x;
         this.prevStart.y = this.start.y;
         this.prevStop.x = this.stop.x;
         this.prevStop.y = this.stop.y;
+        UserInputInformation.AddStartVector(RoomID, start);
+        UserInputInformation.AddStopVector(RoomID, stop);
     }
 
     private List<GameObject> GetWalls()

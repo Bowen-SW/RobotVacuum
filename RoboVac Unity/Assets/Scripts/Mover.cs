@@ -26,7 +26,7 @@ public class Mover : MonoBehaviour
     {
         if(!dragging || !parentSelect.isSelected)
         {
-            transform.position = parent.transform.position;
+            transform.position = parent.transform.position + new Vector3(0f,0f,-0.2f);
             parentMove.SetMoving(false);
         } else {
             Vector3 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);

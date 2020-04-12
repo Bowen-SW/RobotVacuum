@@ -18,6 +18,7 @@ public class Simulation : MonoBehaviour
     public Sprite playImage;
     public Sprite stopImage;
     public Sprite pauseImage;
+    public TrailRenderer trail;
 
     private Button startStopBtn;
     private Button pauseBtn;
@@ -26,7 +27,7 @@ public class Simulation : MonoBehaviour
     private Button settingsBtn;
     private TMP_Text simText;
 
-    private PathType pathType = PathType.Snaking; //TODO Change default All
+    private PathType pathType = PathType.Snaking;
     private int simSpeed = 1;    
     private bool isPaused = false;
     private bool isPlaying = false;
@@ -56,6 +57,7 @@ public class Simulation : MonoBehaviour
         settingsBtn = settingsButton.GetComponent<Button>();
         
         simText = simSpeedText.GetComponent<TMP_Text>();
+        trail.enabled = false;
 
         pathList = new Queue<PathType>();
 
@@ -187,11 +189,8 @@ public class Simulation : MonoBehaviour
 
     private void InitRoomba()
     {
-        Debug.Log(roombaSettings.GetRoombaSpeed());
-        Debug.Log(roombaSettings.GetBatteryLife());
-        Debug.Log(roombaSettings.GetPathType());
-        Debug.Log(roombaSettings.GetVacuumEfficiency());
-        Debug.Log(roombaSettings.GetWhiskerEfficiency());
+        trail.enabled = true;
+        trail.time = roombaSettings.GetBatteryLife() * 60;
         roomba.Init(roombaSettings.GetRoombaSpeed(), roombaSettings.GetBatteryLife(), 
                     pathType, roombaSettings.GetVacuumEfficiency(), roombaSettings.GetWhiskerEfficiency());
         isStopped = false;
@@ -206,9 +205,13 @@ public class Simulation : MonoBehaviour
         roomba.Stop();
         roomba.ResetRunTime();
 
+        trail.Clear();
+        trail.enabled = false;
+
         isPaused = false;
         isPlaying = false;
         isStopped = true;
+        usingAllPaths = false;
 
         pauseBtn.interactable = false;
         simSlowBtn.interactable = false;
