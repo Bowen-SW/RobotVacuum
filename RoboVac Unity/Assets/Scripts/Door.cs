@@ -76,20 +76,14 @@ public class Door : MonoBehaviour, IMovable
                 switch(currentWall.tag)
                 {
                     case "North":
+                    case "South":
                         transform.rotation = Quaternion.Euler(0,0,0);
-                        transform.position = new Vector3(Mathf.Round(target.x)-0.5f,transform.position.y-0.1f,0f);
+                        transform.position = new Vector3(Mathf.Round(target.x)-0.5f,transform.position.y,0f);
                         break;
                     case "East":
-                        transform.rotation = Quaternion.Euler(0,0,-90);
-                        transform.position = new Vector3(transform.position.x-0.1f,Mathf.Round(target.y)-0.5f,0f);
-                        break;
-                    case "South":
-                        transform.rotation = Quaternion.Euler(0,0,180);
-                        transform.position = new Vector3(Mathf.Round(target.x)-0.5f,transform.position.y+0.1f,0f);
-                        break;
                     case "West":
-                        transform.rotation = Quaternion.Euler(0,0,90);
-                        transform.position = new Vector3(transform.position.x+0.1f,Mathf.Round(target.y)-0.5f,0f);
+                        transform.rotation = Quaternion.Euler(0,0,-90);
+                        transform.position = new Vector3(transform.position.x,Mathf.Round(target.y)-0.5f,0f);
                         break;
                 }
             }

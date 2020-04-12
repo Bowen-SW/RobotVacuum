@@ -199,26 +199,26 @@ public class Room : MonoBehaviour, IResizable
             switch(wall.tag)
             {
                 case "North":
-                    wall.transform.position = new Vector3((this.start.x + this.stop.x)/2 - 0.5f, this.stop.y - 0.4f, 0f);
-                    wall.transform.localScale = new Vector3(this.width, 0.2f, transform.position.z);
+                    wall.transform.position = new Vector3((this.start.x + this.stop.x)/2 - 0.5f, this.stop.y - 0.5f, 0f);
+                    wall.transform.localScale = new Vector3(this.width-0.2f, 0.2f, transform.position.z);
                     break;
                 case "East":
-                    wall.transform.position = new Vector3(this.stop.x - 0.4f, (this.start.y + this.stop.y)/2 - 0.5f, 0f);
-                    wall.transform.localScale = new Vector3(0.2f, this.height, transform.position.z);
+                    wall.transform.position = new Vector3(this.stop.x - 0.5f, (this.start.y + this.stop.y)/2 - 0.5f, 0f);
+                    wall.transform.localScale = new Vector3(0.2f, this.height-0.2f, transform.position.z);
                     break;
                 case "South":
-                    wall.transform.position = new Vector3((this.start.x + this.stop.x)/2 - 0.5f, this.start.y - 0.6f, 0f);
-                    wall.transform.localScale = new Vector3(this.width, 0.2f, transform.position.z);
+                    wall.transform.position = new Vector3((this.start.x + this.stop.x)/2 - 0.5f, this.start.y - 0.5f, 0f);
+                    wall.transform.localScale = new Vector3(this.width-0.2f, 0.2f, transform.position.z);
                     break;
                 case "West":
-                    wall.transform.position = new Vector3(this.start.x - 0.6f, (this.start.y + this.stop.y)/2 - 0.5f, 0f);
-                    wall.transform.localScale = new Vector3(0.2f, this.height, transform.position.z);
+                    wall.transform.position = new Vector3(this.start.x - 0.5f, (this.start.y + this.stop.y)/2 - 0.5f, 0f);
+                    wall.transform.localScale = new Vector3(0.2f, this.height-0.2f, transform.position.z);
                     break;
             }
         }
         
         floor.transform.position = new Vector3(this.start.x + this.width/2f - 0.5f,this.start.y + this.height/2f - 0.5f, 0.1f);
-        floor.transform.localScale = new Vector3(this.width, this.height, 1);
+        floor.transform.localScale = new Vector3(this.width-0.2f, this.height-0.2f, 1);
 
         this.prevStart.x = this.start.x;
         this.prevStart.y = this.start.y;
