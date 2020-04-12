@@ -30,6 +30,8 @@ public class Room : MonoBehaviour, IResizable
         {
             RoomID = value;
             Debug.Log("Setting roomID for this room to: " + RoomID);
+            UserInputInformation.AddStartVector(RoomID, start);
+            UserInputInformation.AddStopVector(RoomID, stop);
         }
     }
 
@@ -222,6 +224,8 @@ public class Room : MonoBehaviour, IResizable
         this.prevStart.y = this.start.y;
         this.prevStop.x = this.stop.x;
         this.prevStop.y = this.stop.y;
+        UserInputInformation.AddStartVector(RoomID, start);
+        UserInputInformation.AddStopVector(RoomID, stop);
     }
 
     private List<GameObject> GetWalls()
