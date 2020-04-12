@@ -37,6 +37,22 @@ public class Floor : MonoBehaviour
                 _room.WhiskerCell(roomba);
             }
         }
+
+        
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        string tag = collision.gameObject.tag;
+
+        if (tag.Equals("North") ||
+            tag.Equals("South") ||
+            tag.Equals("West") ||
+            tag.Equals("East"))
+        {
+            Debug.Log("Found a wall");
+        }
     }
 
 }

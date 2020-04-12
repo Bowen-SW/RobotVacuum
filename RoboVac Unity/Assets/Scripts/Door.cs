@@ -81,7 +81,7 @@ public class Door : MonoBehaviour, IMovable
                     if(((currentWall.tag == "East" || currentWall.tag == "West") && (wall.tag == "East" || wall.tag == "West")
                      || (currentWall.tag == "North" || currentWall.tag == "South") && (wall.tag == "North" || wall.tag == "South")))
                     {
-                        wall.gameObject.SetActive(false);
+                        //wall.gameObject.SetActive(false);
                     }
                 }
             }
@@ -94,7 +94,7 @@ public class Door : MonoBehaviour, IMovable
                 List<GameObject> nearby = allWalls;
                 foreach(GameObject wall in nearby)
                 {
-                    wall.gameObject.SetActive(true);
+                    //wall.gameObject.SetActive(true);
                 }
                 currentWall = null;
             }
@@ -110,7 +110,23 @@ public class Door : MonoBehaviour, IMovable
         List<GameObject> nearby = allWalls;
         foreach(GameObject wall in nearby)
         {
-            wall.gameObject.SetActive(true);
+            //wall.gameObject.SetActive(true);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("North") ||
+            collision.gameObject.CompareTag("South") ||
+            collision.gameObject.CompareTag("East") ||
+            collision.gameObject.CompareTag("West"))
+        {
+
+        }
+
+        if (collision.gameObject.CompareTag("roomba"))
+        {
+            Debug.Log("It's a roomba!");
         }
     }
 

@@ -52,11 +52,17 @@ public class TestRoombaScript : MonoBehaviour
         if (isRunning)
         {
             isRunning = false;
-            testRoom.ClearForSimulationEnd();
+            if (testRoom != null)
+            {
+                testRoom.ClearForSimulationEnd();
+            }
         }
         else
         {
-            testRoom.InitForSimulationStart();
+            if (testRoom != null)
+            {
+                testRoom.InitForSimulationStart();
+            }
             isRunning = true;
         }
     }

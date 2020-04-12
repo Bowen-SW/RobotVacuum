@@ -262,7 +262,7 @@ public class Room : MonoBehaviour, IResizable
 
     public float GetCoveragePercent()
     {
-        Debug.Log(getCoverage() / sqft);
+        //Debug.Log(getCoverage() / sqft);
         return getCoverage() / sqft;
     }
 
