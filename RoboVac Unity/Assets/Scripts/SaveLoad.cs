@@ -210,6 +210,7 @@ public class SaveLoad : MonoBehaviour
         UserInputInformation.startVals.Clear();
         UserInputInformation.rooms.Clear();
         UserInputInformation.RoomIDNum = 0;
+        Debug.Log("count: " + saveInformation["rooms"].Count);
         for(int i = 0; i < saveInformation["rooms"].Count; i++)
         {
             double stopX = (double)saveData["stopValues"][i]["x"];
@@ -266,7 +267,6 @@ public class SaveLoad : MonoBehaviour
             }
 
             UserInputInformation.prevReports = reports;
-            loadRooms(saveData);
         }
     }
 
