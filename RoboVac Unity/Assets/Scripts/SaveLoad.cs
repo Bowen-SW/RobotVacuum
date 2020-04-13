@@ -14,6 +14,8 @@ public class SaveLoad : MonoBehaviour
     [HideInInspector] public List<GameObject> rooms;
     [HideInInspector] public List<GameObject> chests = UserInputInformation.chests;
     [HideInInspector] public List<GameObject> chairs = UserInputInformation.chairs;
+    [HideInInspector] public List<GameObject> tables = UserInputInformation.tables;
+    [HideInInspector] public List<GameObject> doors = UserInputInformation.doors;
     [HideInInspector] public List<RunReport> reports = new List<RunReport>();
     [HideInInspector] public List<Vector2> startValues;
     [HideInInspector] public List<Vector2> stopValues;
@@ -147,10 +149,15 @@ public class SaveLoad : MonoBehaviour
 
     public void setFurniture()
     {
+        startValues = new List<Vector2>();
+        stopValues = new List<Vector2>();
         rooms = new List<GameObject>();
         foreach(GameObject room in UserInputInformation.rooms)
         {
             rooms.Add(room);
+            startValues.Add(room.GetComponent<Room>().start);
+            stopValues.Add(room.GetComponent<Room>().stop);
+
         }
         // chests = new List<Room>();
         // foreach(GameObject room in UserInputInformation.rooms)
@@ -167,8 +174,6 @@ public class SaveLoad : MonoBehaviour
         // {
         //     rooms.Add(room.GetComponent<Room>());
         // }
-        startValues = UserInputInformation.startVals;
-        stopValues = UserInputInformation.stopVals;
     }
 
     public void removeFurniture()
@@ -178,7 +183,6 @@ public class SaveLoad : MonoBehaviour
             Destroy(room);
         }
         UserInputInformation.rooms.Clear();
-        
         // foreach(GameObject table in UserInputInformation.tables)
         // {
         //     Destroy(table);
@@ -204,8 +208,8 @@ public class SaveLoad : MonoBehaviour
     {
         UserInputInformation.stopVals.Clear();
         UserInputInformation.startVals.Clear();
-        UserInputInformation.RoomIDNum = 0;
         UserInputInformation.rooms.Clear();
+        UserInputInformation.RoomIDNum = 0;
         for(int i = 0; i < saveInformation["rooms"].Count; i++)
         {
             double stopX = (double)saveData["stopValues"][i]["x"];
@@ -224,17 +228,31 @@ public class SaveLoad : MonoBehaviour
         }
     }
 
-    public void Load()
+    public void loadDoors(JsonData saveInformation)
     {
-        try
+        Debug.Log("coming soon");
+    }
+
+    public void loadTables(JsonData saveInformation)
+    {
+        Debug.Log("coming soon");
+    }
+
+    public void loadChests(JsonData saveInformation)
+    {
+        Debug.Log("coming soon");
+    }
+
+    public void loadChairs(JsonData saveInformation)
+    {
+        Debug.Log("coming soon");
+    }
+
+    public void loadReports(JsonData saveInformation)
+    {
+        if(saveInformation["reports"].Count != 0)
         {
-            removeFurniture();
-            reports.Clear();
-            string filePath = EditorUtility.OpenFilePanel("Open a Floor Plan", Application.persistentDataPath, "json");
-            string jsonString = File.ReadAllText(filePath);
-            saveData = JsonMapper.ToObject(jsonString);
-            UserInputInformation.saveDataGS = saveData;
-            fileName = (string)saveData["fileName"];
+            
             for(int i = 0; i < saveData["reports"].Count; i++)
             {
                 int id = (int)(saveData["reports"][i]["reportID"]);
@@ -250,20 +268,37 @@ public class SaveLoad : MonoBehaviour
             UserInputInformation.prevReports = reports;
             loadRooms(saveData);
         }
-        catch
-        {
-            Debug.Log("cannot open NULL or incompatiable JSON");
-        }
+    }
 
-        
-        // for(int i = 0; i<reports.Count; i++)
-        // {
-        //     Debug.Log(reports[i].getID());
-        //     Debug.Log(reports[i].getDate());
-        //     Debug.Log(reports[i].getDuration());
-        //     Debug.Log(reports[i].getAlgorithmType());
-        //     Debug.Log(reports[i].getCoverage());
-        // }   
+    public void Load()
+    {
+        string fileToLoad = Loader.openFileFromBrowser();
+        // if the string is empty, this indicates that the user hit cancel
+        if(fileToLoad == "")
+        {
+            Debug.Log("Load cancelled.");
+        }
+        else
+        {
+            string jsonString = File.ReadAllText(fileToLoad);
+            saveData = JsonMapper.ToObject(jsonString);
+
+            //if this returns true, all keys necessary for loading were present
+            if(Loader.validateFileFields(saveData) == true)
+            {
+                fileName = (string)saveData["fileName"];
+                UserInputInformation.saveDataGS = saveData;
+                UserInputInformation.FileNameGS = fileName;
+                reports.Clear();
+                removeFurniture();
+                loadReports(saveData);
+                loadRooms(saveData);
+                loadChairs(saveData);
+                loadChests(saveData);
+                loadTables(saveData);
+                loadDoors(saveData);
+            }
+        }
     }
 
     public void Save()
