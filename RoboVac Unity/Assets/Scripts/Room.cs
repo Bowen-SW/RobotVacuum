@@ -104,22 +104,22 @@ public class Room : MonoBehaviour, IResizable
 
     public Vector2 SetLeft(float position)
     {
-        return this.SetStart(new Vector2(position, this.prevStart.y));
+        return this.SetStart(new Vector2(position, this.prevStart.y-0.5f));
     }
 
     public Vector2 SetRight(float position)
     {
-        return this.SetStop(new Vector2(position, this.prevStop.y));
+        return this.SetStop(new Vector2(position, this.prevStop.y-0.5f));
     }
 
     public Vector2 SetTop(float position)
     {
-        return this.SetStop(new Vector2(this.prevStop.x, position));
+        return this.SetStop(new Vector2(this.prevStop.x-0.5f, position));
     }
 
     public Vector2 SetBottom(float position)
     {
-        return this.SetStart(new Vector2(this.prevStart.x, position));
+        return this.SetStart(new Vector2(this.prevStart.x-0.5f, position));
     }
 
     public void LoadPositions(Vector2 start, Vector2 stop)
@@ -199,25 +199,25 @@ public class Room : MonoBehaviour, IResizable
             switch(wall.tag)
             {
                 case "North":
-                    wall.transform.position = new Vector3((this.start.x + this.stop.x)/2 - 0.5f, this.stop.y - 0.5f, 0f);
+                    wall.transform.position = new Vector3((this.start.x + this.stop.x)/2 - 0.5f, this.stop.y - 0.5f, 0.05f);
                     wall.transform.localScale = new Vector3(this.width-0.2f, 0.2f, transform.position.z);
                     break;
                 case "East":
-                    wall.transform.position = new Vector3(this.stop.x - 0.5f, (this.start.y + this.stop.y)/2 - 0.5f, 0f);
+                    wall.transform.position = new Vector3(this.stop.x - 0.5f, (this.start.y + this.stop.y)/2 - 0.5f, 0.05f);
                     wall.transform.localScale = new Vector3(0.2f, this.height-0.2f, transform.position.z);
                     break;
                 case "South":
-                    wall.transform.position = new Vector3((this.start.x + this.stop.x)/2 - 0.5f, this.start.y - 0.5f, 0f);
+                    wall.transform.position = new Vector3((this.start.x + this.stop.x)/2 - 0.5f, this.start.y - 0.5f, 0.05f);
                     wall.transform.localScale = new Vector3(this.width-0.2f, 0.2f, transform.position.z);
                     break;
                 case "West":
-                    wall.transform.position = new Vector3(this.start.x - 0.5f, (this.start.y + this.stop.y)/2 - 0.5f, 0f);
+                    wall.transform.position = new Vector3(this.start.x - 0.5f, (this.start.y + this.stop.y)/2 - 0.5f, 0.05f);
                     wall.transform.localScale = new Vector3(0.2f, this.height-0.2f, transform.position.z);
                     break;
             }
         }
         
-        floor.transform.position = new Vector3(this.start.x + this.width/2f - 0.5f,this.start.y + this.height/2f - 0.5f, 0.1f);
+        floor.transform.position = new Vector3(this.start.x + this.width/2f - 0.5f,this.start.y + this.height/2f - 0.5f, 0.6f);
         floor.transform.localScale = new Vector3(this.width-0.2f, this.height-0.2f, 1);
 
         this.prevStart.x = this.start.x;

@@ -20,6 +20,8 @@ public static class UserInputInformation
     public static List<GameObject> rooms = new List<GameObject>();
     public static List<GameObject> chairs = new List<GameObject>();
     public static List<GameObject> chests = new List<GameObject>();
+    public static List<GameObject> tables = new List<GameObject>();
+    public static List<GameObject> doors = new List<GameObject>();
     public static List<Vector2> startVals = new List<Vector2>();
     public static List<Vector2> stopVals = new List<Vector2>();
     public static string pathTypeUsed;
