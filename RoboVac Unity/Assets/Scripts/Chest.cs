@@ -61,25 +61,25 @@ public class Chest : MonoBehaviour, IResizable
 
     public Vector2 SetLeft(float position)
     {
-        this.start.x = Mathf.Round(position + 0.5f);
+        SetStart(new Vector2(position, this.start.y-0.5f));
         return start;
     }
 
     public Vector2 SetRight(float position)
     {
-        this.stop.x = Mathf.Round(position + 0.5f);
+        SetStop(new Vector2(position, this.stop.y-0.5f));
         return stop;
     }
 
     public Vector2 SetTop(float position)
     {
-        this.stop.y = Mathf.Round(position + 0.5f);
+        SetStop(new Vector2(this.stop.x-0.5f, position));
         return stop;
     }
 
     public Vector2 SetBottom(float position)
     {
-        this.start.y = Mathf.Round(position + 0.5f);
+        SetStart(new Vector2(this.start.x-0.5f, position));
         return start;
     }
 

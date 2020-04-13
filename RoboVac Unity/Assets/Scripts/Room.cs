@@ -104,22 +104,22 @@ public class Room : MonoBehaviour, IResizable
 
     public Vector2 SetLeft(float position)
     {
-        return this.SetStart(new Vector2(position, this.prevStart.y));
+        return this.SetStart(new Vector2(position, this.prevStart.y-0.5f));
     }
 
     public Vector2 SetRight(float position)
     {
-        return this.SetStop(new Vector2(position, this.prevStop.y));
+        return this.SetStop(new Vector2(position, this.prevStop.y-0.5f));
     }
 
     public Vector2 SetTop(float position)
     {
-        return this.SetStop(new Vector2(this.prevStop.x, position));
+        return this.SetStop(new Vector2(this.prevStop.x-0.5f, position));
     }
 
     public Vector2 SetBottom(float position)
     {
-        return this.SetStart(new Vector2(this.prevStart.x, position));
+        return this.SetStart(new Vector2(this.prevStart.x-0.5f, position));
     }
 
     public void LoadPositions(Vector2 start, Vector2 stop)
