@@ -30,11 +30,11 @@ public class Floor : MonoBehaviour
         {
             if(other.gameObject.tag == "whiskers")
             {
-                _room.VacuumCell(roomba);
+                _room.WhiskerCell(roomba);
             }
             else if(other.gameObject.tag == "vacuum")
             {
-                _room.WhiskerCell(roomba);
+                _room.VacuumCell(roomba);
             }
         }
     }
