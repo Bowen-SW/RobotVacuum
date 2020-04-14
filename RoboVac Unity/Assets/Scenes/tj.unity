@@ -1284,7 +1284,7 @@ MonoBehaviour:
   stopValues: []
   fileName: 
   totalSqft: 0
-  room: {fileID: 0}
+  room: {fileID: 3347921352153231088, guid: 5f99ae4e997a3c14ba5e514534d07303, type: 3}
 --- !u!114 &2144135135 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3828793206397614282, guid: 37bafd925285e50419153d29f3d2b960,
