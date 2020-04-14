@@ -770,6 +770,8 @@ MonoBehaviour:
   rooms: []
   chests: []
   chairs: []
+  tables: []
+  doors: []
   reports: []
   startValues: []
   stopValues: []
@@ -786,32 +788,32 @@ PrefabInstance:
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_Parameters.colorGradient.key0.r
-      value: 0.1527071
+      value: 0.8000001
       objectReference: {fileID: 0}
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_Parameters.colorGradient.key0.g
-      value: 0.9433962
+      value: 0.8000001
       objectReference: {fileID: 0}
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_Parameters.colorGradient.key0.b
-      value: 0.06674972
+      value: 0.8000001
       objectReference: {fileID: 0}
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_Parameters.colorGradient.key1.r
-      value: 0.1527071
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_Parameters.colorGradient.key1.g
-      value: 0.9433962
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_Parameters.colorGradient.key1.b
-      value: 0.06674972
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
@@ -851,8 +853,18 @@ PrefabInstance:
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_SortingLayer
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
+        type: 3}
+      propertyPath: m_Parameters.textureMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8e4b2666cc79a004ca59ad27308bcd08, type: 2}
     - target: {fileID: 2675807126547395047, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_IsActive
@@ -946,7 +958,7 @@ PrefabInstance:
     - target: {fileID: 2675807127965337581, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_SortingLayer
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2675807127965337582, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
@@ -1197,7 +1209,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomba: {fileID: 2030935836}
+  trail: {fileID: 1956487262}
   furnitureWindowManager: {fileID: 1991205563}
+  hardwood: {fileID: 2100000, guid: 8e4b2666cc79a004ca59ad27308bcd08, type: 2}
+  freezeCut: {fileID: 2100000, guid: b127c10d05c93c74ebca48e539944f47, type: 2}
+  loopPile: {fileID: 2100000, guid: 184d0632d71d3484b9e6a6016f9ec892, type: 2}
+  cutPile: {fileID: 2100000, guid: 7dc513015590d554d9d1db73c9af0d16, type: 2}
 --- !u!114 &2065904804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1213,6 +1230,8 @@ MonoBehaviour:
   rooms: []
   chests: []
   chairs: []
+  tables: []
+  doors: []
   reports: []
   startValues: []
   stopValues: []

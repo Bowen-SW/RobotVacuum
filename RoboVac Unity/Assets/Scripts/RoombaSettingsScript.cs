@@ -8,7 +8,12 @@ public class RoombaSettingsScript : MonoBehaviour
 {
     
     public Roomba roomba;
+    public TrailRenderer trail;
     public FurnitureWindowManager furnitureWindowManager;
+    public Material hardwood;
+    public Material freezeCut;
+    public Material loopPile;
+    public Material cutPile;
 
     private int roombaSpeed = 12;
     private int batteryLife = 150;
@@ -57,15 +62,19 @@ public class RoombaSettingsScript : MonoBehaviour
         if (String.Equals(floor, "Cut Pile")){
             floorType = FloorType.CutPile;
             vacEff = 70;
+            trail.material = cutPile;
         } else if (String.Equals(floor, "Loop Pile")){
             floorType = FloorType.LoopPile;
             vacEff = 75;
+            trail.material = loopPile;
         } else if (String.Equals(floor, "Hardwood")){
             floorType = FloorType.Hardwood;
             vacEff = 90;
+            trail.material = hardwood;
         } else if (String.Equals(floor, "Frieze-Cut Pile")){
             floorType = FloorType.FreezeCutPile;
             vacEff = 65;
+            trail.material = freezeCut;
         }
 
         furnitureWindowManager.SetFloorTypeDropdownVal(floorType);
@@ -78,21 +87,25 @@ public class RoombaSettingsScript : MonoBehaviour
         {
             floorType = FloorType.CutPile;
             vacEff = 70;
+            trail.material = cutPile;
         }
         else if (String.Equals(floor, "Loop Pile"))
         {
             floorType = FloorType.LoopPile;
             vacEff = 75;
+            trail.material = loopPile;
         }
         else if (String.Equals(floor, "Hardwood"))
         {
             floorType = FloorType.Hardwood;
             vacEff = 90;
+            trail.material = hardwood;
         }
         else if (String.Equals(floor, "Frieze-Cut Pile"))
         {
             floorType = FloorType.FreezeCutPile;
             vacEff = 65;
+            trail.material = freezeCut;
         }
     }
 
