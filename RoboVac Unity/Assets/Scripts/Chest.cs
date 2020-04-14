@@ -4,9 +4,26 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour, IResizable
 {
+    private static int range = 10;
     public Vector2 start;
     public Vector2 stop;
+    private int ChestID;
+    private bool loaded;
 
+    public int id
+    {
+        get
+        {
+            return ChestID;
+        }
+        set
+        {
+            ChestID = value;
+            Debug.Log("Setting chestID for this room to: " + ChestID);
+            UserInputInformation.AddStartVectorCT(ChestID, start);
+            UserInputInformation.AddStopVectorCT(ChestID, stop);
+        }
+    }
     public int width
     {
         get
@@ -25,6 +42,13 @@ public class Chest : MonoBehaviour, IResizable
         private set {}
     }
     
+    public void LoadPositions(Vector2 start, Vector2 stop)
+    {
+        loaded = true;
+        this.start = start;
+        this.stop = stop;
+        
+    }
     public Vector2 GetStart()
     {
         return this.start;
@@ -82,7 +106,21 @@ public class Chest : MonoBehaviour, IResizable
         SetStart(new Vector2(this.start.x-0.5f, position));
         return start;
     }
+    void Start()
+    {
+        if(!loaded)
+        {
+            int pos1, pos2;
+            do {
+                pos1 = Random.Range(-range, range);
+                pos2 = Random.Range(-range, range);
+            }while(Physics.CheckSphere(new Vector3(pos1, pos2, transform.position.z),2f));
 
+            range ++;
+            start = new Vector2((float)pos1, (float)pos2);
+            stop = new Vector2((float) pos1+2, (float)pos2+2);
+        }
+    }
     void Update() {
         this.transform.position = new Vector3(((this.start.x + this.stop.x) / 2f - 0.5f), ((this.start.y + this.stop.y) / 2f - 0.5f), this.transform.position.z);
         this.transform.localScale = new Vector3(this.width, this.height, 1.0f);

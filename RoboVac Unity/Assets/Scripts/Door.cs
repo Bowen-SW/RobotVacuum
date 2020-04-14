@@ -7,10 +7,26 @@ public class Door : MonoBehaviour, IMovable
 
     [SerializeField] private GameObject currentWall = null;
 
+    private static int range = 10;
     public Vector2 target;
     public bool moving;
-
+    private bool loaded;
     public List<GameObject> allWalls;
+    private int DoorID;
+
+    public int id
+    {
+        get
+        {
+            return DoorID;
+        }
+        set
+        {
+            DoorID = value;
+            Debug.Log("Setting doorID for this room to: " + DoorID);
+            UserInputInformation.AddStartVectorD(DoorID, target);
+        }
+    }
 
     public void SetTarget(Vector2 position)
     {
@@ -32,11 +48,25 @@ public class Door : MonoBehaviour, IMovable
         return this.moving;
     }
 
-    // Start is called before the first frame update
+    public void LoadPositions(Vector2 start)
+    {
+        this.target = start;
+        loaded = true;
+    }
+
     void Start()
     {
-        target.x = transform.position.x;
-        target.y = transform.position.y;
+        if(!loaded)
+        {
+            int pos1, pos2;
+            do {
+                pos1 = Random.Range(-range, range);
+                pos2 = Random.Range(-range, range);
+            }while(Physics.CheckSphere(new Vector3(pos1, pos2, transform.position.z),2f));
+
+            range ++;
+            target = new Vector2((float)pos1, (float)pos2);
+        }
     }
 
     // Update is called once per frame

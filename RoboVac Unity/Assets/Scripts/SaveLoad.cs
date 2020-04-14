@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-//using UnityEditor;
+using UnityEditor;
 using System.IO;
 using System;
 using System.Globalization;
@@ -12,13 +12,17 @@ using LitJson;
 public class SaveLoad : MonoBehaviour
 {
     [HideInInspector] public List<GameObject> rooms;
-    [HideInInspector] public List<GameObject> chests = UserInputInformation.chests;
-    [HideInInspector] public List<GameObject> chairs = UserInputInformation.chairs;
-    [HideInInspector] public List<GameObject> tables = UserInputInformation.tables;
-    [HideInInspector] public List<GameObject> doors = UserInputInformation.doors;
+    [HideInInspector] public List<GameObject> chests;
+    [HideInInspector] public List<GameObject> chairs;
+    [HideInInspector] public List<GameObject> doors;
     [HideInInspector] public List<RunReport> reports = new List<RunReport>();
     [HideInInspector] public List<Vector2> startValues;
     [HideInInspector] public List<Vector2> stopValues;
+    [HideInInspector] public List<Vector2> startValuesCR;
+    [HideInInspector] public List<Vector2> stopValuesCR;
+    [HideInInspector] public List<Vector2> startValuesCT;
+    [HideInInspector] public List<Vector2> stopValuesCT;
+    [HideInInspector] public List<Vector2> startValuesD;
     [HideInInspector] public string fileName;
     [HideInInspector] public int totalSqft;
     [HideInInspector] public static DateTime timeStamp;
@@ -31,10 +35,9 @@ public class SaveLoad : MonoBehaviour
     [HideInInspector] public static int coverage;
     [HideInInspector] private static JsonData saveData;
     public GameObject room;
-    [HideInInspector] public static GameObject chair;
-    [HideInInspector] public static GameObject chest;
-    [HideInInspector] public static GameObject table;
-    [HideInInspector] public static GameObject door;
+    public GameObject chair;
+    public GameObject chest;
+    public GameObject door;
     [HideInInspector] public static int stopCount = 0;
     //public GameObject roomba;
     // public Button button;
@@ -151,6 +154,12 @@ public class SaveLoad : MonoBehaviour
     {
         startValues = new List<Vector2>();
         stopValues = new List<Vector2>();
+        startValuesCR = new List<Vector2>();
+        stopValuesCR = new List<Vector2>();
+        startValuesCT = new List<Vector2>();
+        stopValuesCT = new List<Vector2>();
+        startValuesD = new List<Vector2>();
+
         rooms = new List<GameObject>();
         foreach(GameObject room in UserInputInformation.rooms)
         {
@@ -159,21 +168,26 @@ public class SaveLoad : MonoBehaviour
             stopValues.Add(room.GetComponent<Room>().stop);
 
         }
-        // chests = new List<Room>();
-        // foreach(GameObject room in UserInputInformation.rooms)
-        // {
-        //     rooms.Add(room.GetComponent<Room>());
-        // }
-        // chairs = new List<Room>();
-        // foreach(GameObject room in UserInputInformation.rooms)
-        // {
-        //     rooms.Add(room.GetComponent<Room>());
-        // }
-        // tables = new List<Room>();
-        // foreach(GameObject room in UserInputInformation.rooms)
-        // {
-        //     rooms.Add(room.GetComponent<Room>());
-        // }
+        chests = new List<GameObject>();
+        foreach(GameObject chest in UserInputInformation.chests)
+        {
+            chests.Add(chest);
+            startValuesCT.Add(chest.GetComponent<Chest>().start);
+            stopValuesCT.Add(chest.GetComponent<Chest>().stop);
+        }
+        chairs = new List<GameObject>();
+        foreach(GameObject chair in UserInputInformation.chairs)
+        {
+            chairs.Add(chair);
+            startValuesCR.Add(chair.GetComponent<Chair>().start);
+            stopValuesCR.Add(chair.GetComponent<Chair>().stop);
+        }
+        doors = new List<GameObject>();
+        foreach(GameObject door in UserInputInformation.doors)
+        {
+            doors.Add(door);
+            startValuesD.Add(door.GetComponent<Door>().target);
+        }
     }
 
     public void removeFurniture()
@@ -183,25 +197,22 @@ public class SaveLoad : MonoBehaviour
             Destroy(room);
         }
         UserInputInformation.rooms.Clear();
-        // foreach(GameObject table in UserInputInformation.tables)
-        // {
-        //     Destroy(table);
-        // }
-        // UserInputInformation.tables.Clear();
-
-        // foreach(GameObject chest in UserInputInformation.chests)
-        // {
-        //     Destroy(chest);
-        // }
-        // UserInputInformation.chests.Clear();
-
-        // foreach(GameObject chair in UserInputInformation.chair)
-        // {
-        //     Destroy(chair);
-        // }
-        // UserInputInformation.chairs.Clear();
-        UserInputInformation.stopVals.Clear();
-        UserInputInformation.startVals.Clear();
+        foreach(GameObject chest in UserInputInformation.chests)
+        {
+            Destroy(chest);
+        }
+        UserInputInformation.chests.Clear();
+        foreach(GameObject chair in UserInputInformation.chairs)
+        {
+            Destroy(chair);
+        }
+        UserInputInformation.chairs.Clear();
+        foreach(GameObject door in UserInputInformation.doors)
+        {
+            Destroy(door);
+        }
+        UserInputInformation.doors.Clear();
+        UserInputInformation.resetVectorLists();
     }
 
     public void loadRooms(JsonData saveInformation)
@@ -223,32 +234,81 @@ public class SaveLoad : MonoBehaviour
             Vector2 stop = new Vector2((float)stopX, (float)stopY);
             Debug.Log(start + ";" + stop);
 
-            room = (GameObject)Instantiate(room, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
-            room.GetComponent<Room>().LoadPositions(start, stop);
-            UserInputInformation.AddRoom(room);
+            GameObject new_room = (GameObject)Instantiate(room, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+            new_room.GetComponent<Room>().LoadPositions(start, stop);
+            UserInputInformation.AddRoom(new_room);
         }
     }
 
-    public void loadDoors(JsonData saveInformation)
+        public void loadDoors(JsonData saveInformation)
     {
-        Debug.Log("coming soon");
+        UserInputInformation.startValsD.Clear();
+        UserInputInformation.doors.Clear();
+        UserInputInformation.DoorIDNum = 0;
+        Debug.Log("count: " + saveInformation["doors"].Count);
+        for(int i = 0; i < saveInformation["doors"].Count; i++)
+        {
+            double startX = (double)saveData["startValuesD"][i]["x"];
+            double startY = (double)saveData["startValuesD"][i]["y"];
+
+            Vector2 start = new Vector2((float)startX, (float)startY);
+            Debug.Log(start);
+
+            GameObject new_door = (GameObject)Instantiate(door, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+            new_door.GetComponent<Door>().LoadPositions(start);
+            UserInputInformation.AddDoor(new_door);
+        }
     }
 
-    public void loadTables(JsonData saveInformation)
+        public void loadChests(JsonData saveInformation)
     {
-        Debug.Log("coming soon");
+        UserInputInformation.stopValsCT.Clear();
+        UserInputInformation.startValsCT.Clear();
+        UserInputInformation.chests.Clear();
+        UserInputInformation.ChestIDNum = 0;
+        Debug.Log("count: " + saveInformation["chests"].Count);
+        for(int i = 0; i < saveInformation["chests"].Count; i++)
+        {
+            double stopX = (double)saveData["stopValuesCT"][i]["x"];
+            double stopY = (double)saveData["stopValuesCT"][i]["y"];
+
+            double startX = (double)saveData["startValuesCT"][i]["x"];
+            double startY = (double)saveData["startValuesCT"][i]["y"];
+
+            Vector2 start = new Vector2((float)startX, (float)startY);
+            Vector2 stop = new Vector2((float)stopX, (float)stopY);
+            Debug.Log(start + ";" + stop);
+
+            GameObject new_chest = (GameObject)Instantiate(chest, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+            new_chest.GetComponent<Chest>().LoadPositions(start, stop);
+            UserInputInformation.AddChest(new_chest);
+        }
     }
 
-    public void loadChests(JsonData saveInformation)
+        public void loadChairs(JsonData saveInformation)
     {
-        Debug.Log("coming soon");
-    }
+        UserInputInformation.stopValsCR.Clear();
+        UserInputInformation.startValsCR.Clear();
+        UserInputInformation.chairs.Clear();
+        UserInputInformation.ChairIDNum = 0;
+        Debug.Log("count: " + saveInformation["chairs"].Count);
+        for(int i = 0; i < saveInformation["chairs"].Count; i++)
+        {
+            double stopX = (double)saveData["stopValuesCR"][i]["x"];
+            double stopY = (double)saveData["stopValuesCR"][i]["y"];
 
-    public void loadChairs(JsonData saveInformation)
-    {
-        Debug.Log("coming soon");
-    }
+            double startX = (double)saveData["startValuesCR"][i]["x"];
+            double startY = (double)saveData["startValuesCR"][i]["y"];
 
+            Vector2 start = new Vector2((float)startX, (float)startY);
+            Vector2 stop = new Vector2((float)stopX, (float)stopY);
+            Debug.Log(start + ";" + stop);
+
+            GameObject new_chair = (GameObject)Instantiate(chair, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+            new_chair.GetComponent<Chair>().LoadPositions(start, stop);
+            UserInputInformation.AddChair(new_chair);
+        }
+    }
     public void loadReports(JsonData saveInformation)
     {
         if(saveInformation["reports"].Count != 0)
@@ -295,7 +355,6 @@ public class SaveLoad : MonoBehaviour
                 loadRooms(saveData);
                 loadChairs(saveData);
                 loadChests(saveData);
-                loadTables(saveData);
                 loadDoors(saveData);
             }
         }
@@ -311,7 +370,7 @@ public class SaveLoad : MonoBehaviour
         setDuration();
         // this should only be called when the roomba is done or the user stops the simulation
         // recordRun() is in place now for testing purposes only
-        //recordRun();
+        //recordRun(); 
         Debug.Log(JsonUtility.ToJson(this));
         File.WriteAllText(Application.persistentDataPath + "/" + fileName + ".json", JsonUtility.ToJson(this));
         string jsonString = File.ReadAllText(Application.persistentDataPath + "/" + fileName + ".json");

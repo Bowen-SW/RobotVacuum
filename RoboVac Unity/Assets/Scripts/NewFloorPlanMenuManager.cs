@@ -103,26 +103,25 @@ public class NewFloorPlanMenuManager : MonoBehaviour
             Destroy(room);
         }
         UserInputInformation.rooms.Clear();
-        
-        // foreach(GameObject table in UserInputInformation.tables)
-        // {
-        //     Destroy(table);
-        // }
-        // UserInputInformation.tables.Clear();
 
-        // foreach(GameObject chest in UserInputInformation.chests)
-        // {
-        //     Destroy(chest);
-        // }
-        // UserInputInformation.chests.Clear();
+        foreach(GameObject chest in UserInputInformation.chests)
+        {
+            Destroy(chest);
+        }
+        UserInputInformation.chests.Clear();
 
-        // foreach(GameObject chair in UserInputInformation.chair)
-        // {
-        //     Destroy(chair);
-        // }
-        // UserInputInformation.chairs.Clear();
-        UserInputInformation.stopVals.Clear();
-        UserInputInformation.startVals.Clear();
+        foreach(GameObject chair in UserInputInformation.chairs)
+        {
+            Destroy(chair);
+        }
+        UserInputInformation.chairs.Clear();
+
+        foreach(GameObject door in UserInputInformation.doors)
+        {
+            Destroy(door);
+        }
+        UserInputInformation.doors.Clear();
+        UserInputInformation.resetVectorLists();
     }
 
     public void Accept()
@@ -151,6 +150,7 @@ public class NewFloorPlanMenuManager : MonoBehaviour
                 // Create the new default room with the user specified dimensions
                 newRoom.GetComponent<Room>().LoadPositions(new Vector2(-((float)width / 2f), -((float)height / 2f)), new Vector2((float)width / 2f, (float)height / 2f));
             }
+            UserInputInformation.resetIDNums();
             UserInputInformation.AddRoom(newRoom);
             Close();
         }

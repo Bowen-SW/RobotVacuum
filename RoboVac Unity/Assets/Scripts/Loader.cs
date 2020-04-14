@@ -46,8 +46,7 @@ public static class Loader
             JsonData test1 = saveInformation["rooms"];
             JsonData test2 = saveInformation["doors"];
             JsonData test3 = saveInformation["chests"];
-            JsonData test4 = saveInformation["chairs"];
-            JsonData test5 = saveInformation["tables"];  
+            JsonData test4 = saveInformation["chairs"]; 
             JsonData test6 = saveInformation["reports"];
         }
         catch(Exception exception)
@@ -92,15 +91,6 @@ public static class Loader
     public static bool checkChests(JsonData saveInformation)
     {
         if(saveInformation["chests"].Count == 0)
-        {
-            return false;
-        }
-        return true;
-    }
-
-    public static bool checkTables(JsonData saveInformation)
-    {
-        if(saveInformation["tables"].Count == 0)
         {
             return false;
         }

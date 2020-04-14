@@ -14,16 +14,20 @@ public static class UserInputInformation
     private static int width;
     private static int height;
     public static int RoomIDNum = 0;
-    // private static int ChestIDNum = 0;
-    // private static int ChairIDNum = 0;
-    // private static int TableIDNum = 0;
+    public static int ChestIDNum = 0;
+    public static int ChairIDNum = 0;
+    public static int DoorIDNum = 0;
     public static List<GameObject> rooms = new List<GameObject>();
     public static List<GameObject> chairs = new List<GameObject>();
     public static List<GameObject> chests = new List<GameObject>();
-    public static List<GameObject> tables = new List<GameObject>();
     public static List<GameObject> doors = new List<GameObject>();
     public static List<Vector2> startVals = new List<Vector2>();
     public static List<Vector2> stopVals = new List<Vector2>();
+    public static List<Vector2> startValsD = new List<Vector2>();
+    public static List<Vector2> startValsCR = new List<Vector2>();
+    public static List<Vector2> stopValsCR = new List<Vector2>();
+    public static List<Vector2> startValsCT = new List<Vector2>();
+    public static List<Vector2> stopValsCT = new List<Vector2>();
     public static string pathTypeUsed;
     public static string carpetType;
     public static string duration;
@@ -36,6 +40,28 @@ public static class UserInputInformation
 
     public static int fileOverwriteWarning;
 
+    public static void resetIDNums()
+    {
+        RoomIDNum = 0;
+        ChestIDNum = 0;
+        ChairIDNum = 0;
+        DoorIDNum = 0;
+    }
+
+    public static void resetVectorLists()
+    {
+        startVals.Clear();
+        stopVals.Clear();
+
+        startValsCR.Clear();
+        stopValsCR.Clear();
+
+        startValsCT.Clear();
+        stopValsCT.Clear();
+
+        startValsD.Clear();
+    }
+    
     public static string setstartTime()
     {
         timeStamp = DateTime.Now;
@@ -139,6 +165,65 @@ public static class UserInputInformation
         }
     }    
 
+    public static void AddStartVectorCR(int chairID, Vector2 startVector)
+    {
+        if(startValsCR.Count == chairID)
+        {
+            startValsCR.Add(startVector);
+        }
+        else
+        {
+            startValsCR[chairID] = startVector;          
+        }
+    }
+
+    public static void AddStopVectorCR(int chairID, Vector2 stopVector)
+    {
+        if(stopValsCR.Count == chairID)
+        {
+            stopValsCR.Add(stopVector);
+        }
+        else
+        {
+            stopValsCR[chairID] = stopVector;           
+        }
+    }  
+    public static void AddStartVectorCT(int chestID, Vector2 startVector)
+    {
+        if(startValsCT.Count == chestID)
+        {
+            startValsCT.Add(startVector);
+        }
+        else
+        {
+            startValsCT[chestID] = startVector;          
+        }
+    }
+
+    public static void AddStopVectorCT(int chestID, Vector2 stopVector)
+    {
+        if(stopValsCT.Count == chestID)
+        {
+            stopValsCT.Add(stopVector);
+        }
+        else
+        {
+            stopValsCT[chestID] = stopVector;           
+        }
+    } 
+
+    public static void AddStartVectorD(int doorID, Vector2 targetVector)
+    {
+        if(startValsD.Count == doorID)
+        {
+            startValsD.Add(targetVector);
+        }
+        else
+        {
+            startValsD[doorID] = targetVector;          
+        }
+    }
+
     public static string FileNameGS
     {
         get 
@@ -191,20 +276,16 @@ public static class UserInputInformation
             chests.Remove(item);
             return true;
         }
-        /*else if (item.GetComponent<Chair>() != null)
+        else if (item.GetComponent<Chair>() != null)
         {
-            // remove the item from the list of chairs
-
             chairs.Remove(item);
             return true;
         }
         else if (item.GetComponent<Door>() != null)
         {
-            // remove the item from the list of doors
-
             doors.Remove(item);
             return true;
-        }*/
+        }
 
         return false;
     }
@@ -226,6 +307,9 @@ public static class UserInputInformation
         if(chest.GetComponent<Chest>() != null)
         {
             chests.Add(chest);
+            chest.GetComponent<Chest>().id = ChestIDNum;
+            Debug.Log(chest.GetComponent<Chest>().id);
+            ChestIDNum ++;
             return true;
         }
         return false;
@@ -233,9 +317,23 @@ public static class UserInputInformation
 
     public static bool AddChair(GameObject chair)
     {
-        if(chair.GetComponent<Chest>() != null)
+        if(chair.GetComponent<Chair>() != null)
         {
             chairs.Add(chair);
+            chair.GetComponent<Chair>().idCR = ChairIDNum;
+            ChairIDNum ++;
+            return true;
+        }
+        return false;
+    }
+
+    public static bool AddDoor(GameObject door)
+    {
+        if(door.GetComponent<Door>() != null)
+        {
+            doors.Add(door);
+            door.GetComponent<Door>().id = DoorIDNum;
+            DoorIDNum ++;
             return true;
         }
         return false;
