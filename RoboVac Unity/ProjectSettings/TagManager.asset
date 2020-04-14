@@ -17,6 +17,7 @@ TagManager:
   - SimulationReportMenu
   - roomba
   - floor
+  - MessageBox
   layers:
   - Default
   - TransparentFX
