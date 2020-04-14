@@ -905,13 +905,13 @@ PrefabInstance:
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_Parameters.textureMode
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 8e4b2666cc79a004ca59ad27308bcd08, type: 2}
+      objectReference: {fileID: 2100000, guid: a4cd507a5c22fa947bb2d0919fa5ed94, type: 2}
     - target: {fileID: 2675807126547395047, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_IsActive
@@ -1258,10 +1258,10 @@ MonoBehaviour:
   roomba: {fileID: 2030935836}
   trail: {fileID: 1956487262}
   furnitureWindowManager: {fileID: 1991205563}
-  hardwood: {fileID: 2100000, guid: 8e4b2666cc79a004ca59ad27308bcd08, type: 2}
-  freezeCut: {fileID: 2100000, guid: b127c10d05c93c74ebca48e539944f47, type: 2}
-  loopPile: {fileID: 2100000, guid: 184d0632d71d3484b9e6a6016f9ec892, type: 2}
-  cutPile: {fileID: 2100000, guid: 7dc513015590d554d9d1db73c9af0d16, type: 2}
+  hardwood: {fileID: 2100000, guid: a4cd507a5c22fa947bb2d0919fa5ed94, type: 2}
+  freezeCut: {fileID: 2100000, guid: 490490e8a5454d444ab4e92384752f35, type: 2}
+  loopPile: {fileID: 2100000, guid: f7d54a88373508642afae3471e02fb39, type: 2}
+  cutPile: {fileID: 2100000, guid: b4e7ec6d04a40094e962f354b2354c75, type: 2}
 --- !u!114 &2065904804
 MonoBehaviour:
   m_ObjectHideFlags: 0
