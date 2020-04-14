@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
+//using UnityEditor;
 using System.IO;
 using System;
 using System.Globalization;
@@ -16,7 +16,19 @@ public static class Loader
         string filePath = "";
         try
         {
-            filePath = EditorUtility.OpenFilePanel("Open a Floor Plan", Application.persistentDataPath, "json");
+            string initialDir = @"C:\";
+            bool restoreDir = true;
+            string title = "Open a JSON File";
+            string defExt = "json";
+            string filter = "json files (*.json)|*.json";
+
+            SmartDLL.SmartFileExplorer fileExplorer = new SmartDLL.SmartFileExplorer();
+            fileExplorer.OpenExplorer(initialDir, restoreDir, title, defExt, filter);
+
+            filePath = fileExplorer.fileName;
+
+
+            //filePath = EditorUtility.OpenFilePanel("Open a Floor Plan", Application.persistentDataPath, "json");
         }
         catch
         {

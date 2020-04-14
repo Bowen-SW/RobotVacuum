@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
+//using UnityEditor;
 using System.IO;
 using System;
 using System.Globalization;
@@ -311,7 +311,7 @@ public class SaveLoad : MonoBehaviour
         setDuration();
         // this should only be called when the roomba is done or the user stops the simulation
         // recordRun() is in place now for testing purposes only
-        //recordRun(); 
+        //recordRun();
         Debug.Log(JsonUtility.ToJson(this));
         File.WriteAllText(Application.persistentDataPath + "/" + fileName + ".json", JsonUtility.ToJson(this));
         string jsonString = File.ReadAllText(Application.persistentDataPath + "/" + fileName + ".json");
