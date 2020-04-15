@@ -17,6 +17,7 @@ public static class UserInputInformation
     public static int ChestIDNum = 0;
     public static int ChairIDNum = 0;
     public static int DoorIDNum = 0;
+    public static int sQFT = 0;
     public static List<GameObject> rooms = new List<GameObject>();
     public static List<GameObject> chairs = new List<GameObject>();
     public static List<GameObject> chests = new List<GameObject>();
@@ -80,6 +81,18 @@ public static class UserInputInformation
         set
         {
             saveData = value;
+        }
+    }
+
+    public static int sqftGS
+    {
+        get
+        {
+            return sQFT;
+        }
+        set
+        {
+            sQFT = value;
         }
     }
 

@@ -51,23 +51,8 @@ public class SaveLoad : MonoBehaviour
 
     void Update()
     {
-        // string path = @"C:\RobotVacuumFiles";
-        // if(!Directory.Exists(path))
-        // {
-        //     try 
-        //     {
-        //         if (Directory.Exists(path)) 
-        //         {
-        //             return;
-        //         }
-
-        //         DirectoryInfo di = Directory.CreateDirectory(path);
-        //     } 
-        //     catch (Exception e) 
-        //     {
-        //         Debug.Log(e.ToString());
-        //     }
-        // }
+        setTotalSqft();
+        UserInputInformation.sqftGS = totalSqft;
        if(UserInputInformation.roombaStopGS == true || (stopCount % 2 == 0 && stopCount != 0))
        {
             recordRun();
