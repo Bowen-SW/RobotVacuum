@@ -26,9 +26,6 @@ public static class Loader
             fileExplorer.OpenExplorer(initialDir, restoreDir, title, defExt, filter);
 
             filePath = fileExplorer.fileName;
-
-
-            //filePath = EditorUtility.OpenFilePanel("Open a Floor Plan", Application.persistentDataPath, "json");
         }
         catch(Exception e)
         {
