@@ -8,6 +8,7 @@ public class ReportMenuManager : MonoBehaviour
     public GameObject menu;
     public DataCells data;
     public CoverageColorChanger colorChanger;
+    public TMPro.TextMeshProUGUI floorPlanNameLabel;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,8 @@ public class ReportMenuManager : MonoBehaviour
 
         if (UserInputInformation.saveDataGS != null)
         {
+            floorPlanNameLabel.text = UserInputInformation.FileNameGS;
+
             int count = UserInputInformation.saveDataGS["reports"].Count;
 
             if (count > 0)
