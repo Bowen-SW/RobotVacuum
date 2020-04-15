@@ -30,7 +30,7 @@ public static class Loader
 
             //filePath = EditorUtility.OpenFilePanel("Open a Floor Plan", Application.persistentDataPath, "json");
         }
-        catch
+        catch(Exception e)
         {
             Debug.Log("Invalid File.");
         }
