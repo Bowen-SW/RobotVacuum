@@ -76,13 +76,20 @@ public class SaveLoad : MonoBehaviour
     {   
         float _coverage = 0;
         int _sqft = 0;
+        int _area = 0;
         foreach(GameObject room in UserInputInformation.rooms)
         {
             Room _room = room.GetComponent<Room>(); 
             _coverage += _room.getCoverage();
             _sqft += _room.sqft;
         }
-        coverage = (int)(_coverage/(float)_sqft * 100.0f);
+
+        foreach(GameObject chest in UserInputInformation.chests)
+        {
+            Chest _chest = chest.GetComponentInChildren<Chest>();
+            _area += _chest.area;
+        }
+        coverage = (int)(_coverage/(float)(_sqft - _area) * 100.0f);
     }
 
     public void setDuration()
