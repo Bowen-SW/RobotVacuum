@@ -187,12 +187,14 @@ public class Roomba : MonoBehaviour, IMovable
 
     public void Stop(){
         path.StopThreads();
-        
-        Time.timeScale = 0F;
+        path.Stop();
+        vacuum.angularVelocity = 0;
+        Time.timeScale = 1F;
         Debug.Log("Simulation Stopped");
         UserInputInformation.roombaStopGS = true;
         vacuum.position = new Vector2(xCoordinate, yCoordinate);
         vacuum.rotation = 0F;
+        
         transform.position = new Vector3(xCoordinate, yCoordinate, 0);
         transform.rotation = Quaternion.identity;
         unit = .1F;
