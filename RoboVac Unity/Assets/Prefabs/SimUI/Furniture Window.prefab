@@ -1295,6 +1295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 355d7650e2c66f342a6ebd19f5409c5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  filePath: 
 --- !u!1 &552511397304674704
 GameObject:
   m_ObjectHideFlags: 0
@@ -1500,7 +1501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 552511397355151937}
-  objectToAdd: {fileID: 5964590402416469136, guid: 14e1d46c6e8af99478f1ac35c56f921d,
+  objectToAdd: {fileID: 5964590402416469136, guid: 543f49a7ee52e774b97724a725a62c1f,
     type: 3}
 --- !u!1 &552511397445353072
 GameObject:
@@ -3421,7 +3422,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 6128193563927838164}
-  objectToAdd: {fileID: 0}
+  objectToAdd: {fileID: 174239421077433147, guid: 0dbf078f414ed194699b7b94fa71727d,
+    type: 3}
 --- !u!1 &6473725103402393499
 GameObject:
   m_ObjectHideFlags: 0
