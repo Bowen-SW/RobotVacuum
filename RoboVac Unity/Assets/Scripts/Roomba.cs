@@ -186,8 +186,10 @@ public class Roomba : MonoBehaviour, IMovable
     }
 
     public void Stop(){
+        doSprial = false;
         path.StopThreads();
         path.Stop();
+        
         vacuum.angularVelocity = 0;
         Time.timeScale = 1F;
         Debug.Log("Simulation Stopped");
