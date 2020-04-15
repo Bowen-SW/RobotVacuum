@@ -107,7 +107,7 @@ public class Roomba : MonoBehaviour, IMovable
             timer = timer + Time.deltaTime;
 
             string hours = Math.Floor(timer / 3600).ToString("00");
-            string minutes = Mathf.Floor(timer / 60).ToString("00");
+            string minutes = (Mathf.Floor(timer / 60)%60).ToString("00");
             string seconds = (timer % 60).ToString("00");
 
             if(Mathf.Floor(timer / 60) >= batteryLife){
