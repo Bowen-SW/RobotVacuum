@@ -10,7 +10,6 @@ public class SnakingPath : Path
     private bool counterClockwise = false; //Turn counter clockwise if true
     private bool clockwise = false; //Turn clockwise if true
     private bool inCurrentCollision = false;
-    //private bool inCoroutine = false;
 
     float xDirection = 1F;
     float yDirection = 1F;
@@ -20,7 +19,8 @@ public class SnakingPath : Path
     }
 
     private IEnumerator SnakingMove(){
-        //Backoff(-currentDirection.x, -currentDirection.y);
+        Backoff(-currentDirection.x, -currentDirection.y);
+        yield return new WaitForSeconds(.05F);
         Stop();
         
         if(inCurrentCollision) {

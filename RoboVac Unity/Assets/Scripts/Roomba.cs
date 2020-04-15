@@ -152,7 +152,7 @@ public class Roomba : MonoBehaviour, IMovable
             case PathType.Snaking:
                 path = gameObject.AddComponent<SnakingPath>();
                 this.pathType = PathType.Snaking;
-                UserInputInformation.pathTypeGS = "Snaking v1.1";
+                UserInputInformation.pathTypeGS = "Snaking v2.1";
                 break;
             case PathType.Spiral:
                 path = gameObject.AddComponent<SpiralPath>();
