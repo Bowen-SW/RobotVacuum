@@ -198,7 +198,6 @@ public class Simulation : MonoBehaviour
     }
 
     void SetDefaults(){
-        roomba.SaveRunInfo();
         simSpeed = 1;
         roomba.SetSimSpeed(simSpeed);
         simText.text = "1x";

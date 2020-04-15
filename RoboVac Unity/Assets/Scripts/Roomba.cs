@@ -186,6 +186,8 @@ public class Roomba : MonoBehaviour, IMovable
     }
 
     public void Stop(){
+        path.StopThreads();
+        
         Time.timeScale = 0F;
         Debug.Log("Simulation Stopped");
         UserInputInformation.roombaStopGS = true;
@@ -248,19 +250,5 @@ public class Roomba : MonoBehaviour, IMovable
 
     public void SetTimeLimitReached(bool limitReached){
         timeLimitReached = limitReached;
-    }
-
-    public void SaveRunInfo(){
-        String timeStamp = GetTimestamp(DateTime.Now);
-
-        
-        Debug.Log("Duration: " + timeText.text);
-        Debug.Log("Path Type: " + pathType);
-        Debug.Log("Time Stamp: " + timeStamp);
-    }
-
-    private String GetTimestamp(DateTime value)
-    {
-        return value.ToString("MM:dd:yyyy");
     }
  }

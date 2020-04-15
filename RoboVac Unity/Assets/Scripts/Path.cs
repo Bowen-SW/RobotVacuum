@@ -32,6 +32,10 @@ public abstract class Path : MonoBehaviour
         vacuum.velocity = direction * speed;
     }
 
+    public void StopThreads(){
+        StopAllCoroutines();
+    }
+
     protected float GetCurrentAngle(){
         float currentAngle;
         //Check for angles in which arc-tangent is undefined
