@@ -41,6 +41,15 @@ public class Chest : MonoBehaviour, IResizable
         }
         private set {}
     }
+
+    public int area
+    {
+        get
+        {
+            return width * height;
+        }
+        private set {}
+    }
     
     public void LoadPositions(Vector2 start, Vector2 stop)
     {
@@ -124,5 +133,9 @@ public class Chest : MonoBehaviour, IResizable
     void Update() {
         this.transform.position = new Vector3(((this.start.x + this.stop.x) / 2f - 0.5f), ((this.start.y + this.stop.y) / 2f - 0.5f), this.transform.position.z);
         this.transform.localScale = new Vector3(this.width, this.height, 1.0f);
+    }
+
+    protected void OnDestroy() {
+        Destroy(transform.parent.gameObject);
     }
 }
