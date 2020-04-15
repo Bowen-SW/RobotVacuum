@@ -53,8 +53,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6ac33956bd6f74dbdf3f5ba9b06db6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  start: {x: 0, y: 0}
-  stop: {x: 0, y: 0}
+  start: {x: 0, y: 1}
+  stop: {x: 0, y: 1}
 --- !u!1 &5964590402550700007
 GameObject:
   m_ObjectHideFlags: 0

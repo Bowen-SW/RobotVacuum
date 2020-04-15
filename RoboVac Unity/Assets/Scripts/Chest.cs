@@ -114,11 +114,11 @@ public class Chest : MonoBehaviour, IResizable
             do {
                 pos1 = Random.Range(-range, range);
                 pos2 = Random.Range(-range, range);
-            }while(Physics.CheckSphere(new Vector3(pos1, pos2, transform.position.z),2f));
+            }while(Physics.CheckSphere(new Vector3(pos1, pos2, 0f),1f));
 
             range ++;
             start = new Vector2((float)pos1, (float)pos2);
-            stop = new Vector2((float) pos1+2, (float)pos2+2);
+            stop = new Vector2((float) pos1+1, (float)pos2+1);
         }
     }
     void Update() {
