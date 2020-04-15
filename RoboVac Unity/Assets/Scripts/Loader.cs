@@ -16,7 +16,7 @@ public static class Loader
         string filePath = "";
         try
         {
-            string initialDir = @"C:\";
+            string initialDir = @"C:\RobotVacuumFiles";
             bool restoreDir = true;
             string title = "Open a JSON File";
             string defExt = "json";

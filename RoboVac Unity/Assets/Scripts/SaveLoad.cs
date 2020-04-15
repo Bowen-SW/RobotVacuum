@@ -23,7 +23,10 @@ public class SaveLoad : MonoBehaviour
     [HideInInspector] public List<Vector2> startValuesCT;
     [HideInInspector] public List<Vector2> stopValuesCT;
     [HideInInspector] public List<Vector2> startValuesD;
+    [HideInInspector] public List<bool> rotationD;
     [HideInInspector] public string fileName;
+    [HideInInspector] public static string filePath ="";
+    [HideInInspector] public static string defaultDirectory =  @"C:\RobotVacuumFiles";
     [HideInInspector] public int totalSqft;
     [HideInInspector] public static DateTime timeStamp;
     [HideInInspector] public static int floorPlanID = 1;
@@ -48,6 +51,23 @@ public class SaveLoad : MonoBehaviour
 
     void Update()
     {
+        // string path = @"C:\RobotVacuumFiles";
+        // if(!Directory.Exists(path))
+        // {
+        //     try 
+        //     {
+        //         if (Directory.Exists(path)) 
+        //         {
+        //             return;
+        //         }
+
+        //         DirectoryInfo di = Directory.CreateDirectory(path);
+        //     } 
+        //     catch (Exception e) 
+        //     {
+        //         Debug.Log(e.ToString());
+        //     }
+        // }
        if(UserInputInformation.roombaStopGS == true || (stopCount % 2 == 0 && stopCount != 0))
        {
             recordRun();
@@ -119,7 +139,7 @@ public class SaveLoad : MonoBehaviour
         {
             int appendedNum = 1;
             fileName = "floorPlan"+ appendedNum.ToString();
-            while(File.Exists(Application.persistentDataPath + "/" + fileName + ".json"))
+            while(File.Exists(@"C:\RobotVacuumFiles" + "/" + fileName + ".json"))
             {
                 appendedNum++;
                 fileName = "floorPlan"+ appendedNum.ToString();
@@ -159,6 +179,7 @@ public class SaveLoad : MonoBehaviour
         startValuesCT = new List<Vector2>();
         stopValuesCT = new List<Vector2>();
         startValuesD = new List<Vector2>();
+        rotationD = new List<bool>();
 
         rooms = new List<GameObject>();
         foreach(GameObject room in UserInputInformation.rooms)
@@ -187,6 +208,7 @@ public class SaveLoad : MonoBehaviour
         {
             doors.Add(door);
             startValuesD.Add(door.GetComponent<Door>().target);
+            rotationD.Add(door.GetComponent<Door>().isRotated);
         }
     }
 
@@ -240,7 +262,7 @@ public class SaveLoad : MonoBehaviour
         }
     }
 
-        public void loadDoors(JsonData saveInformation)
+    public void loadDoors(JsonData saveInformation)
     {
         UserInputInformation.startValsD.Clear();
         UserInputInformation.doors.Clear();
@@ -251,16 +273,18 @@ public class SaveLoad : MonoBehaviour
             double startX = (double)saveData["startValuesD"][i]["x"];
             double startY = (double)saveData["startValuesD"][i]["y"];
 
+            bool isRotated = (bool)saveData["rotationD"][i];
+
             Vector2 start = new Vector2((float)startX, (float)startY);
             Debug.Log(start);
 
             GameObject new_door = (GameObject)Instantiate(door, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
-            new_door.GetComponent<Door>().LoadPositions(start);
+            new_door.GetComponent<Door>().LoadPositions(start, isRotated);
             UserInputInformation.AddDoor(new_door);
         }
     }
 
-        public void loadChests(JsonData saveInformation)
+    public void loadChests(JsonData saveInformation)
     {
         UserInputInformation.stopValsCT.Clear();
         UserInputInformation.startValsCT.Clear();
@@ -285,7 +309,7 @@ public class SaveLoad : MonoBehaviour
         }
     }
 
-        public void loadChairs(JsonData saveInformation)
+    public void loadChairs(JsonData saveInformation)
     {
         UserInputInformation.stopValsCR.Clear();
         UserInputInformation.startValsCR.Clear();
@@ -340,6 +364,7 @@ public class SaveLoad : MonoBehaviour
         }
         else
         {
+            filePath = fileToLoad;
             string jsonString = File.ReadAllText(fileToLoad);
             saveData = JsonMapper.ToObject(jsonString);
 
@@ -368,12 +393,34 @@ public class SaveLoad : MonoBehaviour
         setFurniture();
         setCoverage();
         setDuration();
-        // this should only be called when the roomba is done or the user stops the simulation
-        // recordRun() is in place now for testing purposes only
-        //recordRun(); 
         Debug.Log(JsonUtility.ToJson(this));
-        File.WriteAllText(Application.persistentDataPath + "/" + fileName + ".json", JsonUtility.ToJson(this));
-        string jsonString = File.ReadAllText(Application.persistentDataPath + "/" + fileName + ".json");
+        
+        if(filePath == "")
+        {
+            try 
+            {
+                if (Directory.Exists(defaultDirectory)) 
+                {
+                    return;
+                }
+
+                DirectoryInfo di = Directory.CreateDirectory(defaultDirectory);
+            } 
+            catch (Exception e) 
+            {
+                Debug.Log(e.ToString());
+            }
+                            
+            filePath = (defaultDirectory + "/" + fileName + ".json");
+            File.WriteAllText(filePath, JsonUtility.ToJson(this));
+        }
+        else
+        {
+            filePath = (defaultDirectory + "/" + fileName + ".json");
+            File.WriteAllText(filePath, JsonUtility.ToJson(this));
+        }
+
+        string jsonString = File.ReadAllText(filePath);
         saveData = JsonMapper.ToObject(jsonString);
         UserInputInformation.saveDataGS = saveData;
     }

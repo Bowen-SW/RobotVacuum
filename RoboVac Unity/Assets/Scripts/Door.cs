@@ -10,7 +10,8 @@ public class Door : MonoBehaviour, IMovable
     private static int range = 10;
     public Vector2 target;
     public bool moving;
-    private bool loaded;
+    public bool isRotated;
+    private bool loaded = false;
     public List<GameObject> allWalls;
     private int DoorID;
 
@@ -48,12 +49,18 @@ public class Door : MonoBehaviour, IMovable
         return this.moving;
     }
 
-    public void LoadPositions(Vector2 start)
+    public void LoadPositions(Vector2 start, bool rotated)
     {
+        if(rotated == true)
+        {
+            Debug.Log("is rotated!");
+            transform.rotation = Quaternion.Euler(0,0,-90);
+            Debug.Log(transform.rotation);
+        }
         this.target = start;
         loaded = true;
     }
-
+    
     void Start()
     {
         if(!loaded)
@@ -109,11 +116,13 @@ public class Door : MonoBehaviour, IMovable
                     case "South":
                         transform.rotation = Quaternion.Euler(0,0,0);
                         transform.position = new Vector3(Mathf.Round(target.x)-0.5f,transform.position.y,0f);
+                        isRotated = false;
                         break;
                     case "East":
                     case "West":
                         transform.rotation = Quaternion.Euler(0,0,-90);
                         transform.position = new Vector3(transform.position.x,Mathf.Round(target.y)-0.5f,0f);
+                        isRotated = true;
                         break;
                 }
             }

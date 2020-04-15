@@ -24,6 +24,7 @@ public static class UserInputInformation
     public static List<Vector2> startVals = new List<Vector2>();
     public static List<Vector2> stopVals = new List<Vector2>();
     public static List<Vector2> startValsD = new List<Vector2>();
+    public static List<bool> rotationD = new List<bool>();
     public static List<Vector2> startValsCR = new List<Vector2>();
     public static List<Vector2> stopValsCR = new List<Vector2>();
     public static List<Vector2> startValsCT = new List<Vector2>();
@@ -60,6 +61,7 @@ public static class UserInputInformation
         stopValsCT.Clear();
 
         startValsD.Clear();
+        rotationD.Clear();
     }
     
     public static string setstartTime()
@@ -224,6 +226,18 @@ public static class UserInputInformation
         }
     }
 
+    public static void AddRotationBoolD(int doorID, bool isRotated)
+    {
+        if(rotationD.Count == doorID)
+        {
+            rotationD.Add(isRotated);
+        }
+        else
+        {
+            rotationD[doorID] = isRotated;          
+        }
+    }
+
     public static string FileNameGS
     {
         get 
@@ -233,6 +247,7 @@ public static class UserInputInformation
         set 
         {
             fileName = value;
+            Debug.Log("setting file name: " + fileName);
         }
     }
 

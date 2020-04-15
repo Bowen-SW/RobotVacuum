@@ -17,6 +17,7 @@ public class NewFloorPlanMenuManager : MonoBehaviour
     public TextMeshProUGUI roomHeight;
     public TextMeshProUGUI carpetType;
     public RoombaSettingsScript roombaSettings;
+    public string path = @"C:\RobotVacuumFiles";
     public int warningCount = 0;
 
     // Start is called before the first frame update
@@ -74,8 +75,19 @@ public class NewFloorPlanMenuManager : MonoBehaviour
             errorMessage.text = "Err: Enter a file name.";
             return false;
         }
-        // else if (Directory.Exists(Application.persistentDataPath+fileName.text.Replace("\u200B", "")+".json"))
-        else if(File.Exists(Application.persistentDataPath + "/" + fileNameStripped + ".json"))
+        else if (!Directory.Exists(path))
+        {
+            try 
+            {
+                DirectoryInfo di = Directory.CreateDirectory(path);
+            } 
+            catch (Exception e) 
+            {
+                Debug.Log(e.ToString());
+            }
+            return true;
+        }
+        else if(File.Exists(path + "/" + fileNameStripped + ".json"))
         {
             errorMessage.text = "Warning: Duplicate file name. Press accept to overwrite existing file.";
             if(warningCount == 0)
