@@ -319,11 +319,11 @@ public static class UserInputInformation
 
     public static bool AddChest(GameObject chest)
     {
-        if(chest.GetComponent<Chest>() != null)
+        if(chest.GetComponentInChildren<Chest>() != null)
         {
             chests.Add(chest);
-            chest.GetComponent<Chest>().id = ChestIDNum;
-            Debug.Log(chest.GetComponent<Chest>().id);
+            chest.GetComponentInChildren<Chest>().id = ChestIDNum;
+            Debug.Log(chest.GetComponentInChildren<Chest>().id);
             ChestIDNum ++;
             return true;
         }
@@ -332,10 +332,10 @@ public static class UserInputInformation
 
     public static bool AddChair(GameObject chair)
     {
-        if(chair.GetComponent<Chair>() != null)
+        if(chair.GetComponentInChildren<Chair>() != null)
         {
             chairs.Add(chair);
-            chair.GetComponent<Chair>().idCR = ChairIDNum;
+            chair.GetComponentInChildren<Chair>().idCR = ChairIDNum;
             ChairIDNum ++;
             return true;
         }

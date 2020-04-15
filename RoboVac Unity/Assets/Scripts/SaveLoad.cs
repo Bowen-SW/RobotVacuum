@@ -193,15 +193,15 @@ public class SaveLoad : MonoBehaviour
         foreach(GameObject chest in UserInputInformation.chests)
         {
             chests.Add(chest);
-            startValuesCT.Add(chest.GetComponent<Chest>().start);
-            stopValuesCT.Add(chest.GetComponent<Chest>().stop);
+            startValuesCT.Add(chest.GetComponentInChildren<Chest>().start);
+            stopValuesCT.Add(chest.GetComponentInChildren<Chest>().stop);
         }
         chairs = new List<GameObject>();
         foreach(GameObject chair in UserInputInformation.chairs)
         {
             chairs.Add(chair);
-            startValuesCR.Add(chair.GetComponent<Chair>().start);
-            stopValuesCR.Add(chair.GetComponent<Chair>().stop);
+            startValuesCR.Add(chair.GetComponentInChildren<Chair>().start);
+            stopValuesCR.Add(chair.GetComponentInChildren<Chair>().stop);
         }
         doors = new List<GameObject>();
         foreach(GameObject door in UserInputInformation.doors)
@@ -304,7 +304,7 @@ public class SaveLoad : MonoBehaviour
             Debug.Log(start + ";" + stop);
 
             GameObject new_chest = (GameObject)Instantiate(chest, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
-            new_chest.GetComponent<Chest>().LoadPositions(start, stop);
+            new_chest.GetComponentInChildren<Chest>().LoadPositions(start, stop);
             UserInputInformation.AddChest(new_chest);
         }
     }
@@ -329,7 +329,7 @@ public class SaveLoad : MonoBehaviour
             Debug.Log(start + ";" + stop);
 
             GameObject new_chair = (GameObject)Instantiate(chair, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
-            new_chair.GetComponent<Chair>().LoadPositions(start, stop);
+            new_chair.GetComponentInChildren<Chair>().LoadPositions(start, stop);
             UserInputInformation.AddChair(new_chair);
         }
     }
@@ -421,6 +421,7 @@ public class SaveLoad : MonoBehaviour
         }
 
         string jsonString = File.ReadAllText(filePath);
+        Debug.Log(jsonString);
         saveData = JsonMapper.ToObject(jsonString);
         UserInputInformation.saveDataGS = saveData;
     }
