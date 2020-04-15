@@ -6,15 +6,12 @@ using UnityEngine;
 
 public class SpiralPath : RandomPath
 {
-    //roomba.SetSpiral(true); //after travelling a distance for x seconds
     private Timer timer;
     private Roomba roomba;
     private bool isInRoutine = false;
 
     public override void Move(){
         roomba = GetComponent<Roomba>();
-        //SetTimer();
-        //Debug.Log("Timer set");
         StartCoroutine(RandomMove());
         StartCoroutine(WaitToSpiral());
     }
@@ -32,18 +29,4 @@ public class SpiralPath : RandomPath
 
         isInRoutine = false;
     }
-
-    // private void SetTimer() {
-    //     timer = new Timer(5000);
-    //     timer.Elapsed += OnTimedEvent;
-    //     timer.Enabled = true;
-    // }    
-
-    // private void OnTimedEvent(object source, ElapsedEventArgs e){
-    //     Stop();
-    //     timer.Stop();
-    //     timer.Dispose();
-    //     Debug.Log("Set do sprial");
-    //     roomba.SetDoSpiral(true);
-    // }
 }

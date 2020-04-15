@@ -11,7 +11,6 @@ public class WallFollow : Path
     public override void Move(){
         //If collision and sensor not touching, turn counterclockwise 90 degrees, then proceed.
         //else if collision and sensor is touching, turn 90 degrees clockwise, then proceed
-        //Backoff(-currentDirection.x, -currentDirection.y);
         if(!inCollision){
             inCollision = true;
             Stop();
@@ -101,7 +100,6 @@ public class WallFollow : Path
             Debug.Log("Error finding next X clockwise position");
         }
 
-        // Debug.Log("Current X = " + currentDirection.x + " New X = " + roundedX);
         return roundedX;
     }
     private int FindNextYCounter(){
@@ -118,7 +116,6 @@ public class WallFollow : Path
             Debug.Log("Error finding next Y clockwise position");
         }
 
-        // Debug.Log("Current Y = " + currentDirection.y + " New Y = " + roundedY);
         return roundedY;
     }
 }
