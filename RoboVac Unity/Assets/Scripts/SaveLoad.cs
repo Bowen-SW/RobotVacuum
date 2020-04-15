@@ -357,18 +357,12 @@ public class SaveLoad : MonoBehaviour
     public void Load()
     {
         string fileToLoad = Loader.openFileFromBrowser();
-        // if the string is empty, this indicates that the user hit cancel
-        if(fileToLoad == "")
-        {
-            Debug.Log("Load cancelled.");
-        }
-        else
+        try
         {
             filePath = fileToLoad;
             string jsonString = File.ReadAllText(fileToLoad);
             saveData = JsonMapper.ToObject(jsonString);
 
-            //if this returns true, all keys necessary for loading were present
             if(Loader.validateFileFields(saveData) == true)
             {
                 fileName = (string)saveData["fileName"];
@@ -382,6 +376,10 @@ public class SaveLoad : MonoBehaviour
                 loadChests(saveData);
                 loadDoors(saveData);
             }
+        }
+        catch
+        {
+            Debug.Log("cancel");
         }
     }
 
