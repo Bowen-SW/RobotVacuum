@@ -68,11 +68,12 @@ public static class UserInputInformation
     public static void setTotalSqft()
     {
         totalSqft = 0;
-        for(int i = 0; i < startVals.Count; i++)
+        foreach(GameObject room in rooms)
         {
-            int width = ((int)(stopVals[i].x - startVals[i].x));
-            int height = ((int)(stopVals[i].y - startVals[i].y));
+            int width = ((int)(room.GetComponent<Room>().stop.x - room.GetComponent<Room>().start.x));
+            int height = ((int)(room.GetComponent<Room>().stop.y - room.GetComponent<Room>().start.y));
             totalSqft += (width*height);
+            //Debug.Log("Updating sqft: " + totalSqft);
         }
     }
     
