@@ -7,7 +7,9 @@ public class ErrorHandler : MonoBehaviour
     public Canvas canvas;
     public GameObject noDoorsForEachRoomMessageBox;
     public GameObject roomTooBigMessageBox;
+    public GameObject roombaNotInRoomMessageBox;
     public Simulation sim;
+    public Roomba roomba;
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +55,22 @@ public class ErrorHandler : MonoBehaviour
 
             return;
         }
+        else if (!RoombaIsInRoom())
+        {
+            if (GameObject.FindGameObjectWithTag("MessageBox") == null)
+            {
+                GameObject newObj = Instantiate(roombaNotInRoomMessageBox, new Vector3(canvas.transform.position.x, canvas.transform.position.y, canvas.transform.position.z), new Quaternion(0f, 0f, 0f, 0f));
+                newObj.transform.SetParent(canvas.transform, false);
+                RectTransform objRectTrans = newObj.GetComponent<RectTransform>();
+                objRectTrans.offsetMin = new Vector2(0f, 0f);
+                objRectTrans.offsetMax = new Vector2(0f, 0f);
+            }
+
+            sim.hasErrors = true;
+
+            return;
+
+        }
 
         sim.hasErrors = false;
 
@@ -79,6 +97,16 @@ public class ErrorHandler : MonoBehaviour
     private bool RoomTooBig()
     {
         if(UserInputInformation.sqftGS > 8000)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool RoombaIsInRoom()
+    {
+        if (roomba.isInRoom)
         {
             return true;
         }

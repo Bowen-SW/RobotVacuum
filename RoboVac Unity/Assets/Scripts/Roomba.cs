@@ -31,6 +31,8 @@ public class Roomba : MonoBehaviour, IMovable
     private Vector3 target;
     private bool moving = false;
 
+    public bool isInRoom = false;
+
     //IMovable functions
     public void SetTarget(Vector2 position)
     {
@@ -270,4 +272,5 @@ public class Roomba : MonoBehaviour, IMovable
     public bool IsTimerStarted(){
         return timerStarted;
     }
+
  }

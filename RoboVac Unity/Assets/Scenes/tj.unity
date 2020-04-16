@@ -1370,7 +1370,10 @@ MonoBehaviour:
     type: 3}
   roomTooBigMessageBox: {fileID: 3209953621017671151, guid: 43261d3aab18e9848af4c5685ceb074c,
     type: 3}
+  roombaNotInRoomMessageBox: {fileID: 336239401504978450, guid: f1eede6491caad347bd9f4fa286ef53c,
+    type: 3}
   sim: {fileID: 661668115}
+  roomba: {fileID: 2030935836}
 --- !u!114 &2144135135 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3828793206397614282, guid: 37bafd925285e50419153d29f3d2b960,
