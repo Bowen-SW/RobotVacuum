@@ -1329,6 +1329,8 @@ MonoBehaviour:
   canvas: {fileID: 2065904801}
   noDoorsForEachRoomMessageBox: {fileID: 6115198456926209938, guid: 40e12a28d4bf9d54f843c5ca2fba6b6e,
     type: 3}
+  roomTooBigMessageBox: {fileID: 3209953621017671151, guid: 43261d3aab18e9848af4c5685ceb074c,
+    type: 3}
   sim: {fileID: 661668115}
 --- !u!114 &2144135135 stripped
 MonoBehaviour:

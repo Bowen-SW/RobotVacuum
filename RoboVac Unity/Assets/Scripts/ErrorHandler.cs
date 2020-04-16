@@ -6,6 +6,7 @@ public class ErrorHandler : MonoBehaviour
 {
     public Canvas canvas;
     public GameObject noDoorsForEachRoomMessageBox;
+    public GameObject roomTooBigMessageBox;
     public Simulation sim;
 
     // Start is called before the first frame update
@@ -23,6 +24,21 @@ public class ErrorHandler : MonoBehaviour
     public void CheckForErrors()
     {
         if (!AllRoomsHaveDoors())
+        {
+            if (GameObject.FindGameObjectWithTag("MessageBox") == null)
+            {
+                GameObject newObj = Instantiate(noDoorsForEachRoomMessageBox, new Vector3(canvas.transform.position.x, canvas.transform.position.y, canvas.transform.position.z), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+                newObj.transform.SetParent(canvas.transform, false);
+                RectTransform objRectTrans = newObj.GetComponent<RectTransform>();
+                objRectTrans.offsetMin = new Vector2(0.0f, 0.0f);
+                objRectTrans.offsetMax = new Vector2(0.0f, 0.0f);
+            }
+
+            sim.hasErrors = true;
+
+            return;
+        } 
+        else if(RoomTooBig())
         {
             if (GameObject.FindGameObjectWithTag("MessageBox") == null)
             {
@@ -58,6 +74,16 @@ public class ErrorHandler : MonoBehaviour
         }
 
         return true;
+    }
+
+    private bool RoomTooBig()
+    {
+        if(UserInputInformation.sqftGS > 8000)
+        {
+            return true;
+        }
+
+        return false;
     }
 
 }
