@@ -68,7 +68,7 @@ public class SaveLoad : MonoBehaviour
 
     public void pause()
     {
-        stopCount = 1;
+        stopCount = 0;
     }
     public void setStopCount()
     {   
