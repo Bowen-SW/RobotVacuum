@@ -66,6 +66,8 @@ public class Simulation : MonoBehaviour
         pathList = new Queue<PathType>();
 
         roombaSettings = GetComponentInParent<RoombaSettingsScript>();
+
+        CreateDefaultFloorPlan();
     }
 
     void Update(){
@@ -301,6 +303,54 @@ public class Simulation : MonoBehaviour
             }
         }
 
+    }
+
+    public GameObject room;
+    public GameObject door;
+    public GameObject chest;
+    public GameObject chair;
+
+    private void CreateDefaultFloorPlan()
+    {
+        CreateDefaultRoom(new Vector2(-32f, -16f), new Vector2(0f, 16f));
+        CreateDefaultRoom(new Vector2(0f, -24f), new Vector2(24f, 0f));
+        CreateDefaultRoom(new Vector2(0f, 0f), new Vector2(24f, 24f));
+
+        CreateDefaultDoor(new Vector2(0f, -12f), true);
+        CreateDefaultDoor(new Vector2(0f, 12f), true);
+        CreateDefaultDoor(new Vector2(16f, 0f), false);
+
+        CreateDefaultChair(new Vector2(14f, -20f), new Vector2(22f, -4f));
+
+        CreateDefaultChest(new Vector2(-24f, -8f), new Vector2(-8f, 8f));
+    }
+
+    private void CreateDefaultRoom(Vector2 start, Vector2 stop)
+    {
+        GameObject new_room = Instantiate(room, new Vector3(0f, 0f, 0f), Quaternion.identity);
+        new_room.GetComponent<Room>().LoadPositions(start, stop);
+        UserInputInformation.AddRoom(new_room);
+    }
+
+    private void CreateDefaultDoor(Vector2 position, bool rotated)
+    {
+        GameObject new_door = Instantiate(door, new Vector3(position.x, position.y, 0f), Quaternion.identity);
+        new_door.GetComponent<Door>().LoadPositions(position, rotated);
+        UserInputInformation.AddDoor(new_door);
+    }
+
+    private void CreateDefaultChair(Vector2 start, Vector2 stop)
+    {
+        GameObject new_chair = Instantiate(chair, new Vector3(0f, 0f, 0f), Quaternion.identity);
+        new_chair.GetComponentInChildren<Chair>().LoadPositions(start, stop);
+        UserInputInformation.AddChair(new_chair);
+    }
+
+    private void CreateDefaultChest(Vector2 start, Vector2 stop)
+    {
+        GameObject new_chest = Instantiate(chest, new Vector3(0f, 0f, 0f), Quaternion.identity);
+        new_chest.GetComponentInChildren<Chest>().LoadPositions(start, stop);
+        UserInputInformation.AddChair(new_chest);
     }
 
 }

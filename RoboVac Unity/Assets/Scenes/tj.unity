@@ -1481,6 +1481,30 @@ PrefabInstance:
       propertyPath: sqftText
       value: 
       objectReference: {fileID: 275656775}
+    - target: {fileID: 3160643662923642046, guid: a11c057f602876c4ab245b55fcb7e506,
+        type: 3}
+      propertyPath: room
+      value: 
+      objectReference: {fileID: 3347921352153231088, guid: 5f99ae4e997a3c14ba5e514534d07303,
+        type: 3}
+    - target: {fileID: 3160643662923642046, guid: a11c057f602876c4ab245b55fcb7e506,
+        type: 3}
+      propertyPath: door
+      value: 
+      objectReference: {fileID: 174239421077433147, guid: 0dbf078f414ed194699b7b94fa71727d,
+        type: 3}
+    - target: {fileID: 3160643662923642046, guid: a11c057f602876c4ab245b55fcb7e506,
+        type: 3}
+      propertyPath: chest
+      value: 
+      objectReference: {fileID: 5964590402416469136, guid: 14e1d46c6e8af99478f1ac35c56f921d,
+        type: 3}
+    - target: {fileID: 3160643662923642046, guid: a11c057f602876c4ab245b55fcb7e506,
+        type: 3}
+      propertyPath: chair
+      value: 
+      objectReference: {fileID: 5964590402416469136, guid: 543f49a7ee52e774b97724a725a62c1f,
+        type: 3}
     - target: {fileID: 8768774828694831210, guid: a11c057f602876c4ab245b55fcb7e506,
         type: 3}
       propertyPath: m_LocalPosition.x

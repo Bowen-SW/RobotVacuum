@@ -86,6 +86,10 @@ public class Door : MonoBehaviour, IMovable
             range ++;
             target = new Vector2((float)pos1, (float)pos2);
         }
+        else
+        {
+            target = transform.position;
+        }
     }
 
     // Update is called once per frame
