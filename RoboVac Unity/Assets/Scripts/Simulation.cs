@@ -13,7 +13,9 @@ public class Simulation : MonoBehaviour
     public Button simSlowButton;
     public Button simFastButton;
     public Button settingsButton;
+
     public TMP_Text simSpeedText;
+    public TMP_Text sqftText;
 
     public Sprite playImage;
     public Sprite stopImage;
@@ -87,6 +89,26 @@ public class Simulation : MonoBehaviour
                 }
             }
         }
+
+        // Change the apperance of the sqft label
+        sqftText.text = UserInputInformation.sqftGS.ToString();
+        if (UserInputInformation.sqftGS > 8000)
+        {
+            // Inidicate that the current sqft is unacceptable
+            sqftText.color = Color.red;
+        }
+        else
+        {
+            // Set label to the standard color
+            Color newColor;
+            newColor.r = 231;
+            newColor.g = 236;
+            newColor.b = 239;
+            newColor.a = 255;
+
+            sqftText.color = newColor;
+        }
+
     }
 
     public void StartStopRoomba(){
