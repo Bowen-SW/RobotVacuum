@@ -126,6 +126,9 @@ public class Simulation : MonoBehaviour
             startStopBtn.GetComponent<Image>().sprite = playImage;
             startStopBtn.GetComponent<Image>().color = new Color(182, 214, 204, 255);
 
+            OpenOutwardDoors();
+
+
         } else if(isStopped) {        //Roomba started for the first time  
             if(pathType == PathType.All){
                 StartAllPaths();
@@ -137,6 +140,9 @@ public class Simulation : MonoBehaviour
             // Change the play button icon into a stop button icon
             startStopBtn.GetComponent<Image>().sprite = stopImage;
             startStopBtn.GetComponent<Image>().color = new Color(255, 0, 0, 255);
+
+            CloseOutwardDoors();
+
         }
     }
 
@@ -243,6 +249,35 @@ public class Simulation : MonoBehaviour
     public bool IsStopped()
     {
         return isStopped;
+    }
+
+    private void CloseOutwardDoors()
+    {
+        Door[] doors = UnityEngine.Object.FindObjectsOfType<Door>();
+
+        foreach (Door door in doors)
+        {
+            if (door.touchingWalls.Count < 2)
+            {
+                door.CloseDoor();
+            }
+
+        }
+
+    }
+
+    private void OpenOutwardDoors()
+    {
+        Door[] doors = UnityEngine.Object.FindObjectsOfType<Door>();
+
+        foreach (Door door in doors)
+        {
+            if (door.touchingWalls.Count < 2)
+            {
+                door.OpenDoor();
+            }
+        }
+
     }
 
 }

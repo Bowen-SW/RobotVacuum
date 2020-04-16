@@ -15,6 +15,10 @@ public class Door : MonoBehaviour, IMovable
     public List<GameObject> allWalls;
     private int DoorID;
 
+    public List<GameObject> touchingWalls;
+
+    public bool isClosed = false;
+
     public int id
     {
         get
@@ -91,7 +95,7 @@ public class Door : MonoBehaviour, IMovable
             }
         }
 
-        if(currentWall != null)
+        if(currentWall != null && !isClosed)
         {
             MeshRenderer floor = transform.GetChild(2).GetComponent<MeshRenderer>();
             MeshRenderer parentFloor = currentWall.transform.parent.GetChild(0).GetComponent<MeshRenderer>(); 
@@ -174,4 +178,18 @@ public class Door : MonoBehaviour, IMovable
         gameObjects.AddRange(GameObject.FindGameObjectsWithTag("East"));
         return gameObjects;
     }
+
+    public void CloseDoor()
+    {
+        isClosed = true;
+
+        transform.GetChild(2).GetComponent<MeshRenderer>().material = transform.GetChild(0).GetComponent<MeshRenderer>().material;
+
+    }
+
+    public void OpenDoor()
+    {
+        isClosed = false;
+    }
+
 }
