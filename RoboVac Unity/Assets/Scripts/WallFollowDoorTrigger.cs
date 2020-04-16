@@ -1,21 +1,19 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorSpace : MonoBehaviour
+public class WallFollowDoorTrigger : MonoBehaviour
 {
-    public GameObject door;
-    public CapsuleCollider2D doorTrigger;
-    private Door _door;
     private CapsuleCollider2D _doorTrigger;
     private Roomba _roomba = null;
     private bool isWallFollow = false;
+    private Door _door;
 
     // Start is called before the first frame update
     void Start()
     {
-        _door = door.GetComponent<Door>();
-        _doorTrigger = doorTrigger.GetComponent<CapsuleCollider2D>();
+        _door = GetComponentInParent<Door>();
+        _doorTrigger = GetComponent<CapsuleCollider2D>();
         if(_roomba == null){
             _roomba = GameObject.FindGameObjectWithTag("roomba").GetComponent<Roomba>();
         }
@@ -24,23 +22,15 @@ public class DoorSpace : MonoBehaviour
     void Update()
     {
         isWallFollow = (_roomba.GetPathType() == PathType.WallFollow);
-        if(isWallFollow){
-            _doorTrigger.enabled = true;
-            GetComponent<BoxCollider2D>().enabled = false;
-        } else {
-            _doorTrigger.enabled = false;
-            GetComponent<BoxCollider2D>().enabled = true;
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
         if(_roomba.IsTimerStarted()){
-            if(other.tag == "roomba" && !isWallFollow)
+            if(other.tag == "roombaRear" && isWallFollow)
             {
                 List<GameObject> walls = _door.AllWalls();
                 foreach(GameObject wall in walls)
                 {
-                    Debug.Log("Remove walls");
                     wall.GetComponent<EdgeCollider2D>().enabled = false;
                     //This causes the roomba to not be touching anything and it will turn clockwise
                 }
@@ -50,7 +40,7 @@ public class DoorSpace : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other) {
         if(_roomba.IsTimerStarted()){
-            if(other.tag == "roomba" && !isWallFollow)
+            if(other.tag == "roombaRear" && isWallFollow)
             {
                 List<GameObject> walls = _door.AllWalls();
                 foreach(GameObject wall in walls)
@@ -58,6 +48,8 @@ public class DoorSpace : MonoBehaviour
                     Debug.Log("Enable walls");
                     wall.GetComponent<EdgeCollider2D>().enabled = true;
                 }
+                _roomba.GetPath().SetIsTouching(false);
+                _roomba.GetPath().Move();
             }
         }
     }

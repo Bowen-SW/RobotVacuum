@@ -8,11 +8,13 @@ using TMPro;
 public class Roomba : MonoBehaviour, IMovable
 {
     public TMP_Text simTimeText;
+    public BoxCollider2D rearTrigger;
+    public WallFollowTrigger wallFollowTrigger;
     private TMP_Text timeText;
     private Rigidbody2D vacuum;
     private int batteryLife;
     private Path path;
-    private PathType pathType;
+    private PathType pathType = PathType.Random;
     private float vacEff;
     private float whiskerEff;
     private float roombaSpeed;
@@ -77,6 +79,11 @@ public class Roomba : MonoBehaviour, IMovable
         SetStartPosition();
 
         SetPathType(pathType);
+        if(pathType == PathType.WallFollow){
+            rearTrigger.enabled = true;
+        } else {
+            rearTrigger.enabled = false;
+        }
         path.SetFields(this.roombaSpeed, vacuum);
 
         if(pathType == PathType.Spiral){
@@ -157,12 +164,12 @@ public class Roomba : MonoBehaviour, IMovable
             case PathType.Spiral:
                 path = gameObject.AddComponent<SpiralPath>();
                 this.pathType = PathType.Spiral;
-                UserInputInformation.pathTypeGS = "Spiral v3.0";
+                UserInputInformation.pathTypeGS = "Spiral v3.1";
                 break;
             case PathType.WallFollow:
                 path = gameObject.AddComponent<WallFollow>();
                 this.pathType = PathType.WallFollow;
-                UserInputInformation.pathTypeGS = "Wall Follow v2.0";
+                UserInputInformation.pathTypeGS = "Wall Follow v3.0";
                 break;
             case PathType.All:
                 this.pathType = PathType.All;
@@ -189,10 +196,14 @@ public class Roomba : MonoBehaviour, IMovable
         doSprial = false;
         path.StopThreads();
         path.Stop();
+
+        if(pathType == PathType.WallFollow){
+            wallFollowTrigger.SetCount(0);
+        }
         
         vacuum.angularVelocity = 0;
         Time.timeScale = 1F;
-        Debug.Log("Simulation Stopped");
+        // Debug.Log("Simulation Stopped");
         UserInputInformation.roombaStopGS = true;
         vacuum.position = new Vector2(xCoordinate, yCoordinate);
         vacuum.rotation = 0F;
@@ -254,5 +265,9 @@ public class Roomba : MonoBehaviour, IMovable
 
     public void SetTimeLimitReached(bool limitReached){
         timeLimitReached = limitReached;
+    }
+
+    public bool IsTimerStarted(){
+        return timerStarted;
     }
  }

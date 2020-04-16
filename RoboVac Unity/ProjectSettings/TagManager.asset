@@ -21,6 +21,7 @@ TagManager:
   - tabletop
   - door
   - doorway
+  - roombaRear
   layers:
   - Default
   - TransparentFX

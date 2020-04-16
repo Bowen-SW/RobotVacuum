@@ -121,6 +121,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &138262254 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2675807128330151280, guid: 12f13358cc8f4af4e9e67b3091bba7de,
+    type: 3}
+  m_PrefabInstance: {fileID: 1225594381}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108ab0bccc4992a48a1f5faa40b25d62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &159107719 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3828793207222524455, guid: 37bafd925285e50419153d29f3d2b960,
@@ -845,6 +857,8 @@ MonoBehaviour:
   chair: {fileID: 0}
   chest: {fileID: 0}
   door: {fileID: 0}
+  messageBox: {fileID: 0}
+  canvas: {fileID: 0}
 --- !u!1001 &1225594381
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -852,6 +866,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1450814127133013701, guid: 12f13358cc8f4af4e9e67b3091bba7de,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2675807126547395045, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_Parameters.colorGradient.key0.r
@@ -947,6 +966,11 @@ PrefabInstance:
       propertyPath: simTimeText
       value: 
       objectReference: {fileID: 4449327511973817241}
+    - target: {fileID: 2675807127965337571, guid: 12f13358cc8f4af4e9e67b3091bba7de,
+        type: 3}
+      propertyPath: wallFollowTrigger
+      value: 
+      objectReference: {fileID: 138262254}
     - target: {fileID: 2675807127965337580, guid: 12f13358cc8f4af4e9e67b3091bba7de,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1314,6 +1338,8 @@ MonoBehaviour:
   chair: {fileID: 5964590402416469136, guid: 543f49a7ee52e774b97724a725a62c1f, type: 3}
   chest: {fileID: 5964590402416469136, guid: 14e1d46c6e8af99478f1ac35c56f921d, type: 3}
   door: {fileID: 174239421077433147, guid: 0dbf078f414ed194699b7b94fa71727d, type: 3}
+  messageBox: {fileID: 0}
+  canvas: {fileID: 0}
 --- !u!114 &2065904805
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,6 +15,15 @@ public class WallFollowTrigger : MonoBehaviour {
         path = roomba.GetPath();   
     }
 
+    void Update(){
+        if(Object.FindObjectOfType<Simulation>().IsStopped()){
+            wallSensor.enabled = false;
+        } else {
+            wallSensor.enabled = true;
+        }
+
+    }
+
     void OnTriggerEnter2D(Collider2D col){
         if(roomba.GetPathType() == PathType.WallFollow){
             if(col.IsTouching(wallSensor) && (col.gameObject.tag != "whiskers" && col.gameObject.tag != "vacuum")
@@ -40,6 +49,10 @@ public class WallFollowTrigger : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public void SetCount(int newCount){
+        count = newCount;
     }
 
 }
