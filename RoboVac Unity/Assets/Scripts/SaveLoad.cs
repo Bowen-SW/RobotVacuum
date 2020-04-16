@@ -41,6 +41,8 @@ public class SaveLoad : MonoBehaviour
     public GameObject chair;
     public GameObject chest;
     public GameObject door;
+    public GameObject messageBox;
+    public Canvas canvas;
     [HideInInspector] public static int stopCount = 0;
     //public GameObject roomba;
     // public Button button;
@@ -367,6 +369,18 @@ public class SaveLoad : MonoBehaviour
                 loadChairs(saveData);
                 loadChests(saveData);
                 loadDoors(saveData);
+            }
+            else
+            {
+                if (GameObject.FindGameObjectWithTag("MessageBox") == null)
+                {
+                    GameObject newObj = Instantiate(messageBox, new Vector3(canvas.transform.position.x, canvas.transform.position.y, canvas.transform.position.z), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+                    newObj.transform.SetParent(canvas.transform, false);
+                    RectTransform objRectTrans = newObj.GetComponent<RectTransform>();
+                    objRectTrans.offsetMin = new Vector2(0.0f, 0.0f);
+                    objRectTrans.offsetMax = new Vector2(0.0f, 0.0f);
+                }
+            
             }
         }
         catch
