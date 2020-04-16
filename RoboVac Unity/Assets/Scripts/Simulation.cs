@@ -70,6 +70,7 @@ public class Simulation : MonoBehaviour
 
     void Update(){
         if(roomba.IsTimeLimitReached()){
+            UserInputInformation.roombaStopGS = true;
             Debug.Log("Time limit has been reached");
             
             roomba.SetTimeLimitReached(false);
