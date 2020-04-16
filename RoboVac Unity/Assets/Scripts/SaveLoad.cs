@@ -201,7 +201,7 @@ public class SaveLoad : MonoBehaviour
         foreach(GameObject door in UserInputInformation.doors)
         {
             doors.Add(door);
-            startValuesD.Add(door.GetComponent<Door>().target);
+            startValuesD.Add(door.GetComponent<Door>().getXYPos());
             rotationD.Add(door.GetComponent<Door>().isRotated);
         }
     }
@@ -397,6 +397,7 @@ public class SaveLoad : MonoBehaviour
         setFurniture();
         setCoverage();
         setDuration();
+        Debug.Log(filePath);
         Debug.Log(JsonUtility.ToJson(this));
         
         if(filePath == "")
@@ -405,22 +406,28 @@ public class SaveLoad : MonoBehaviour
             {
                 if (Directory.Exists(defaultDirectory)) 
                 {
+                    filePath = (defaultDirectory + "\\" + fileName + ".json");
+                    Debug.Log(filePath);
+                    File.WriteAllText(filePath, JsonUtility.ToJson(this));
                     return;
                 }
 
                 DirectoryInfo di = Directory.CreateDirectory(defaultDirectory);
+                filePath = (defaultDirectory + "\\" + fileName + ".json");
+                Debug.Log(filePath);
+                File.WriteAllText(filePath, JsonUtility.ToJson(this));
             } 
             catch (Exception e) 
             {
                 Debug.Log(e.ToString());
             }
                             
-            filePath = (defaultDirectory + "/" + fileName + ".json");
-            File.WriteAllText(filePath, JsonUtility.ToJson(this));
+
         }
         else
         {
-            filePath = (defaultDirectory + "/" + fileName + ".json");
+            filePath = (defaultDirectory + "\\" + fileName + ".json");
+            Debug.Log(filePath);
             File.WriteAllText(filePath, JsonUtility.ToJson(this));
         }
 

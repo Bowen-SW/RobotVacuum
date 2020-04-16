@@ -9,11 +9,16 @@ public class Door : MonoBehaviour, IMovable
 
     private static int range = 10;
     public Vector2 target;
+    public Vector2 xypos;
     public bool moving;
     public bool isRotated;
     private bool loaded = false;
     public List<GameObject> allWalls;
     private int DoorID;
+
+    public List<GameObject> touchingWalls;
+
+    public bool isClosed = false;
 
     public int id
     {
@@ -25,8 +30,15 @@ public class Door : MonoBehaviour, IMovable
         {
             DoorID = value;
             Debug.Log("Setting doorID for this room to: " + DoorID);
-            UserInputInformation.AddStartVectorD(DoorID, target);
+            xypos = new Vector2(transform.position.x, transform.position.y);
+            UserInputInformation.AddStartVectorD(DoorID, xypos);
         }
+    }
+
+    public Vector2 getXYPos()
+    {
+        xypos = new Vector2(transform.position.x, transform.position.y); 
+        return xypos;
     }
 
     public void SetTarget(Vector2 position)
@@ -54,10 +66,10 @@ public class Door : MonoBehaviour, IMovable
         if(rotated == true)
         {
             Debug.Log("is rotated!");
-            transform.rotation = Quaternion.Euler(0,0,-90);
+            transform.position = new Vector3(start.x, start.y, -90);
             Debug.Log(transform.rotation);
         }
-        this.target = start;
+        transform.position = new Vector3 (start.x, start.y, 0);
         loaded = true;
     }
     
@@ -91,7 +103,7 @@ public class Door : MonoBehaviour, IMovable
             }
         }
 
-        if(currentWall != null)
+        if(currentWall != null && !isClosed)
         {
             MeshRenderer floor = transform.GetChild(2).GetComponent<MeshRenderer>();
             MeshRenderer parentFloor = currentWall.transform.parent.GetChild(0).GetComponent<MeshRenderer>(); 
@@ -174,4 +186,18 @@ public class Door : MonoBehaviour, IMovable
         gameObjects.AddRange(GameObject.FindGameObjectsWithTag("East"));
         return gameObjects;
     }
+
+    public void CloseDoor()
+    {
+        isClosed = true;
+
+        transform.GetChild(2).GetComponent<MeshRenderer>().material = transform.GetChild(0).GetComponent<MeshRenderer>().material;
+
+    }
+
+    public void OpenDoor()
+    {
+        isClosed = false;
+    }
+
 }

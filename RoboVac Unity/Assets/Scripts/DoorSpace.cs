@@ -35,7 +35,8 @@ public class DoorSpace : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
         if(_roomba.IsTimerStarted()){
-            if(other.tag == "roomba" && !isWallFollow)
+            if(other.tag == "roomba" && !isWallFollow && !_door.isClosed)
+
             {
                 List<GameObject> walls = _door.AllWalls();
                 foreach(GameObject wall in walls)
@@ -46,11 +47,29 @@ public class DoorSpace : MonoBehaviour
                 }
             }
         }
+
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("North") || other.CompareTag("South") ||
+            other.CompareTag("West") || other.CompareTag("East"))
+        {
+            foreach (GameObject wall in _door.touchingWalls)
+            {
+                if (wall.transform.parent.Equals(other.gameObject.transform.parent))
+                {
+                    return;
+                }
+            }
+
+            _door.touchingWalls.Add(other.gameObject);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other) {
         if(_roomba.IsTimerStarted()){
-            if(other.tag == "roomba" && !isWallFollow)
+            if(other.tag == "roomba" && !isWallFollow  && !_door.isClosed)
             {
                 List<GameObject> walls = _door.AllWalls();
                 foreach(GameObject wall in walls)
@@ -60,5 +79,12 @@ public class DoorSpace : MonoBehaviour
                 }
             }
         }
+
+        if (other.CompareTag("North") || other.CompareTag("South") ||
+            other.CompareTag("West") || other.CompareTag("East"))
+        {
+            _door.touchingWalls.Remove(other.gameObject);
+        }
+
     }
 }
