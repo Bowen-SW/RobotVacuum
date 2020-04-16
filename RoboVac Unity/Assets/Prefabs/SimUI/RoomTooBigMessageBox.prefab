@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 3656227237677315178, guid: 40e12a28d4bf9d54f843c5ca2fba6b6e,
         type: 3}
       propertyPath: m_text
-      value: 'Error: Room is bigger that 8000 square feet!'
+      value: 'Error: Room is bigger than 8000 square feet!'
       objectReference: {fileID: 0}
     - target: {fileID: 3656227237677315178, guid: 40e12a28d4bf9d54f843c5ca2fba6b6e,
         type: 3}
