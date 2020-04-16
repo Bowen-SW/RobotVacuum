@@ -62,7 +62,12 @@ public class DoorSpace : MonoBehaviour
                 }
             }
 
-            _door.touchingWalls.Add(other.gameObject);
+            if (_door.touchingWalls.Count < 2)
+            {
+                _door.touchingWalls.Add(other.gameObject);
+            }
+
+            //_door.touchingWalls.Add(other.gameObject);
         }
     }
 
