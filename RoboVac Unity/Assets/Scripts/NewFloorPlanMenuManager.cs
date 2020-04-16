@@ -163,7 +163,7 @@ public class NewFloorPlanMenuManager : MonoBehaviour
                 newRoom.GetComponent<Room>().LoadPositions(new Vector2(-((float)width / 2f), -((float)height / 2f)), new Vector2((float)width / 2f, (float)height / 2f));
             }
             UserInputInformation.resetIDNums();
-            UserInputInformation.prevReports.Clear();
+            UserInputInformation.prevReports = new List<RunReport>();
             UserInputInformation.saveDataGS="";
             UserInputInformation.AddRoom(newRoom);
             Close();
