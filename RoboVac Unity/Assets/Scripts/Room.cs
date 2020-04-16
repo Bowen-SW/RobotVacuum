@@ -164,17 +164,22 @@ public class Room : MonoBehaviour, IResizable
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
+            Physics.Raycast(ray, out hit, 100);
+
+            RaycastHit2D hit2D = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.up, 1.0f);
             
-            if(Physics.Raycast(ray, out hit, 100))
+            if(hit.collider != null)
             {
-                for(int i = 0; i < transform.childCount; i++)
+                if(hit.transform.parent == transform)
                 {
-                    Transform c = transform.GetChild(i);
-                    if(hit.transform == c)
-                    {
-                        Selection.Select(this.gameObject);
-                        break;
-                    }
+                    Selection.Select(this.gameObject);
+                }
+            }
+            if(hit2D.collider != null)
+            {
+                if(hit2D.transform.parent == transform)
+                {
+                    Selection.Select(this.gameObject);
                 }
             }
         }
