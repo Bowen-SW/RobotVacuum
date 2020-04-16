@@ -9,6 +9,8 @@ public class Floor : MonoBehaviour
     public GameObject room;
     private Room _room;
 
+    public bool hasDoor = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +38,20 @@ public class Floor : MonoBehaviour
             {
                 _room.VacuumCell(roomba);
             }
+        }
+
+        if (other.gameObject.CompareTag("doorway"))
+        {
+            hasDoor = true;
+        }
+
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("doorway"))
+        {
+            hasDoor = false;
         }
     }
 

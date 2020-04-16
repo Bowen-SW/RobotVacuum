@@ -18,6 +18,9 @@ TagManager:
   - roomba
   - floor
   - MessageBox
+  - tabletop
+  - door
+  - doorway
   layers:
   - Default
   - TransparentFX

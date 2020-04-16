@@ -20,6 +20,8 @@ public class Simulation : MonoBehaviour
     public Sprite pauseImage;
     public TrailRenderer trail;
 
+    public bool hasErrors = false;
+
     private Button startStopBtn;
     private Button pauseBtn;
     private Button simSlowBtn;
@@ -88,6 +90,11 @@ public class Simulation : MonoBehaviour
     }
 
     public void StartStopRoomba(){
+        if (hasErrors)
+        {
+            return;
+        }
+
         simFastBtn.interactable = true;
         pauseBtn.interactable = true;
 

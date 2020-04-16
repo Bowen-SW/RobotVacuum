@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 174239421077433149}
   - component: {fileID: 174239421077433150}
   - component: {fileID: 5826242966994398671}
+  - component: {fileID: 6923955917917451617}
   m_Layer: 0
   m_Name: Door
-  m_TagString: Untagged
+  m_TagString: door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,6 +53,7 @@ MonoBehaviour:
   currentWall: {fileID: 0}
   target: {x: 0, y: 0}
   moving: 0
+  isRotated: 0
   allWalls: []
 --- !u!114 &174239421077433150
 MonoBehaviour:
@@ -92,6 +94,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.2, y: 0.6}
   m_EdgeRadius: 0
+--- !u!50 &6923955917917451617
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174239421077433147}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &174239422263906107
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +326,7 @@ GameObject:
   - component: {fileID: 1965554647244333539}
   m_Layer: 0
   m_Name: Quad (2)
-  m_TagString: Untagged
+  m_TagString: doorway
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
