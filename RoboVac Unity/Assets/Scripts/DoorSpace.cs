@@ -26,7 +26,7 @@ public class DoorSpace : MonoBehaviour
         isWallFollow = (_roomba.GetPathType() == PathType.WallFollow);
         if(isWallFollow){
             _doorTrigger.enabled = true;
-            GetComponent<BoxCollider2D>().enabled = false;
+            //GetComponent<BoxCollider2D>().enabled = false;
         } else {
             _doorTrigger.enabled = false;
             GetComponent<BoxCollider2D>().enabled = true;
