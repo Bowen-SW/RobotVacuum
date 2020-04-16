@@ -350,7 +350,7 @@ public class Simulation : MonoBehaviour
     {
         GameObject new_chest = Instantiate(chest, new Vector3(0f, 0f, 0f), Quaternion.identity);
         new_chest.GetComponentInChildren<Chest>().LoadPositions(start, stop);
-        UserInputInformation.AddChair(new_chest);
+        UserInputInformation.AddChest(new_chest);
     }
 
 }
