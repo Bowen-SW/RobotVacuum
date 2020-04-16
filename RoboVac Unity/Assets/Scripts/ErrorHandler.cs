@@ -42,7 +42,7 @@ public class ErrorHandler : MonoBehaviour
         {
             if (GameObject.FindGameObjectWithTag("MessageBox") == null)
             {
-                GameObject newObj = Instantiate(noDoorsForEachRoomMessageBox, new Vector3(canvas.transform.position.x, canvas.transform.position.y, canvas.transform.position.z), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+                GameObject newObj = Instantiate(roomTooBigMessageBox, new Vector3(canvas.transform.position.x, canvas.transform.position.y, canvas.transform.position.z), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
                 newObj.transform.SetParent(canvas.transform, false);
                 RectTransform objRectTrans = newObj.GetComponent<RectTransform>();
                 objRectTrans.offsetMin = new Vector2(0.0f, 0.0f);
