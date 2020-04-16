@@ -201,7 +201,7 @@ public class SaveLoad : MonoBehaviour
         foreach(GameObject door in UserInputInformation.doors)
         {
             doors.Add(door);
-            startValuesD.Add(door.GetComponent<Door>().target);
+            startValuesD.Add(door.GetComponent<Door>().getXYPos());
             rotationD.Add(door.GetComponent<Door>().isRotated);
         }
     }
