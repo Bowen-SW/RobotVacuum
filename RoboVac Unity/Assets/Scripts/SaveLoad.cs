@@ -15,7 +15,7 @@ public class SaveLoad : MonoBehaviour
     [HideInInspector] public List<GameObject> chests;
     [HideInInspector] public List<GameObject> chairs;
     [HideInInspector] public List<GameObject> doors;
-    [HideInInspector] public List<RunReport> reports = new List<RunReport>();
+    [HideInInspector] public List<RunReport> reports;
     [HideInInspector] public List<Vector2> startValues;
     [HideInInspector] public List<Vector2> stopValues;
     [HideInInspector] public List<Vector2> startValuesCR;
@@ -150,10 +150,12 @@ public class SaveLoad : MonoBehaviour
 
     public void recordRun()
     {
-        if(reports.Count < 1)
-        {
-            floorPlanIDGS = 1;
-        }
+        reports = UserInputInformation.prevReports;
+        floorPlanIDGS = reports.Count+1;
+        // if(reports.Count < 1)
+        // {
+        //     floorPlanIDGS = 1;
+        // }
         setTimeStamp();
         setCoverage();
         carpetType = UserInputInformation.carpetType;
@@ -331,9 +333,9 @@ public class SaveLoad : MonoBehaviour
     }
     public void loadReports(JsonData saveInformation)
     {
+        reports = new List<RunReport>();
         if(saveInformation["reports"].Count != 0)
-        {
-            
+        {  
             for(int i = 0; i < saveData["reports"].Count; i++)
             {
                 int id = (int)(saveData["reports"][i]["reportID"]);
@@ -364,7 +366,7 @@ public class SaveLoad : MonoBehaviour
                 fileName = (string)saveData["fileName"];
                 UserInputInformation.saveDataGS = saveData;
                 UserInputInformation.FileNameGS = fileName;
-                reports.Clear();
+                // reports.Clear();
                 removeFurniture();
                 loadReports(saveData);
                 loadRooms(saveData);

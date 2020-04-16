@@ -27,7 +27,7 @@ public static class Loader
 
             filePath = fileExplorer.fileName;
         }
-        catch(Exception e)
+        catch
         {
             Debug.Log("Invalid File.");
         }

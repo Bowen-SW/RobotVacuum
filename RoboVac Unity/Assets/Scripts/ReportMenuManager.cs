@@ -38,7 +38,8 @@ public class ReportMenuManager : MonoBehaviour
 
             if (count > 0)
             {
-                for (int i = 0; i < 5 && i < count; i++)
+                //Debug.Log("count val = " + count);
+                for (int i = count-1; i > count-5 || i > 0; i--)
                 {
                     string runNumber = UserInputInformation.saveDataGS["reports"][i]["reportID"].ToString();
                     string date = UserInputInformation.saveDataGS["reports"][i]["dateStamp"].ToString();
