@@ -17,7 +17,7 @@ public static class UserInputInformation
     public static int ChestIDNum = 0;
     public static int ChairIDNum = 0;
     public static int DoorIDNum = 0;
-    public static int sQFT = 0;
+    public static int totalSqft = 0;
     public static List<GameObject> rooms = new List<GameObject>();
     public static List<GameObject> chairs = new List<GameObject>();
     public static List<GameObject> chests = new List<GameObject>();
@@ -64,6 +64,17 @@ public static class UserInputInformation
         startValsD.Clear();
         rotationD.Clear();
     }
+
+    public static void setTotalSqft()
+    {
+        totalSqft = 0;
+        for(int i = 0; i < startVals.Count; i++)
+        {
+            int width = ((int)(stopVals[i].x - startVals[i].x));
+            int height = ((int)(stopVals[i].y - startVals[i].y));
+            totalSqft += (width*height);
+        }
+    }
     
     public static string setstartTime()
     {
@@ -88,11 +99,11 @@ public static class UserInputInformation
     {
         get
         {
-            return sQFT;
+            return totalSqft;
         }
         set
         {
-            sQFT = value;
+            totalSqft = value;
         }
     }
 

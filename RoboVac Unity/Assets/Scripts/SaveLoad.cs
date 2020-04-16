@@ -53,8 +53,10 @@ public class SaveLoad : MonoBehaviour
 
     void Update()
     {
-        setTotalSqft();
-        UserInputInformation.sqftGS = totalSqft;
+        //setTotalSqft();
+        UserInputInformation.setTotalSqft();
+        //UserInputInformation.sqftGS = totalSqft;
+        //totalSqft = UserInputInformation.totalSqft;
        if(UserInputInformation.roombaStopGS == true || (stopCount % 2 == 0 && stopCount != 0))
        {
             recordRun();
