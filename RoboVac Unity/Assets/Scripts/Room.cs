@@ -175,7 +175,7 @@ public class Room : MonoBehaviour, IResizable
                     Selection.Select(this.gameObject);
                 }
             }
-            if(hit2D.collider != null)
+            else if(hit2D.collider != null)
             {
                 if(hit2D.transform.parent == transform)
                 {
