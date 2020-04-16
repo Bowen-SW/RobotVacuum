@@ -22,6 +22,8 @@ TagManager:
   - door
   - doorway
   - roombaRear
+  - chair
+  - chest
   layers:
   - Default
   - TransparentFX
