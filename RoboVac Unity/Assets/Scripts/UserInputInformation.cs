@@ -36,7 +36,7 @@ public static class UserInputInformation
     public static DateTime timeStamp;
     public static string timeStampString;
     public static JsonData saveData;
-    public static List<RunReport> prevReports;
+    public static List<RunReport> prevReports = new List<RunReport>();
 
     public static bool RoombaStop;
 
