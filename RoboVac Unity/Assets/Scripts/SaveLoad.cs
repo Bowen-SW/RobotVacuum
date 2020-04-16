@@ -395,10 +395,10 @@ public class SaveLoad : MonoBehaviour
     {
         setFileName();
         setTimeStamp();
-        setTotalSqft();
         setFurniture();
         setCoverage();
         setDuration();
+        setTotalSqft();
         Debug.Log(filePath);
         Debug.Log(JsonUtility.ToJson(this));
         
