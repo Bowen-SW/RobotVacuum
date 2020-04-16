@@ -22,6 +22,8 @@ public class DeleteButton : MonoBehaviour
     public void TaskOnClick()
     {
 
+        Debug.Log(Selection.selected.name);
+
         UserInputInformation.RemoveItem(Selection.selected);
 
         // Delete the currently selected object

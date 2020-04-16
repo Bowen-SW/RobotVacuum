@@ -311,14 +311,14 @@ public static class UserInputInformation
             rooms.Remove(item);
             return true;
         }
-        else if (item.GetComponent<Chest>() != null)
+        else if (item.transform.parent.CompareTag("chest"))
         {
-            chests.Remove(item);
+            chests.Remove(item.transform.parent.gameObject);
             return true;
         }
-        else if (item.GetComponent<Chair>() != null)
+        else if (item.transform.parent.CompareTag("chair"))
         {
-            chairs.Remove(item);
+            chairs.Remove(item.transform.parent.gameObject);
             return true;
         }
         else if (item.GetComponent<Door>() != null)
