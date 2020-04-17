@@ -61,6 +61,7 @@ public class SaveLoad : MonoBehaviour
        {
             recordRun();
             Save();
+            UserInputInformation.clearCoverageGS = true;
             UserInputInformation.roombaStopGS = false;
             stopCount = 0;
        }

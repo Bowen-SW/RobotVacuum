@@ -33,6 +33,7 @@ public static class UserInputInformation
     public static string pathTypeUsed;
     public static string carpetType;
     public static string duration;
+    public static bool clearCoverage = false;
     public static DateTime timeStamp;
     public static string timeStampString;
     public static JsonData saveData;
@@ -82,6 +83,18 @@ public static class UserInputInformation
         timeStamp = DateTime.Now;
         timeStampString = timeStamp.ToString("MM-dd-yyyy @ HH:mm", DateTimeFormatInfo.InvariantInfo);
         return timeStampString;
+    }
+
+    public static bool clearCoverageGS
+    {
+        get
+        {
+            return clearCoverage;
+        }
+        set
+        {
+            clearCoverage = value;
+        }
     }
 
     public static JsonData saveDataGS
@@ -311,6 +324,11 @@ public static class UserInputInformation
             rooms.Remove(item);
             return true;
         }
+        else if (item.CompareTag("door"))
+        {
+            doors.Remove(item.transform.gameObject);
+            return true;
+        }
         else if (item.transform.parent.CompareTag("chest"))
         {
             chests.Remove(item.transform.parent.gameObject);
@@ -319,11 +337,6 @@ public static class UserInputInformation
         else if (item.transform.parent.CompareTag("chair"))
         {
             chairs.Remove(item.transform.parent.gameObject);
-            return true;
-        }
-        else if (item.GetComponent<Door>() != null)
-        {
-            doors.Remove(item);
             return true;
         }
 

@@ -186,7 +186,10 @@ public class Room : MonoBehaviour, IResizable
 
         if(Object.FindObjectOfType<Simulation>().IsStopped())
         {
-            ResetCells();
+            if(UserInputInformation.clearCoverageGS==true)
+            {
+                ResetCells();
+            }
         }
 
         GameObject floor = GetFloor();
