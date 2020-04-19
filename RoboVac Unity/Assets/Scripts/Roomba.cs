@@ -29,6 +29,8 @@ public class Roomba : MonoBehaviour, IMovable
     private float yCoordinate = 0;
 
     private Vector3 target;
+    private float radius;
+    private Vector2 startSpiralPos;
     private bool moving = false;
 
     public bool isInRoom = false;
@@ -107,6 +109,23 @@ public class Roomba : MonoBehaviour, IMovable
     }
 
     void Update(){
+        if(pathType == PathType.Spiral && doSprial){
+
+            radius = Mathf.Sqrt(Mathf.Pow(vacuum.position.x - startSpiralPos.x,2f) + Mathf.Pow(vacuum.position.y - startSpiralPos.y, 2f));
+            Vector3 moveVector = new Vector3(unit*(float)Math.Cos(timer), unit*(float)Math.Sin(timer),0);
+         
+            transform.position += moveVector * Time.deltaTime;
+            unit += Time.deltaTime / 15F;
+            transform.Rotate(Vector3.forward, angle * Time.deltaTime);  
+        }
+        else{        
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
+
+            Vector3 moveVector = new Vector3(moveHorizontal, moveVertical, 0.0F);
+            transform.position += moveVector * Time.deltaTime;
+        }
+
         if(timerStarted){
             if(Selection.selected == this.gameObject)
             {
@@ -134,19 +153,19 @@ public class Roomba : MonoBehaviour, IMovable
 
     void FixedUpdate()
     {
-        if(pathType == PathType.Spiral && doSprial){
-            Vector3 moveVector = new Vector3(unit*(float)Math.Cos(timer), unit*(float)Math.Sin(timer),0);
-            transform.position += moveVector * Time.deltaTime;
-            unit += Time.deltaTime / 15F;
-            transform.Rotate(Vector3.forward, angle * Time.deltaTime);  
-        }
-        else{        
-            float moveHorizontal = Input.GetAxis("Horizontal");
-            float moveVertical = Input.GetAxis("Vertical");
+        // if(pathType == PathType.Spiral && doSprial){
+        //     Vector3 moveVector = new Vector3(unit*(float)Math.Cos(timer), unit*(float)Math.Sin(timer),0);
+        //     transform.position += moveVector * Time.deltaTime;
+        //     unit += Time.deltaTime / 15F;
+        //     transform.Rotate(Vector3.forward, angle * Time.deltaTime);  
+        // }
+        // else{        
+        //     float moveHorizontal = Input.GetAxis("Horizontal");
+        //     float moveVertical = Input.GetAxis("Vertical");
 
-            Vector3 moveVector = new Vector3(moveHorizontal, moveVertical, 0.0F);
-            transform.position += moveVector * Time.deltaTime;
-        }
+        //     Vector3 moveVector = new Vector3(moveHorizontal, moveVertical, 0.0F);
+        //     transform.position += moveVector * Time.deltaTime;
+        // }
     }
 
     //This function also sets the path version
@@ -225,6 +244,8 @@ public class Roomba : MonoBehaviour, IMovable
 
     public void SetDoSpiral(bool spiral){
         doSprial = spiral;
+        startSpiralPos = vacuum.position;
+        Debug.Log("Start spiral pos = " + startSpiralPos);
         //Reset the spiral values
         unit = .1F;
     }
@@ -248,6 +269,8 @@ public class Roomba : MonoBehaviour, IMovable
     private void SetStartPosition(){
         xCoordinate = vacuum.position.x;
         yCoordinate = vacuum.position.y;
+        startSpiralPos = vacuum.position;
+        Debug.Log("Start spiral pos = " + startSpiralPos);
     }
 
     public void SetSimSpeed(float speed){
