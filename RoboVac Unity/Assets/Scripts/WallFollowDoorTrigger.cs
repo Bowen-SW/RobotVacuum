@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class WallFollowDoorTrigger : MonoBehaviour
 {
-    private CapsuleCollider2D _doorTrigger;
+    // private CapsuleCollider2D _doorTrigger;
     private Roomba _roomba = null;
     private bool isWallFollow = false;
     private Door _door;
+    private DoorSpace _doorSpace;
+    private BoxCollider2D wallSensor;
 
     // Start is called before the first frame update
     void Start()
     {
         _door = GetComponentInParent<Door>();
-        _doorTrigger = GetComponent<CapsuleCollider2D>();
+
         if(_roomba == null){
             _roomba = GameObject.FindGameObjectWithTag("roomba").GetComponent<Roomba>();
         }
@@ -31,23 +33,9 @@ public class WallFollowDoorTrigger : MonoBehaviour
                 List<GameObject> walls = _door.AllWalls();
                 foreach(GameObject wall in walls)
                 {
-                    wall.GetComponent<EdgeCollider2D>().enabled = false;
-                    //This causes the roomba to not be touching anything and it will turn clockwise
+                    Physics2D.IgnoreCollision(wall.GetComponent<BoxCollider2D>(), _roomba.GetComponent<CircleCollider2D>());
                 }
-            }
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other) {
-        if(_roomba.IsTimerStarted()){
-            if(other.tag == "roombaRear" && isWallFollow)
-            {
-                List<GameObject> walls = _door.AllWalls();
-                foreach(GameObject wall in walls)
-                {
-                    Debug.Log("Enable walls");
-                    wall.GetComponent<EdgeCollider2D>().enabled = true;
-                }
+                // Debug.Log("WallFollowDoorTrigger Enter and move");
                 _roomba.GetPath().SetIsTouching(false);
                 _roomba.GetPath().Move();
             }

@@ -29,7 +29,7 @@ public class WallFollow : Path
     }
 
     private IEnumerator TurnClock(){
-        Debug.Log("Turning Clockwise");
+        // Debug.Log("Turning Clockwise");
         vacuum.angularVelocity = -angularVelocity;
 
         float waitTime = rightAngle / Mathf.Abs(angularVelocity);
@@ -38,11 +38,12 @@ public class WallFollow : Path
 
         int xPos = FindNextXClock();
         int yPos = FindNextYClock();
+        Debug.Log("Launching to " + xPos + ", " + yPos);
         Launch(xPos, yPos);
     }
 
     private IEnumerator TurnCounter(){
-        Debug.Log("Turning CounterClockwise");
+        // Debug.Log("Turning CounterClockwise");
         vacuum.angularVelocity = angularVelocity;
 
         float waitTime = rightAngle / Mathf.Abs(angularVelocity);

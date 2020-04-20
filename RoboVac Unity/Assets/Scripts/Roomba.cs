@@ -65,6 +65,8 @@ public class Roomba : MonoBehaviour, IMovable
     void Awake() {
         vacuum = GetComponent<Rigidbody2D>();
         timeText = simTimeText.GetComponent<TMP_Text>();
+        wallFollowTrigger.enabled = true;
+        rearTrigger.enabled = true;
     }
 
     public void Init(float roombaSpeed, int batteryLife, PathType pathType, float vacEff, float whiskerEff)
@@ -84,9 +86,11 @@ public class Roomba : MonoBehaviour, IMovable
 
         SetPathType(pathType);
         if(pathType == PathType.WallFollow){
+            wallFollowTrigger.enabled = true;
             rearTrigger.enabled = true;
         } else {
             rearTrigger.enabled = false;
+            wallFollowTrigger.enabled = false;
         }
         path.SetFields(this.roombaSpeed, vacuum);
 
@@ -220,6 +224,7 @@ public class Roomba : MonoBehaviour, IMovable
 
         if(pathType == PathType.WallFollow){
             wallFollowTrigger.SetCount(0);
+            wallFollowTrigger.enabled = false;
         }
         
         vacuum.angularVelocity = 0;

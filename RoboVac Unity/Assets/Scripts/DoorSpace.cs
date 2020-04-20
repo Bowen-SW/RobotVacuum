@@ -5,9 +5,9 @@ using UnityEngine;
 public class DoorSpace : MonoBehaviour
 {
     public GameObject door;
-    public CapsuleCollider2D doorTrigger;
+    public BoxCollider2D doorTrigger;
     private Door _door;
-    private CapsuleCollider2D _doorTrigger;
+    private BoxCollider2D _doorTrigger;
     private Roomba _roomba = null;
     private bool isWallFollow = false;
 
@@ -15,32 +15,32 @@ public class DoorSpace : MonoBehaviour
     void Start()
     {
         _door = door.GetComponent<Door>();
-        _doorTrigger = doorTrigger.GetComponent<CapsuleCollider2D>();
+        _doorTrigger = doorTrigger.GetComponent<BoxCollider2D>();
         if(_roomba == null){
             _roomba = GameObject.FindGameObjectWithTag("roomba").GetComponent<Roomba>();
         }
     }
 
-    void Update()
-    {
-        isWallFollow = (_roomba.GetPathType() == PathType.WallFollow);
-        if(isWallFollow){
-            _doorTrigger.enabled = true;
-            //GetComponent<BoxCollider2D>().enabled = false;
-        } else {
-            _doorTrigger.enabled = false;
-            GetComponent<BoxCollider2D>().enabled = true;
-        }
-    }
+    // void Update()
+    // {
+    //     isWallFollow = (_roomba.GetPathType() == PathType.WallFollow);
+    //     if(isWallFollow){
+    //         _doorTrigger.enabled = true;
+    //         //GetComponent<BoxCollider2D>().enabled = false;
+    //     } else {
+    //         _doorTrigger.enabled = false;
+    //         // GetComponent<BoxCollider2D>().enabled = true;
+    //     }
+    // }
 
     private void OnTriggerEnter2D(Collider2D other) {
         if(_roomba.IsTimerStarted()){
-            if(other.tag == "roomba" && !isWallFollow && !_door.isClosed)
+            if(other.tag == "roomba" && !_door.isClosed)
             {
                 foreach (GameObject wall in _door.touchingWalls)
                 {
                     Debug.Log("Remove touching walls");
-                    Physics2D.IgnoreCollision(wall.GetComponent<EdgeCollider2D>(), other.gameObject.GetComponent<CircleCollider2D>());
+                    Physics2D.IgnoreCollision(wall.GetComponent<BoxCollider2D>(), _roomba.GetComponent<CircleCollider2D>());
                     // This causes the roomba to not be touching anything and it will turn clockwise
                 }
 
@@ -73,12 +73,12 @@ public class DoorSpace : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other) {
         if(_roomba.IsTimerStarted()){
-            if(other.tag == "roomba" && !isWallFollow  && !_door.isClosed)
+            if(other.tag == "roomba"  && !_door.isClosed)
             {
                 foreach (GameObject wall in _door.touchingWalls)
                 {
                     Debug.Log("Enable touching walls");
-                    Physics2D.IgnoreCollision(wall.GetComponent<EdgeCollider2D>(), other.gameObject.GetComponent<CircleCollider2D>(), false);
+                    Physics2D.IgnoreCollision(wall.GetComponent<BoxCollider2D>(), _roomba.GetComponent<CircleCollider2D>(), false);
                 }
 
             }
