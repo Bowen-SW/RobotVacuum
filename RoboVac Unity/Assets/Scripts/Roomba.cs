@@ -281,6 +281,7 @@ public class Roomba : MonoBehaviour, IMovable
     public void SetSimSpeed(float speed){
         simSpeed = speed;
         Time.timeScale = simSpeed;
+        Time.fixedDeltaTime = 0.02F * Time.timeScale;
     }
 
     public void ResetRunTime(){
