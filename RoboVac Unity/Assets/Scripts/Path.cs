@@ -6,7 +6,7 @@ public abstract class Path : MonoBehaviour
 {
     protected float angularVelocity;
 
-    protected float velocity;
+    public float velocity;
 
     protected Rigidbody2D vacuum;
 

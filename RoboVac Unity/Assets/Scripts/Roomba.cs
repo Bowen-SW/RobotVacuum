@@ -114,12 +114,25 @@ public class Roomba : MonoBehaviour, IMovable
 
     void Update(){
         if(pathType == PathType.Spiral && doSprial){
+            float spiralTimer = timer;
+            
+            Vector3 moveVector;
 
             radius = Mathf.Sqrt(Mathf.Pow(vacuum.position.x - startSpiralPos.x,2f) + Mathf.Pow(vacuum.position.y - startSpiralPos.y, 2f));
-            Vector3 moveVector = new Vector3(unit*(float)Math.Cos(timer), unit*(float)Math.Sin(timer),0);
-         
-            transform.position += moveVector * Time.deltaTime;
+
+            if(radius > 1){
+                spiralTimer /= radius * radius;
+                moveVector = new Vector3((float)Math.Cos(spiralTimer), (float)Math.Sin(-spiralTimer),0);
+                // unit += Time.deltaTime / (15F * radius * radius);
+            }else {
+                moveVector = new Vector3((float)Math.Cos(spiralTimer), (float)Math.Sin(spiralTimer),0);
+            }
+            
+            Vector3 normalVec = moveVector.normalized;
+
             unit += Time.deltaTime / 15F;
+            transform.position += normalVec * unit * path.velocity * Time.deltaTime;
+            
             transform.Rotate(Vector3.forward, angle * Time.deltaTime);  
         }
         else{        

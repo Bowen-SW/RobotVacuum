@@ -29,7 +29,7 @@ public class WallFollowDoorTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         isWallFollow = (_roomba.GetPathType() == PathType.WallFollow);
         if(_roomba.IsTimerStarted()){
-            if(other.tag == "roomba" && isWallFollow)
+            if(other.tag == "roomba" && isWallFollow && !_door.isClosed)
             {
                 // List<GameObject> walls = _door.AllWalls();
                 // foreach(GameObject wall in walls)
