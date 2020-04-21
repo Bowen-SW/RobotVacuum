@@ -72,6 +72,7 @@ public class DoorSpace : MonoBehaviour
     }
 
     private void OnTriggerExit2D(Collider2D other) {
+        isWallFollow = (_roomba.GetPathType() == PathType.WallFollow);
         if(_roomba.IsTimerStarted()){
             if(other.tag == "roomba"  && !_door.isClosed)
             {
@@ -80,7 +81,10 @@ public class DoorSpace : MonoBehaviour
                     Debug.Log("Enable touching walls");
                     Physics2D.IgnoreCollision(wall.GetComponent<BoxCollider2D>(), _roomba.GetComponent<CircleCollider2D>(), false);
                 }
-
+                if(isWallFollow){
+                    _roomba.GetPath().SetIsTouching(false);
+                _roomba.GetPath().Move();
+                }
             }
         }
 

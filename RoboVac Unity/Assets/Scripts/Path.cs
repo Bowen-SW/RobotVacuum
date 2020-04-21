@@ -11,7 +11,7 @@ public abstract class Path : MonoBehaviour
     protected Rigidbody2D vacuum;
 
     protected Vector3 currentDirection;
-    protected bool isTouching = false;
+    protected bool isTouching = true;
 
     public abstract void Move();
 

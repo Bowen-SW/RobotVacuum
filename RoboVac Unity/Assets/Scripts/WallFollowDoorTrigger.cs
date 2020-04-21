@@ -21,14 +21,15 @@ public class WallFollowDoorTrigger : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        isWallFollow = (_roomba.GetPathType() == PathType.WallFollow);
-    }
+    // void Update()
+    // {
+        
+    // }
 
     private void OnTriggerEnter2D(Collider2D other) {
+        isWallFollow = (_roomba.GetPathType() == PathType.WallFollow);
         if(_roomba.IsTimerStarted()){
-            if(other.tag == "roombaRear" && isWallFollow)
+            if(other.tag == "roomba" && isWallFollow)
             {
                 // List<GameObject> walls = _door.AllWalls();
                 // foreach(GameObject wall in walls)

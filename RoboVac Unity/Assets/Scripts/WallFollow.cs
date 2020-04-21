@@ -6,7 +6,7 @@ using UnityEngine;
 public class WallFollow : Path
 {
     private float rightAngle = 90F;
-    private bool firstTurn = true;
+    // private bool firstTurn = true;
     private bool inCollision = false;
     public override void Move(){
         //If collision and sensor not touching, turn counterclockwise 90 degrees, then proceed.
@@ -15,16 +15,16 @@ public class WallFollow : Path
             inCollision = true;
             Stop();
 
-            if((isTouching || firstTurn)){ //Turn Counter-clockwise
+            if(isTouching){ //Turn Counter-clockwise
                 
                 StartCoroutine(TurnCounter());
-                firstTurn = false;
                 
             } else{ //Turn counter clockwise
                 StartCoroutine(TurnClock());
                 
             }
             inCollision = false;
+            isTouching = true;
         }
     }
 
