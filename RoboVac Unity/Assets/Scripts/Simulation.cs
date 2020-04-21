@@ -115,7 +115,7 @@ public class Simulation : MonoBehaviour
     }
 
     public void StartStopRoomba(){
-        if (hasErrors)
+        if (hasErrors && !isPlaying)
         {
             return;
         }
