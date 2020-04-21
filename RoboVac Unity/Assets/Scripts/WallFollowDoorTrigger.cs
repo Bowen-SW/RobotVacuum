@@ -30,11 +30,11 @@ public class WallFollowDoorTrigger : MonoBehaviour
         if(_roomba.IsTimerStarted()){
             if(other.tag == "roombaRear" && isWallFollow)
             {
-                List<GameObject> walls = _door.AllWalls();
-                foreach(GameObject wall in walls)
-                {
-                    Physics2D.IgnoreCollision(wall.GetComponent<BoxCollider2D>(), _roomba.GetComponent<CircleCollider2D>());
-                }
+                // List<GameObject> walls = _door.AllWalls();
+                // foreach(GameObject wall in walls)
+                // {
+                //     Physics2D.IgnoreCollision(wall.GetComponent<BoxCollider2D>(), _roomba.GetComponent<CircleCollider2D>());
+                // }
                 // Debug.Log("WallFollowDoorTrigger Enter and move");
                 _roomba.GetPath().SetIsTouching(false);
                 _roomba.GetPath().Move();
