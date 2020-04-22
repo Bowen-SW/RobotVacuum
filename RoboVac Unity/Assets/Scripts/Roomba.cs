@@ -28,6 +28,8 @@ public class Roomba : MonoBehaviour, IMovable
     private float xCoordinate = 0;
     private float yCoordinate = 0;
 
+    private bool useRadius = false;
+
     private Vector3 target;
     private float radius;
     private Vector2 startSpiralPos;
@@ -65,8 +67,7 @@ public class Roomba : MonoBehaviour, IMovable
     void Awake() {
         vacuum = GetComponent<Rigidbody2D>();
         timeText = simTimeText.GetComponent<TMP_Text>();
-        // wallFollowTrigger.enabled = true;
-        // rearTrigger.enabled = true;
+        Camera.main.orthographicSize = 18;
     }
 
     public void Init(float roombaSpeed, int batteryLife, PathType pathType, float vacEff, float whiskerEff)
@@ -85,13 +86,6 @@ public class Roomba : MonoBehaviour, IMovable
         SetStartPosition();
 
         SetPathType(pathType);
-        if(pathType == PathType.WallFollow){
-            // wallFollowTrigger.enabled = true;
-            // rearTrigger.enabled = true;
-        } else {
-            // rearTrigger.enabled = false;
-            // wallFollowTrigger.enabled = false;
-        }
         path.SetFields(this.roombaSpeed, vacuum);
 
         if(pathType == PathType.Spiral){
@@ -114,27 +108,52 @@ public class Roomba : MonoBehaviour, IMovable
     }
 
     void Update(){
+        // if(pathType == PathType.Spiral && doSprial){
+
+        //     float spiralTimer = timer;
+            
+        //     Vector3 moveVector;
+
+        //     radius = Mathf.Sqrt(Mathf.Pow(vacuum.position.x - startSpiralPos.x,2f) + Mathf.Pow(vacuum.position.y - startSpiralPos.y, 2f));
+        //     if(radius > 1 && !useRadius){
+        //         useRadius = true;
+        //     } else {
+        //         radius = 1;
+        //     }
+
+        //     if(useRadius){
+        //         // Debug.Log("Sin of sprial time: " + Mathf.Sin(spiralTimer));
+        //         spiralTimer /= radius;
+        //         moveVector = new Vector3(Mathf.Sin(spiralTimer), Mathf.Cos(spiralTimer), 0);
+        //     }else {
+        //         spiralTimer /= radius;
+        //         moveVector = new Vector3(Mathf.Cos(spiralTimer), Mathf.Sin(spiralTimer), 0);
+        //     }
+            
+        //     // moveVector = new Vector3((float)Math.Cos(spiralTimer), (float)Math.Sin(spiralTimer),0);
+        //     Vector3 normalVec = moveVector.normalized;
+
+        //     unit += Time.deltaTime / 15F;
+        //     transform.position += normalVec * unit * path.velocity * Time.deltaTime;
+        //     // transform.position = Vector3.MoveTowards(transform.position, transform.position + (moveVector * unit), path.velocity * Time.deltaTime);
+        //     transform.Rotate(Vector3.forward, angle * Time.deltaTime);  
+        // }
+        // else{        
+        //     float moveHorizontal = Input.GetAxis("Horizontal");
+        //     float moveVertical = Input.GetAxis("Vertical");
+
+        //     Vector3 moveVector = new Vector3(moveHorizontal, moveVertical, 0.0F);
+        //     transform.position += moveVector * Time.deltaTime;
+        // }
+
         if(pathType == PathType.Spiral && doSprial){
-            float spiralTimer = timer;
-            
-            Vector3 moveVector;
-
             radius = Mathf.Sqrt(Mathf.Pow(vacuum.position.x - startSpiralPos.x,2f) + Mathf.Pow(vacuum.position.y - startSpiralPos.y, 2f));
-
-            // if(radius > 1){
-            //     spiralTimer /= radius * radius;
-            //     moveVector = new Vector3((float)Math.Cos(spiralTimer), (float)Math.Sin(-spiralTimer),0);
-            //     // unit += Time.deltaTime / (15F * radius * radius);
-            // }else {
-            //     moveVector = new Vector3((float)Math.Cos(spiralTimer), (float)Math.Sin(spiralTimer),0);
-            // }
             
-            moveVector = new Vector3((float)Math.Cos(spiralTimer), (float)Math.Sin(spiralTimer),0);
-            Vector3 normalVec = moveVector.normalized;
+            
 
+            Vector3 moveVector = new Vector3(unit*Mathf.Cos(timer % (2*Mathf.PI)), unit*Mathf.Sin(timer % (2*Mathf.PI)),0);
+            transform.position += moveVector * Time.deltaTime;
             unit += Time.deltaTime / 15F;
-            transform.position += normalVec * unit * path.velocity * Time.deltaTime;
-            
             transform.Rotate(Vector3.forward, angle * Time.deltaTime);  
         }
         else{        
@@ -247,6 +266,7 @@ public class Roomba : MonoBehaviour, IMovable
 
     public void SetDoSpiral(bool spiral){
         doSprial = spiral;
+        useRadius = false;
         startSpiralPos = vacuum.position;
         Debug.Log("Start spiral pos = " + startSpiralPos);
         //Reset the spiral values
