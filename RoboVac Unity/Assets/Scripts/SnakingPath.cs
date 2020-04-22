@@ -20,7 +20,7 @@ public class SnakingPath : Path
 
     private IEnumerator SnakingMove(){
         Backoff(-currentDirection.x, -currentDirection.y);
-        yield return new WaitForSeconds(.05F);
+        yield return new WaitForSeconds(.5F);
         Stop();
         
         if(inCurrentCollision) {
