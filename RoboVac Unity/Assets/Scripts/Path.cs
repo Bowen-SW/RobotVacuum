@@ -8,6 +8,8 @@ public abstract class Path : MonoBehaviour
 
     public float velocity;
 
+    protected Collision2D collisionObj;
+
     protected Rigidbody2D vacuum;
 
     protected Vector3 currentDirection;
@@ -79,4 +81,8 @@ public abstract class Path : MonoBehaviour
         Vector3 normalizedDirection = direction.normalized * velocity;
         vacuum.velocity = normalizedDirection;
     }    
+
+    public void SetCollisionObj(Collision2D obj){
+        collisionObj = obj;
+    }
 }

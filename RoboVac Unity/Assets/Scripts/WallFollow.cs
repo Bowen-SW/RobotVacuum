@@ -13,19 +13,55 @@ public class WallFollow : Path
         //else if collision and sensor is touching, turn 90 degrees clockwise, then proceed
         if(!inCollision){
             inCollision = true;
-            Stop();
+            if(collisionObj.gameObject.tag == "chest" || collisionObj.gameObject.tag == "leg"){
+                
+                StartCoroutine(MoveAroundObj());
+            } else {
+                Stop();
 
-            if(isTouching){ //Turn Counter-clockwise
-                
-                StartCoroutine(TurnCounter());
-                
-            } else{ //Turn counter clockwise
-                StartCoroutine(TurnClock());
-                
+                if(isTouching){ //Turn Counter-clockwise
+                    StartCoroutine(TurnCounter());   
+                } else{ //Turn counter clockwise
+                    StartCoroutine(TurnClock());
+                }
             }
+
+            
             inCollision = false;
             isTouching = true;
         }
+    }
+
+    private IEnumerator MoveAroundObj(){
+        Backoff(-currentDirection.x, -currentDirection.y);
+        yield return new WaitForSeconds(.5F);
+
+        Stop();
+
+        //Turn CounterClockwise
+        vacuum.angularVelocity = angularVelocity;
+
+        float waitTime = rightAngle / Mathf.Abs(angularVelocity);
+        yield return new WaitForSeconds(waitTime);
+        vacuum.angularVelocity = 0;
+
+        int xPos = FindNextXCounter();
+        int yPos = FindNextYCounter();
+        Launch(xPos, yPos);
+
+        //Give the roomba 2 seconds to try and get around the object
+        yield return new WaitForSeconds(2F);
+        
+        //Turn Clockwise
+        vacuum.angularVelocity = -angularVelocity;
+
+        waitTime = rightAngle / Mathf.Abs(angularVelocity);
+        yield return new WaitForSeconds(waitTime);
+        vacuum.angularVelocity = 0;
+
+        xPos = FindNextXClock();
+        yPos = FindNextYClock();
+        Launch(xPos, yPos);
     }
 
     private IEnumerator TurnClock(){
@@ -38,7 +74,6 @@ public class WallFollow : Path
 
         int xPos = FindNextXClock();
         int yPos = FindNextYClock();
-        Debug.Log("Launching to " + xPos + ", " + yPos);
         Launch(xPos, yPos);
     }
 

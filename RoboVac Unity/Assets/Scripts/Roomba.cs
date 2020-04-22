@@ -65,7 +65,7 @@ public class Roomba : MonoBehaviour, IMovable
     void Awake() {
         vacuum = GetComponent<Rigidbody2D>();
         timeText = simTimeText.GetComponent<TMP_Text>();
-        wallFollowTrigger.enabled = true;
+        // wallFollowTrigger.enabled = true;
         // rearTrigger.enabled = true;
     }
 
@@ -86,11 +86,11 @@ public class Roomba : MonoBehaviour, IMovable
 
         SetPathType(pathType);
         if(pathType == PathType.WallFollow){
-            wallFollowTrigger.enabled = true;
+            // wallFollowTrigger.enabled = true;
             // rearTrigger.enabled = true;
         } else {
             // rearTrigger.enabled = false;
-            wallFollowTrigger.enabled = false;
+            // wallFollowTrigger.enabled = false;
         }
         path.SetFields(this.roombaSpeed, vacuum);
 
@@ -103,11 +103,12 @@ public class Roomba : MonoBehaviour, IMovable
         timerStarted = true;
     }
 
-    void OnCollisionEnter2D(Collision2D col) { 
+    void OnCollisionEnter2D(Collision2D other) { 
         if(timerStarted){
             if(pathType == PathType.Spiral){
                 doSprial = false;
             }
+            path.SetCollisionObj(other);
             path.Move();
         }
     }
@@ -169,23 +170,6 @@ public class Roomba : MonoBehaviour, IMovable
         }
     }
 
-    void FixedUpdate()
-    {
-        // if(pathType == PathType.Spiral && doSprial){
-        //     Vector3 moveVector = new Vector3(unit*(float)Math.Cos(timer), unit*(float)Math.Sin(timer),0);
-        //     transform.position += moveVector * Time.deltaTime;
-        //     unit += Time.deltaTime / 15F;
-        //     transform.Rotate(Vector3.forward, angle * Time.deltaTime);  
-        // }
-        // else{        
-        //     float moveHorizontal = Input.GetAxis("Horizontal");
-        //     float moveVertical = Input.GetAxis("Vertical");
-
-        //     Vector3 moveVector = new Vector3(moveHorizontal, moveVertical, 0.0F);
-        //     transform.position += moveVector * Time.deltaTime;
-        // }
-    }
-
     //This function also sets the path version
     public void SetPathType(PathType pathType){
         Debug.Log("Path selection = " + pathType);
@@ -193,12 +177,12 @@ public class Roomba : MonoBehaviour, IMovable
             case PathType.Random:
                 path = gameObject.AddComponent<RandomPath>();
                 this.pathType = PathType.Random;
-                UserInputInformation.pathTypeGS = "Random v1.2";
+                UserInputInformation.pathTypeGS = "Random v1.3";
                 break;
             case PathType.Snaking:
                 path = gameObject.AddComponent<SnakingPath>();
                 this.pathType = PathType.Snaking;
-                UserInputInformation.pathTypeGS = "Snaking v2.1";
+                UserInputInformation.pathTypeGS = "Snaking v2.2";
                 break;
             case PathType.Spiral:
                 path = gameObject.AddComponent<SpiralPath>();
@@ -208,7 +192,7 @@ public class Roomba : MonoBehaviour, IMovable
             case PathType.WallFollow:
                 path = gameObject.AddComponent<WallFollow>();
                 this.pathType = PathType.WallFollow;
-                UserInputInformation.pathTypeGS = "Wall Follow v3.0";
+                UserInputInformation.pathTypeGS = "Wall Follow v3.2";
                 break;
             case PathType.All:
                 this.pathType = PathType.All;
@@ -218,7 +202,7 @@ public class Roomba : MonoBehaviour, IMovable
                 Debug.Log("Error setting path. Default to Random.");
                 path = gameObject.AddComponent<RandomPath>();
                 this.pathType = PathType.Random;
-                UserInputInformation.pathTypeGS = "Random v1.2";
+                UserInputInformation.pathTypeGS = "Random v1.3";
                 break;
         }
     }
@@ -236,10 +220,10 @@ public class Roomba : MonoBehaviour, IMovable
         path.StopThreads();
         path.Stop();
 
-        if(pathType == PathType.WallFollow){
-            wallFollowTrigger.SetCount(0);
-            wallFollowTrigger.enabled = false;
-        }
+        // if(pathType == PathType.WallFollow){
+        //     wallFollowTrigger.SetCount(0);
+        //     wallFollowTrigger.enabled = false;
+        // }
         
         vacuum.angularVelocity = 0;
         Time.timeScale = 1F;
