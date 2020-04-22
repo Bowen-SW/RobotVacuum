@@ -323,7 +323,10 @@ public class Simulation : MonoBehaviour
         CreateDefaultChair(new Vector2(14f, -20f), new Vector2(22f, -4f));
 
         CreateDefaultChest(new Vector2(-24f, -8f), new Vector2(-8f, 8f));
+        Vector3 temp = new Vector3(10.0f,10.0f,0);
+        roomba.transform.position = temp;
     }
+
 
     private void CreateDefaultRoom(Vector2 start, Vector2 stop)
     {
