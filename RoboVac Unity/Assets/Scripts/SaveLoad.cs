@@ -53,10 +53,7 @@ public class SaveLoad : MonoBehaviour
 
     void Update()
     {
-        //setTotalSqft();
         UserInputInformation.setTotalSqft();
-        //UserInputInformation.sqftGS = totalSqft;
-        //totalSqft = UserInputInformation.totalSqft;
        if(UserInputInformation.roombaStopGS == true || (stopCount % 2 == 0 && stopCount != 0))
        {
             recordRun();
@@ -74,7 +71,7 @@ public class SaveLoad : MonoBehaviour
     public void setStopCount()
     {   
         stopCount++;
-        Debug.Log(stopCount);
+        //Debug.Log(stopCount);
     }
 
     public void setCoverage()
@@ -85,6 +82,7 @@ public class SaveLoad : MonoBehaviour
         foreach(GameObject room in UserInputInformation.rooms)
         {
             Room _room = room.GetComponent<Room>(); 
+            Debug.Log("Room coverage = " + _room.getCoverage());
             _coverage += _room.getCoverage();
             _sqft += _room.sqft;
         }
@@ -163,10 +161,10 @@ public class SaveLoad : MonoBehaviour
         duration = UserInputInformation.durationGS;
         pathType = UserInputInformation.pathTypeGS;
         RunReport newRun = new RunReport(floorPlanIDGS, timeStampString, duration, pathType, coverage);
-        Debug.Log(newRun);
+        // Debug.Log(newRun);
         reports.Add(newRun);
         floorPlanIDGS++;
-        Debug.Log(floorPlanIDGS);
+        // Debug.Log(floorPlanIDGS);
     }
 
     public void setFurniture()
@@ -242,7 +240,7 @@ public class SaveLoad : MonoBehaviour
         UserInputInformation.startVals.Clear();
         UserInputInformation.rooms.Clear();
         UserInputInformation.RoomIDNum = 0;
-        Debug.Log("count: " + saveInformation["rooms"].Count);
+        // Debug.Log("count: " + saveInformation["rooms"].Count);
         for(int i = 0; i < saveInformation["rooms"].Count; i++)
         {
             double stopX = (double)saveData["stopValues"][i]["x"];
@@ -253,7 +251,7 @@ public class SaveLoad : MonoBehaviour
 
             Vector2 start = new Vector2((float)startX, (float)startY);
             Vector2 stop = new Vector2((float)stopX, (float)stopY);
-            Debug.Log(start + ";" + stop);
+            // Debug.Log(start + ";" + stop);
 
             GameObject new_room = (GameObject)Instantiate(room, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
             new_room.GetComponent<Room>().LoadPositions(start, stop);
@@ -266,7 +264,7 @@ public class SaveLoad : MonoBehaviour
         UserInputInformation.startValsD.Clear();
         UserInputInformation.doors.Clear();
         UserInputInformation.DoorIDNum = 0;
-        Debug.Log("count: " + saveInformation["doors"].Count);
+        // Debug.Log("count: " + saveInformation["doors"].Count);
         for(int i = 0; i < saveInformation["doors"].Count; i++)
         {
             double startX = (double)saveData["startValuesD"][i]["x"];
@@ -275,7 +273,7 @@ public class SaveLoad : MonoBehaviour
             bool isRotated = (bool)saveData["rotationD"][i];
 
             Vector2 start = new Vector2((float)startX, (float)startY);
-            Debug.Log(start);
+            // Debug.Log(start);
 
             GameObject new_door = (GameObject)Instantiate(door, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
             new_door.GetComponent<Door>().LoadPositions(start, isRotated);
@@ -289,7 +287,7 @@ public class SaveLoad : MonoBehaviour
         UserInputInformation.startValsCT.Clear();
         UserInputInformation.chests.Clear();
         UserInputInformation.ChestIDNum = 0;
-        Debug.Log("count: " + saveInformation["chests"].Count);
+        // Debug.Log("count: " + saveInformation["chests"].Count);
         for(int i = 0; i < saveInformation["chests"].Count; i++)
         {
             double stopX = (double)saveData["stopValuesCT"][i]["x"];
@@ -300,7 +298,7 @@ public class SaveLoad : MonoBehaviour
 
             Vector2 start = new Vector2((float)startX, (float)startY);
             Vector2 stop = new Vector2((float)stopX, (float)stopY);
-            Debug.Log(start + ";" + stop);
+            // Debug.Log(start + ";" + stop);
 
             GameObject new_chest = (GameObject)Instantiate(chest, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
             new_chest.GetComponentInChildren<Chest>().LoadPositions(start, stop);
@@ -314,7 +312,7 @@ public class SaveLoad : MonoBehaviour
         UserInputInformation.startValsCR.Clear();
         UserInputInformation.chairs.Clear();
         UserInputInformation.ChairIDNum = 0;
-        Debug.Log("count: " + saveInformation["chairs"].Count);
+        // Debug.Log("count: " + saveInformation["chairs"].Count);
         for(int i = 0; i < saveInformation["chairs"].Count; i++)
         {
             double stopX = (double)saveData["stopValuesCR"][i]["x"];
@@ -325,7 +323,7 @@ public class SaveLoad : MonoBehaviour
 
             Vector2 start = new Vector2((float)startX, (float)startY);
             Vector2 stop = new Vector2((float)stopX, (float)stopY);
-            Debug.Log(start + ";" + stop);
+            // Debug.Log(start + ";" + stop);
 
             GameObject new_chair = (GameObject)Instantiate(chair, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
             new_chair.GetComponentInChildren<Chair>().LoadPositions(start, stop);
@@ -390,7 +388,7 @@ public class SaveLoad : MonoBehaviour
         }
         catch
         {
-            Debug.Log("cancel");
+            // Debug.Log("cancel");
         }
     }
 
@@ -402,8 +400,8 @@ public class SaveLoad : MonoBehaviour
         setCoverage();
         setDuration();
         setTotalSqft();
-        Debug.Log(filePath);
-        Debug.Log(JsonUtility.ToJson(this));
+        // Debug.Log(filePath);
+        // Debug.Log(JsonUtility.ToJson(this));
         
         if(filePath == "")
         {
@@ -412,19 +410,27 @@ public class SaveLoad : MonoBehaviour
                 if (Directory.Exists(defaultDirectory)) 
                 {
                     filePath = (defaultDirectory + "\\" + fileName + ".json");
-                    Debug.Log(filePath);
+                    // Debug.Log(filePath);
                     File.WriteAllText(filePath, JsonUtility.ToJson(this));
+                    string jsonString1 = File.ReadAllText(filePath);
+                    saveData = JsonMapper.ToObject(jsonString1);
+                    UserInputInformation.saveDataGS = saveData;
+                    // Debug.Log("UserInputInformation.saveDataGS = " + UserInputInformation.saveDataGS);
                     return;
                 }
 
                 DirectoryInfo di = Directory.CreateDirectory(defaultDirectory);
                 filePath = (defaultDirectory + "\\" + fileName + ".json");
-                Debug.Log(filePath);
+                // Debug.Log(filePath);
                 File.WriteAllText(filePath, JsonUtility.ToJson(this));
+                string jsonString2 = File.ReadAllText(filePath);
+                saveData = JsonMapper.ToObject(jsonString2);
+                UserInputInformation.saveDataGS = saveData;
+                // Debug.Log("UserInputInformation.saveDataGS = " + UserInputInformation.saveDataGS);
             } 
             catch (Exception e) 
             {
-                Debug.Log(e.ToString());
+                // Debug.Log(e.ToString());
             }
                             
 
@@ -432,13 +438,14 @@ public class SaveLoad : MonoBehaviour
         else
         {
             filePath = (defaultDirectory + "\\" + fileName + ".json");
-            Debug.Log(filePath);
+            // Debug.Log(filePath);
             File.WriteAllText(filePath, JsonUtility.ToJson(this));
         }
 
         string jsonString = File.ReadAllText(filePath);
-        Debug.Log(jsonString);
+        // Debug.Log(jsonString);
         saveData = JsonMapper.ToObject(jsonString);
         UserInputInformation.saveDataGS = saveData;
+        // Debug.Log("UserInputInformation.saveDataGS = " + UserInputInformation.saveDataGS);
     }
 }

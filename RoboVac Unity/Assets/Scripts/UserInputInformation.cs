@@ -74,7 +74,6 @@ public static class UserInputInformation
             int width = ((int)(room.GetComponent<Room>().stop.x - room.GetComponent<Room>().start.x));
             int height = ((int)(room.GetComponent<Room>().stop.y - room.GetComponent<Room>().start.y));
             totalSqft += (width*height);
-            //Debug.Log("Updating sqft: " + totalSqft);
         }
     }
     

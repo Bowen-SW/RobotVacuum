@@ -146,7 +146,7 @@ public class Room : MonoBehaviour, IResizable
             stop = new Vector2((float) pos1+2, (float)pos2+2);
         }
 
-        ResetCells();
+        ResetCells();       
     }
 
     // Update is called once per frame
@@ -234,6 +234,7 @@ public class Room : MonoBehaviour, IResizable
         this.prevStop.y = this.stop.y;
         UserInputInformation.AddStartVector(RoomID, start);
         UserInputInformation.AddStopVector(RoomID, stop);
+        ResetCells();
     }
 
     private List<GameObject> GetWalls()
