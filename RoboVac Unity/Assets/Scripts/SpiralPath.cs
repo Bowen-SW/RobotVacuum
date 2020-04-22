@@ -22,7 +22,7 @@ public class SpiralPath : RandomPath
         }
 
         isInRoutine = true;
-        yield return new WaitForSeconds(7F/velocity);
+        yield return new WaitForSeconds(10F/velocity);
         Stop();
         roomba.SetDoSpiral(true);
         Debug.Log("Sprial set to true");
