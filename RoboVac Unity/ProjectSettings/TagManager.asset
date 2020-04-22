@@ -24,6 +24,7 @@ TagManager:
   - roombaRear
   - chair
   - chest
+  - leg
   layers:
   - Default
   - TransparentFX

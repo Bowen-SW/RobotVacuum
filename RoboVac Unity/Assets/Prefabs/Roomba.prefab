@@ -340,7 +340,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simTimeText: {fileID: 0}
-  rearTrigger: {fileID: 1450814127133013701}
   wallFollowTrigger: {fileID: 0}
   isInRoom: 0
 --- !u!50 &2675807127965337570
@@ -410,7 +409,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2675807128330151282
 Transform:
   m_ObjectHideFlags: 0
@@ -419,8 +418,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2675807128330151283}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.4, y: 0.3, z: -17.076462}
-  m_LocalScale: {x: 18, y: 31, z: 1}
+  m_LocalPosition: {x: 2.4, y: 0.4, z: -17.076462}
+  m_LocalScale: {x: 18, y: 35, z: 1}
   m_Children: []
   m_Father: {fileID: 2675807127965337580}
   m_RootOrder: 3

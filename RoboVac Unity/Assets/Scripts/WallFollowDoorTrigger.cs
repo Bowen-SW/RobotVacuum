@@ -21,22 +21,12 @@ public class WallFollowDoorTrigger : MonoBehaviour
         }
     }
 
-    // void Update()
-    // {
-        
-    // }
 
     private void OnTriggerEnter2D(Collider2D other) {
         isWallFollow = (_roomba.GetPathType() == PathType.WallFollow);
         if(_roomba.IsTimerStarted()){
             if(other.tag == "roomba" && isWallFollow && !_door.isClosed)
             {
-                // List<GameObject> walls = _door.AllWalls();
-                // foreach(GameObject wall in walls)
-                // {
-                //     Physics2D.IgnoreCollision(wall.GetComponent<BoxCollider2D>(), _roomba.GetComponent<CircleCollider2D>());
-                // }
-                // Debug.Log("WallFollowDoorTrigger Enter and move");
                 _roomba.GetPath().SetIsTouching(false);
                 _roomba.GetPath().Move();
             }

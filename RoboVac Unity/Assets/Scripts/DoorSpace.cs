@@ -21,18 +21,6 @@ public class DoorSpace : MonoBehaviour
         }
     }
 
-    // void Update()
-    // {
-    //     isWallFollow = (_roomba.GetPathType() == PathType.WallFollow);
-    //     if(isWallFollow){
-    //         _doorTrigger.enabled = true;
-    //         //GetComponent<BoxCollider2D>().enabled = false;
-    //     } else {
-    //         _doorTrigger.enabled = false;
-    //         // GetComponent<BoxCollider2D>().enabled = true;
-    //     }
-    // }
-
     private void OnTriggerEnter2D(Collider2D other) {
         if(_roomba.IsTimerStarted()){
             if(other.tag == "roomba" && !_door.isClosed)

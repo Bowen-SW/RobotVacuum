@@ -8,7 +8,7 @@ using TMPro;
 public class Roomba : MonoBehaviour, IMovable
 {
     public TMP_Text simTimeText;
-    public BoxCollider2D rearTrigger;
+    // public BoxCollider2D rearTrigger;
     public WallFollowTrigger wallFollowTrigger;
     private TMP_Text timeText;
     private Rigidbody2D vacuum;
@@ -66,7 +66,7 @@ public class Roomba : MonoBehaviour, IMovable
         vacuum = GetComponent<Rigidbody2D>();
         timeText = simTimeText.GetComponent<TMP_Text>();
         wallFollowTrigger.enabled = true;
-        rearTrigger.enabled = true;
+        // rearTrigger.enabled = true;
     }
 
     public void Init(float roombaSpeed, int batteryLife, PathType pathType, float vacEff, float whiskerEff)
@@ -87,9 +87,9 @@ public class Roomba : MonoBehaviour, IMovable
         SetPathType(pathType);
         if(pathType == PathType.WallFollow){
             wallFollowTrigger.enabled = true;
-            rearTrigger.enabled = true;
+            // rearTrigger.enabled = true;
         } else {
-            rearTrigger.enabled = false;
+            // rearTrigger.enabled = false;
             wallFollowTrigger.enabled = false;
         }
         path.SetFields(this.roombaSpeed, vacuum);
@@ -120,14 +120,15 @@ public class Roomba : MonoBehaviour, IMovable
 
             radius = Mathf.Sqrt(Mathf.Pow(vacuum.position.x - startSpiralPos.x,2f) + Mathf.Pow(vacuum.position.y - startSpiralPos.y, 2f));
 
-            if(radius > 1){
-                spiralTimer /= radius * radius;
-                moveVector = new Vector3((float)Math.Cos(spiralTimer), (float)Math.Sin(-spiralTimer),0);
-                // unit += Time.deltaTime / (15F * radius * radius);
-            }else {
-                moveVector = new Vector3((float)Math.Cos(spiralTimer), (float)Math.Sin(spiralTimer),0);
-            }
+            // if(radius > 1){
+            //     spiralTimer /= radius * radius;
+            //     moveVector = new Vector3((float)Math.Cos(spiralTimer), (float)Math.Sin(-spiralTimer),0);
+            //     // unit += Time.deltaTime / (15F * radius * radius);
+            // }else {
+            //     moveVector = new Vector3((float)Math.Cos(spiralTimer), (float)Math.Sin(spiralTimer),0);
+            // }
             
+            moveVector = new Vector3((float)Math.Cos(spiralTimer), (float)Math.Sin(spiralTimer),0);
             Vector3 normalVec = moveVector.normalized;
 
             unit += Time.deltaTime / 15F;
@@ -294,7 +295,7 @@ public class Roomba : MonoBehaviour, IMovable
     public void SetSimSpeed(float speed){
         simSpeed = speed;
         Time.timeScale = simSpeed;
-        // Time.fixedDeltaTime = 0.02F * Time.timeScale;
+        Time.fixedDeltaTime = 0.02F * Time.timeScale;
     }
 
     public void ResetRunTime(){
