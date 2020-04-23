@@ -17,6 +17,10 @@ public abstract class Path : MonoBehaviour
 
     public abstract void Move();
 
+    public void SetVelocity(float vFactor){
+        velocity = vFactor;
+    }
+
     public void SetFields (float roombaSpeed, Rigidbody2D vacuum){ 
         float velocityFactor = roombaSpeed / 12F;
         this.angularVelocity = roombaSpeed * 4 * velocityFactor;
