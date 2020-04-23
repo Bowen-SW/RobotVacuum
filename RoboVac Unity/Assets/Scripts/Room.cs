@@ -189,6 +189,7 @@ public class Room : MonoBehaviour, IResizable
             if(UserInputInformation.clearCoverageGS==true)
             {
                 ResetCells();
+                UserInputInformation.clearCoverageGS=false;
             }
         }
 
