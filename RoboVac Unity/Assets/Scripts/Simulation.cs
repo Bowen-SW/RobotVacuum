@@ -190,7 +190,9 @@ public class Simulation : MonoBehaviour
             simSpeed = 1;
             simText.text = "1x";
             simSlowBtn.interactable = false;
-            roomba.GetPath().SetVelocity(roombaSettings.GetRoombaSpeed());
+            if(roombaSettings.GetRoombaSpeed() > 12F){
+                roomba.GetPath().SetVelocity(roombaSettings.GetRoombaSpeed());
+            }
         } else if(simSpeed == 50) {
             simSpeed = 25;
             simText.text = "25x";
@@ -210,12 +212,16 @@ public class Simulation : MonoBehaviour
             simSpeed = 25;
             simText.text = "25x";
             simSlowBtn.interactable = true;
-            roomba.GetPath().SetVelocity(1F);
+            if(roombaSettings.GetRoombaSpeed() > 12F){
+                roomba.GetPath().SetVelocity(1F);
+            }
         } else if(simSpeed == 25) {
             simSpeed = 50;
             simText.text = "50x";
             simFastBtn.interactable = false;
-            roomba.GetPath().SetVelocity(1F);
+            if(roombaSettings.GetRoombaSpeed() > 12F){
+                roomba.GetPath().SetVelocity(1F);
+            }
         } else if(simSpeed == 50) {
             //Do nothing, max speed reached
         } else {
