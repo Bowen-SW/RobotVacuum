@@ -23,6 +23,7 @@ public class SaveLoad : MonoBehaviour
     [HideInInspector] public List<Vector2> startValuesCT;
     [HideInInspector] public List<Vector2> stopValuesCT;
     [HideInInspector] public List<Vector2> startValuesD;
+    [HideInInspector] public Vector3 roombaPosition;
     [HideInInspector] public List<bool> rotationD;
     [HideInInspector] public string fileName;
     [HideInInspector] public static string filePath ="";
@@ -372,6 +373,14 @@ public class SaveLoad : MonoBehaviour
                 loadChairs(saveData);
                 loadChests(saveData);
                 loadDoors(saveData);
+                Vector3 thisVec = new Vector3(((float)saveData["roombaPosition"]["x"]), ((float)saveData["roombaPosition"]["y"]), ((float)saveData["roombaPosition"]["z"]));
+                try
+                {
+                    UserInputInformation.roombaPositionGS = thisVec;
+                }
+                catch{
+
+                }
             }
             else
             {
@@ -400,6 +409,7 @@ public class SaveLoad : MonoBehaviour
         setCoverage();
         setDuration();
         setTotalSqft();
+        roombaPosition = UserInputInformation.roombaPositionGS;
         // Debug.Log(filePath);
         // Debug.Log(JsonUtility.ToJson(this));
         

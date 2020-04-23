@@ -30,10 +30,12 @@ public static class UserInputInformation
     public static List<Vector2> stopValsCR = new List<Vector2>();
     public static List<Vector2> startValsCT = new List<Vector2>();
     public static List<Vector2> stopValsCT = new List<Vector2>();
+    public static Vector3 roombaPosition = new Vector3();
     public static string pathTypeUsed;
     public static string carpetType;
     public static string duration;
     public static bool clearCoverage = false;
+    public static bool loadRoomba = false;
     public static DateTime timeStamp;
     public static string timeStampString;
     public static JsonData saveData;
@@ -93,6 +95,20 @@ public static class UserInputInformation
         set
         {
             clearCoverage = value;
+        }
+    }
+
+    public static Vector3 roombaPositionGS
+    {
+        get
+        {
+            return roombaPosition;
+        }
+        set
+        {
+            roombaPosition = value;
+            loadRoomba = true;
+
         }
     }
 

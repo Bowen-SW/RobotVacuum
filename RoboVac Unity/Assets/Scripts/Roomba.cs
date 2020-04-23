@@ -105,6 +105,11 @@ public class Roomba : MonoBehaviour, IMovable
 
     void Update(){
 
+        if(UserInputInformation.loadRoomba == true)
+        {
+            SetTarget(UserInputInformation.roombaPositionGS);
+            UserInputInformation.loadRoomba = false;
+        }
         if(pathType == PathType.Spiral && doSprial){
             radius = Mathf.Sqrt(Mathf.Pow(vacuum.position.x - startSpiralPos.x,2f) + Mathf.Pow(vacuum.position.y - startSpiralPos.y, 2f));
       
