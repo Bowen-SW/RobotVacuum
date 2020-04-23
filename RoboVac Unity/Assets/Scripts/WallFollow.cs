@@ -16,6 +16,7 @@ public class WallFollow : Path
             if(collisionObj.gameObject.tag == "chest" || collisionObj.gameObject.tag == "leg"){
                 
                 StartCoroutine(MoveAroundObj());
+
             } else {
                 Stop();
 
@@ -52,6 +53,7 @@ public class WallFollow : Path
         //Give the roomba 2 seconds to try and get around the object
         yield return new WaitForSeconds(2F);
         
+        Stop();
         //Turn Clockwise
         vacuum.angularVelocity = -angularVelocity;
 
