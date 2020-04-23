@@ -25,7 +25,6 @@ public class SpiralPath : RandomPath
         yield return new WaitForSeconds(10F/velocity);
         Stop();
         roomba.SetDoSpiral(true);
-        Debug.Log("Sprial set to true");
 
         isInRoutine = false;
     }

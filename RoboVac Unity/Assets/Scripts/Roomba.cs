@@ -153,7 +153,6 @@ public class Roomba : MonoBehaviour, IMovable
 
     //This function also sets the path version
     public void SetPathType(PathType pathType){
-        Debug.Log("Path selection = " + pathType);
         switch(pathType){
             case PathType.Random:
                 path = gameObject.AddComponent<RandomPath>();
@@ -173,7 +172,7 @@ public class Roomba : MonoBehaviour, IMovable
             case PathType.WallFollow:
                 path = gameObject.AddComponent<WallFollow>();
                 this.pathType = PathType.WallFollow;
-                UserInputInformation.pathTypeGS = "Wall Follow v3.2";
+                UserInputInformation.pathTypeGS = "Wall Follow v3.4";
                 break;
             case PathType.All:
                 this.pathType = PathType.All;
@@ -249,7 +248,6 @@ public class Roomba : MonoBehaviour, IMovable
         xCoordinate = vacuum.position.x;
         yCoordinate = vacuum.position.y;
         startSpiralPos = vacuum.position;
-        Debug.Log("Start spiral pos = " + startSpiralPos);
     }
 
     public void SetSimSpeed(float speed){

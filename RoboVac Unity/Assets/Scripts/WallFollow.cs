@@ -6,18 +6,18 @@ using UnityEngine;
 public class WallFollow : Path
 {
     private float rightAngle = 90F;
-    // private bool firstTurn = true;
     private bool inCollision = false;
+    private bool isMovingAroundObj = false;
+
     public override void Move(){
         //If collision and sensor not touching, turn counterclockwise 90 degrees, then proceed.
         //else if collision and sensor is touching, turn 90 degrees clockwise, then proceed
         if(!inCollision){
-            inCollision = true;
-            if(collisionObj.gameObject.tag == "chest" || collisionObj.gameObject.tag == "leg"){
-                
+            
+            if(collisionObj.gameObject.tag == "chest" || collisionObj.gameObject.tag == "leg"){                
                 StartCoroutine(MoveAroundObj());
-
             } else {
+                isMovingAroundObj = false;
                 Stop();
 
                 if(isTouching){ //Turn Counter-clockwise
@@ -26,48 +26,55 @@ public class WallFollow : Path
                     StartCoroutine(TurnClock());
                 }
             }
-
             
-            inCollision = false;
             isTouching = true;
-        }
+        } else if(collisionObj.gameObject.tag == "North" || collisionObj.gameObject.tag == "East"
+            || collisionObj.gameObject.tag == "South" || collisionObj.gameObject.tag == "West"){
+
+            StopAllCoroutines();
+            StartCoroutine(TurnCounter());
+            isTouching = true;
+            
+        } else if(isMovingAroundObj){
+            StopAllCoroutines();
+
+            StartCoroutine(MoveAroundObj());
+        }  
     }
 
     private IEnumerator MoveAroundObj(){
+        inCollision = true;
+        isMovingAroundObj = true;
         Backoff(-currentDirection.x, -currentDirection.y);
-        yield return new WaitForSeconds(.5F);
+        yield return new WaitForSeconds(1F / velocity);
 
         Stop();
 
         //Turn CounterClockwise
-        vacuum.angularVelocity = angularVelocity;
-
-        float waitTime = rightAngle / Mathf.Abs(angularVelocity);
-        yield return new WaitForSeconds(waitTime);
-        vacuum.angularVelocity = 0;
-
-        int xPos = FindNextXCounter();
-        int yPos = FindNextYCounter();
-        Launch(xPos, yPos);
+        yield return TurnCounter();
+        inCollision = true;
 
         //Give the roomba 2 seconds to try and get around the object
-        yield return new WaitForSeconds(2F);
+        yield return new WaitForSeconds(3F / velocity);
         
         Stop();
         //Turn Clockwise
-        vacuum.angularVelocity = -angularVelocity;
+        yield return TurnClock();
+        inCollision = true;
 
-        waitTime = rightAngle / Mathf.Abs(angularVelocity);
-        yield return new WaitForSeconds(waitTime);
-        vacuum.angularVelocity = 0;
+        yield return new WaitForSeconds(4F / velocity);
 
-        xPos = FindNextXClock();
-        yPos = FindNextYClock();
-        Launch(xPos, yPos);
+        Stop();
+        yield return TurnClock();
+
+
+        isMovingAroundObj = false;
+        inCollision = false;
     }
 
     private IEnumerator TurnClock(){
-        // Debug.Log("Turning Clockwise");
+        inCollision = true;
+
         vacuum.angularVelocity = -angularVelocity;
 
         float waitTime = rightAngle / Mathf.Abs(angularVelocity);
@@ -77,10 +84,12 @@ public class WallFollow : Path
         int xPos = FindNextXClock();
         int yPos = FindNextYClock();
         Launch(xPos, yPos);
+        inCollision = false;
     }
 
     private IEnumerator TurnCounter(){
-        // Debug.Log("Turning CounterClockwise");
+        inCollision = true;
+
         vacuum.angularVelocity = angularVelocity;
 
         float waitTime = rightAngle / Mathf.Abs(angularVelocity);
@@ -90,6 +99,7 @@ public class WallFollow : Path
         int xPos = FindNextXCounter();
         int yPos = FindNextYCounter();
         Launch(xPos, yPos);
+        inCollision = false;
     }
 
     private int FindNextXClock(){
