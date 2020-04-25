@@ -184,14 +184,14 @@ public class Room : MonoBehaviour, IResizable
             }
         }
 
-        if(Object.FindObjectOfType<Simulation>().IsStopped())
-        {
-            if(UserInputInformation.clearCoverageGS==true)
-            {
-                ResetCells();
-                UserInputInformation.clearCoverageGS=false;
-            }
-        }
+        // if(Object.FindObjectOfType<Simulation>().IsStopped())
+        // {
+        //     if(UserInputInformation.clearCoverageGS==true)
+        //     {
+        //         ResetCells();
+        //         //UserInputInformation.clearCoverageGS=false;
+        //     }
+        // }
 
         GameObject floor = GetFloor();
         floor.GetComponent<MeshRenderer>().material = floorTypes[(int)(Object.FindObjectOfType<RoombaSettingsScript>().GetFloorType())];
@@ -297,7 +297,7 @@ public class Room : MonoBehaviour, IResizable
         } catch { }
     }
 
-    void ResetCells()
+    public void ResetCells()
     {
         cells = new float[width, height];
         for(int i = 0; i < width; i++)

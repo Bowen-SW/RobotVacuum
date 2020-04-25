@@ -59,7 +59,12 @@ public class SaveLoad : MonoBehaviour
        {
             recordRun();
             Save();
-            UserInputInformation.clearCoverageGS = true;
+            //UserInputInformation.clearCoverageGS = true;
+            foreach(GameObject room in UserInputInformation.rooms)
+            {
+                Room _room = room.GetComponent<Room>(); 
+                _room.ResetCells();
+            }
             UserInputInformation.roombaStopGS = false;
             stopCount = 0;
        }
