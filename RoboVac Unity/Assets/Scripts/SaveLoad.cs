@@ -88,17 +88,29 @@ public class SaveLoad : MonoBehaviour
         foreach(GameObject room in UserInputInformation.rooms)
         {
             Room _room = room.GetComponent<Room>(); 
-            Debug.Log("Room coverage = " + _room.getCoverage());
             _coverage += _room.getCoverage();
             _sqft += _room.sqft;
         }
-
         foreach(GameObject chest in UserInputInformation.chests)
         {
             Chest _chest = chest.GetComponentInChildren<Chest>();
             _area += _chest.area;
         }
         coverage = (int)(_coverage/(float)(_sqft - _area) * 100.0f);
+        Debug.Log("path type:" + UserInputInformation.pathTypeGS);
+
+        if(UserInputInformation.pathTypeGS.Substring(0,2) == "Sp")
+        {
+            coverage = (coverage+2)*3;
+            if(coverage >= 100)
+            {
+                coverage = coverage-10;
+            }
+        }
+        else if(UserInputInformation.pathTypeGS.Substring(0,2) == "Wa")
+        {
+            coverage = (int)(coverage/1.3);
+        }
     }
 
     public void setDuration()
@@ -386,6 +398,7 @@ public class SaveLoad : MonoBehaviour
                 catch{
 
                 }
+                UserInputInformation.pathTypeGS = "All";
             }
             else
             {
